@@ -2,13 +2,21 @@ from mcserver import  *
 from data import *
 
 
-c = Crawler(tag="minecraft")
-c1 = Crawler(tag="A+Minecraft+Server")
+def leer_tag():
+    with open('tags.txt','r') as tags:
+        for tag in tags:
+            yield tag
 
-info1 = c.info()
-info2 = c1.info()
+def servers_online(tag):
+    bot = Crawler(tag=tag)
+    for ip in bot.info():
+        server = McServer(ip=ip)
+        if server.obtener_data() == 'online':
+            print(server)
 
-for x in info1 :
-    print(x)
-for x in info2:
-    print(x)
+def main():
+    tags = leer_tag()
+    for tag in tags:
+        servers_online(tag=tag)
+       
+main()
