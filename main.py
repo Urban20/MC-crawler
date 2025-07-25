@@ -19,4 +19,5 @@ def main():
     for tag in tags:
         servers_online(tag=tag)
        
-main()
+if __name__ == '__main__':
+    main()

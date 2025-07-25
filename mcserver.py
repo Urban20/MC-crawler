@@ -1,12 +1,14 @@
 # obtiene informacion de los servidores de minecraft edicion java
 from mcstatus import JavaServer
+import re
 
 
 
 class McServer():
     def __init__(self,ip : str):
         self.ip = ip
-        self.direccion = self.ip + ':25565'
+        self.puerto = ':25565'
+        self.direccion = self.ip + self.puerto
         self.estado = 'offline'
         self.jugadores_online = ''
         self.motd = ''
@@ -14,11 +16,12 @@ class McServer():
         self.max_jugadores = None
         self.version = None
         self.p_onlines = None
+        self.timeout = 3
 
     def obtener_data(self):
 
         try:
-            server = JavaServer.lookup(address=self.direccion,timeout=3)
+            server = JavaServer.lookup(address=self.direccion,timeout=self.timeout)
             estado = server.status()
 
             self.version = estado.version.name
@@ -26,11 +29,11 @@ class McServer():
             self.jugadores_online = estado.players.online
             self.motd = estado.motd.to_plain().strip()
             self.estado = 'online'
-            self.p_onlines = estado.players.sample
+            self.p_onlines = re.findall(r"name='(\w+)'",str(estado.players.sample))
             
             return self.estado
         
-        except Exception as e:
+        except:
 
             return self.estado
 

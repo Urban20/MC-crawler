@@ -2,7 +2,6 @@
 
 import requests
 import re
-from bs4 import BeautifulSoup
 
 
 class Crawler():
@@ -15,16 +14,10 @@ class Crawler():
     def info(self):
         web = requests.get(self.url+self.tag)
         if web.status_code == 200:
-            try:
-                html = BeautifulSoup(web.text,"html.parser")
-                self.ips = html.find_all('a',class_='title text-dark')
+             
+            self.ips = re.findall(r'/host/(\d+\.\d+\.\d+\.\d+)',web.text)
                 
-            except:
-                print('error de obtencion de ips')
-
-            finally:
-                for ip in self.ips:
-                    yield ip.text
-
+            for ip in self.ips:
+                yield ip
     
 
