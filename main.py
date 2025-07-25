@@ -2,6 +2,14 @@ from mcserver import  *
 from data import *
 
 
+def guardar_sv(server : str):
+    try:
+        with open("servers.txt","a") as sv:
+            sv.write(server)
+    except:
+        print("server no guardado por un error\n")
+
+
 def leer_tag():
     with open('tags.txt','r') as tags:
         for tag in tags:
@@ -13,6 +21,8 @@ def servers_online(tag):
         server = McServer(ip=ip)
         if server.obtener_data() == 'online':
             print(server)
+            guardar_sv(server=server.info)
+            
 
 def main():
     tags = leer_tag()

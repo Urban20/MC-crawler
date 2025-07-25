@@ -2,8 +2,6 @@
 from mcstatus import JavaServer
 import re
 
-
-
 class McServer():
     def __init__(self,ip : str):
         self.ip = ip
@@ -31,6 +29,7 @@ class McServer():
             self.estado = 'online'
             self.p_onlines = re.findall(r"name='(\w+)'",str(estado.players.sample))
             
+            self.info = None
             return self.estado
         
         except:
@@ -40,7 +39,7 @@ class McServer():
     def __str__(self):
         
         if self.estado == 'online':
-            return f'''
+            self.info = f'''\n-----------------------------------------
             estado: {self.estado}
 
             ip: {self.direccion}
@@ -52,8 +51,9 @@ class McServer():
             version : {self.version}
 
             jugadores online: {self.p_onlines}
-
+            \n-----------------------------------------
             '''
+            return self.info
         else:
             
             return f'''

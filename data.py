@@ -3,7 +3,6 @@
 import requests
 import re
 
-
 class Crawler():
     def __init__(self,tag):
         self.tag = tag
@@ -12,7 +11,7 @@ class Crawler():
         self.ips = []
 
     def info(self):
-        web = requests.get(self.url+self.tag)
+        web = requests.get(self.url+self.tag,headers={'User-Agent': 'Mozilla/5.0'})
         if web.status_code == 200:
              
             self.ips = re.findall(r'/host/(\d+\.\d+\.\d+\.\d+)',web.text)
