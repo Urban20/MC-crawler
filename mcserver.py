@@ -27,7 +27,7 @@ class McServer():
             self.jugadores_online = estado.players.online
             self.motd = estado.motd.to_plain().strip()
             self.estado = 'online'
-            self.p_onlines = re.findall(r"name='(\w+)'",str(estado.players.sample))
+            self.p_onlines = re.findall(r"name='(\S+)'",str(estado.players.sample))
             
             self.info = None
             return self.estado
