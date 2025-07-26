@@ -4,7 +4,7 @@ from data import *
 
 def guardar_sv(server : str):
     try:
-        with open("servers.txt","a") as sv:
+        with open("servers.txt","a",encoding='utf-8') as sv:
             sv.write(server)
     except:
         print("server no guardado por un error\n")
