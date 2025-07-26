@@ -1,4 +1,6 @@
 # obtiene informacion de los servidores de minecraft edicion java
+
+
 from mcstatus import JavaServer
 import re
 
