@@ -3,10 +3,10 @@ from mcstatus import JavaServer
 import re
 
 class McServer():
-    def __init__(self,ip : str):
+    def __init__(self,ip : str,puerto : int):
         self.ip = ip
-        self.puerto = ':25565'
-        self.direccion = self.ip + self.puerto
+        self.puerto = puerto
+        self.direccion = self.ip + ':' + str(self.puerto)
         self.estado = 'offline'
         self.jugadores_online = ''
         self.motd = ''
@@ -39,7 +39,10 @@ class McServer():
     def __str__(self):
         
         if self.estado == 'online':
-            self.info = f'''\n-----------------------------------------
+
+            self.info = f'ip: {self.direccion} | motd: {self.motd} | version: {self.version}\n'
+
+            return f'''\n-----------------------------------------
             estado: {self.estado}
 
             ip: {self.direccion}
@@ -53,7 +56,7 @@ class McServer():
             jugadores online: {self.p_onlines}
             \n-----------------------------------------
             '''
-            return self.info
+            
         else:
             
             return f'''
