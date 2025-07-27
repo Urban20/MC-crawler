@@ -5,6 +5,7 @@ from mcstatus import JavaServer
 import re
 
 class McServer():
+    'esta clase es la encargada de obtener el estado y la informacion de los servidores'
     def __init__(self,ip : str,puerto : int):
         self.ip = ip
         self.puerto = puerto
@@ -17,9 +18,9 @@ class McServer():
         self.version = None
         self.p_onlines = None
         self.timeout = 3
-
+        self.info = None
     def obtener_data(self):
-
+        'metodo que actualiza la informacion de un servidor'
         try:
             server = JavaServer.lookup(address=self.direccion,timeout=self.timeout)
             estado = server.status()
@@ -27,11 +28,11 @@ class McServer():
             self.version = estado.version.name
             self.max_jugadores = estado.players.max
             self.jugadores_online = estado.players.online
-            self.motd = estado.motd.to_plain().strip()
+            self.motd = estado.motd.to_plain().replace('\n',' ').replace('\r', ' ').strip()
             self.estado = 'online'
             self.p_onlines = re.findall(r"name='(\S+)'",str(estado.players.sample))
+            self.info = f'ip: {self.direccion} | motd: {self.motd} | version: {self.version}\n'
             
-            self.info = None
             return self.estado
         
         except:
@@ -41,8 +42,6 @@ class McServer():
     def __str__(self):
         
         if self.estado == 'online':
-
-            self.info = f'ip: {self.direccion} | motd: {self.motd} | version: {self.version}\n'
 
             return f'''\n-----------------------------------------
             estado: {self.estado}
