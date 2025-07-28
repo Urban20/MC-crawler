@@ -60,8 +60,8 @@ def leer_tag():
 def servers_online(tag : str):
     'imprime los servidores que encuentre online'
     bot = Crawler(tag=tag)
-    for ip in bot.info():
-        server = McServer(ip=ip,puerto=25565)
+    for ip,pais in bot.info():
+        server = McServer(ip=ip,puerto=25565,pais=pais)
 
         if server.obtener_data() == 'online':
             print(server)
