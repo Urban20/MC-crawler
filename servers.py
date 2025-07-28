@@ -22,7 +22,8 @@ def filtrar_info(regex : str):
                 if re.search(regex,linea.lower()):
                     ip = re.search(r'ip:\s+(\d+\.\d+\.\d+\.\d+):',linea).group(1)
                     puerto = re.search(r'ip:\s+\d+\.\d+\.\d+\.\d+:(\d+)',linea).group(1)
-                    server = McServer(ip=ip,puerto=int(puerto))
+                    pais = re.search(r'pais:\s+([^|]+)',linea).group(1).strip()
+                    server = McServer(ip=ip,puerto=int(puerto),pais=pais)
                     server.obtener_data()
                     print(server)
                     contador += 1
