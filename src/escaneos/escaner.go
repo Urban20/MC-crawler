@@ -16,7 +16,7 @@ const (
 
 var n0 = flag.Int("n0", 0, "")
 var n1 = flag.Int("n1", 0, "")
-var hl = flag.Int("hl", 100, "")
+var hl = flag.Int("hl", 50, "")
 
 // 130 61
 // 54.36.0.0/14 178.32.0.0/15 151.80.0.0/16
