@@ -71,7 +71,7 @@ python main.py
 
 ## Ética de uso ⚖️  
 
-- 🔒 Solo escanear redes propias o con permiso  
+- 🔒 Evitar un uso excesivo de escaneos de barrido
 - 📵 Nunca saturar servidores  
 
 ---
