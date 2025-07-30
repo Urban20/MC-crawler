@@ -3,6 +3,7 @@
 "MOTD"
 "BungeeCord"
 "Craft"
+port+25565
 "ovh+sas"
 "Survival+Server"
 "Minecraft+Server+powered+by+Docker"
@@ -19,6 +20,8 @@
 "no+grief"
 "Cuberite"
 "GeyserMC"
+minecraft+host
+minecraft+powered+by
 "invite"
 "chicken"
 "piglin"

@@ -16,7 +16,7 @@ def filtrar_info(regex : str):
     contador = 0
     try:
         with open(servers,'r',encoding=codif) as sv:
-            print(f'\n[#] lista de servidores que coinciden con {regex}:\n')
+            print(f'\n[#] lista de servidores que coinciden con "{regex}":\n')
             for linea in sv:
 
                 if re.search(regex,linea.lower()):

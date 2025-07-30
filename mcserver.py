@@ -6,7 +6,7 @@ import re
 
 class McServer():
     'esta clase es la encargada de obtener el estado y la informacion de los servidores'
-    def __init__(self,ip : str,puerto : int,pais='desconocido'):
+    def __init__(self,ip : str,puerto=25565,pais='desconocido'):
         self.pais = pais
         self.ip = ip
         self.puerto = puerto
@@ -32,7 +32,9 @@ class McServer():
             self.motd = estado.motd.to_plain().replace('\n',' ').replace('\r', ' ').strip()
             self.estado = 'online'
             self.p_onlines = re.findall(r"name='(\S+)'",str(estado.players.sample))
-            self.info = f'ip: {self.direccion} | motd: {self.motd} | pais: {self.pais} | version: {self.version}\n'
+            self.uuid = re.findall(r"id='(\S+)'",str(estado.players.sample))
+            self.p_data = list(zip(self.p_onlines,self.uuid))
+            self.info = f'ip: {self.direccion} | | pais: {self.pais} | version: {self.version}\n'
             
             return self.estado
         
@@ -57,7 +59,7 @@ class McServer():
 
             version: {self.version}
 
-            jugadores online: {self.p_onlines}
+            jugadores online: {self.p_data}
             \n-----------------------------------------
             '''
             

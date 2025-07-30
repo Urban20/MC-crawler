@@ -1,9 +1,8 @@
 from ui import empaquetar
+import servers
 
-
-titulo = 'MC Crawler'
-dimension = "500x500"
 
 
 if __name__ == '__main__':
+    servers.eliminar_clones()
     empaquetar()

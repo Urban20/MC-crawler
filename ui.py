@@ -5,7 +5,7 @@ from servers import Buscar_Servers,filtrar_info
 
 
 titulo = 'MC Crawler'
-dimension = "500x200"
+dimension = "500x500"
 
 class UI():
     'la clase UI es la encargada de manejar la interfaz grafica'
