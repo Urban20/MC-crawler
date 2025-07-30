@@ -37,9 +37,9 @@ def empaquetar():
     'esta funcion contiene TODOS los elementos de la interfaz grafica'
     ui = UI(dimension,titulo)
     ui.crear_pantalla()
-    ui.agregar_etiqueta('Rastrear servers por rastreo de informacion (crawling):',13)
+    ui.agregar_etiqueta('Rastrear servers por crawling:',13)
     ui.crear_boton('Buscar servidores',Buscar_Servers)
-    ui.agregar_etiqueta('Rastrear servers por barridos:',13)
+    ui.agregar_etiqueta('Rastrear servers por barridos (mas agresivo, CUIDADO):',13)
     ui.crear_boton('barrido',ejecutar_barrido)
     ui.agregar_etiqueta('buscar server por palabra clave: ',13)
     salida = ui.crear_input()

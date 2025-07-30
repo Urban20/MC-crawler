@@ -27,9 +27,7 @@ def ejecutar_bin():
     'automatiza la ejecucion del ejecutable de go'
     try:
         dir = os.getcwd()
-        #t_dir = f'{dir}\\src\\MC-crawler'
         
-        #os.chdir(t_dir)
         print('\n[+] barriendo bloques de ips, esto puede llevar tiempo ...\n ')
         
         for n0,n1 in [(130,61),(54,36),(14,178),(151,80)]:
@@ -52,9 +50,10 @@ def leer_stdout():
 
 
 def ejecutar_barrido():
-    #ejecutar_bin()
+    ejecutar_bin()
     for linea in leer_stdout():
-        bot = McServer(ip=linea,puerto=25565)
+        bot = McServer(ip=linea.replace('\n',''),puerto=25565)
         if bot.obtener_data() == 'online':
             print(bot)
             guardar_sv(bot.info)
+    os.remove(STDOUT)
