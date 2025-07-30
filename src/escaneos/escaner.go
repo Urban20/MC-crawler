@@ -11,12 +11,12 @@ import (
 
 const (
 	PUERTO = 25565
-	LIMITE = 100             // no tocar a menos que sepas lo que haces (gorountines maximas en simultaneo)
 	STDOUT = "ip_escan.data" // donde se desvia el stdout, no modificar
 )
 
 var n0 = flag.Int("n0", 0, "")
 var n1 = flag.Int("n1", 0, "")
+var hl = flag.Int("hl", 100, "")
 
 // 130 61
 // 54.36.0.0/14 178.32.0.0/15 151.80.0.0/16
@@ -56,12 +56,13 @@ func main() {
 	flag.Parse()
 	n0 := *n0
 	n1 := *n1
+	hl := *hl
 
 	arch, _ := os.Create(STDOUT)
 
 	os.Stdout = arch
 
-	lim := make(chan struct{}, LIMITE)
+	lim := make(chan struct{}, hl)
 	wg := sync.WaitGroup{}
 
 	for ip := range Barrido16(n0, n1) {
@@ -86,6 +87,5 @@ func main() {
 
 	}
 	wg.Wait()
-	fmt.Scanln()
 
 }
