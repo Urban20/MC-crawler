@@ -3,7 +3,6 @@
 from data import *
 from mcserver import  *
 import re
-import os
 
 tags_info = 'tags.txt'
 servers = 'servers.data'
@@ -34,11 +33,15 @@ def filtrar_info(regex : str):
         print(f'hubo un problema al filtrar los servidores: {e}')
         
 def eliminar_clones():
-    with open(servers,'r',encoding=codif) as sv1:
-        data = set(sv1)
-    with open(servers,'w',encoding=codif) as sv2:
-        sv2.writelines(data)
-        
+    try:
+        with open(servers,'r',encoding=codif) as sv1:
+            data = set(sv1)
+        with open(servers,'w',encoding=codif) as sv2:
+            sv2.writelines(data)
+    except FileNotFoundError:
+        # se ignora el error
+        ...
+
     
     
 def guardar_sv(server : str):
@@ -53,10 +56,13 @@ def guardar_sv(server : str):
 
 def leer_tag():
     'funcion que lee los tags (palabras clave) y los retorna'
-    with open(tags_info,'r') as tags:
-        for tag in tags:
-            yield tag
-
+    try:
+    
+        with open(tags_info,'r') as tags:
+            for tag in tags:
+                yield tag
+    except FileNotFoundError:
+        print('\nno se encontraron los tags ...\n')
 
 def servers_online(tag : str):
     'imprime los servidores que encuentre online'

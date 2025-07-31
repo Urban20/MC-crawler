@@ -29,7 +29,7 @@ def ejecutar_bin():
         dir = os.getcwd()
         
         print('\n[+] barriendo bloques de ips, esto puede llevar tiempo ...\n ')
-        
+        print('NO cierres el programa')
         for n0,n1 in [(130,61),(54,36),(14,178),(151,80)]:
             com = subprocess.Popen([BINARIO,'-n0',str(n0),'-n1',str(n1),'-hl',str(HILOS)],shell=True)
         com.wait()
