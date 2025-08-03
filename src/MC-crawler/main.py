@@ -1,8 +1,9 @@
 from ui import empaquetar
-import servers
+from db import conec
+
 
 
 
 if __name__ == '__main__':
-    servers.eliminar_clones()
     empaquetar()
+    conec.close()

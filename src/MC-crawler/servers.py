@@ -2,65 +2,34 @@
 
 from data import *
 from mcserver import  *
-import re
+import db
 
 tags_info = 'tags.txt'
 servers = 'servers.data'
 
-codif = 'utf-8'
 
-
-def filtrar_info(regex : str):
-    'filtra los servidores que coinciden con la busqueda y que estan online'
-    contador = 0
-    try:
-        with open(servers,'r',encoding=codif) as sv:
-            print(f'\n[#] lista de servidores que coinciden con "{regex}":\n')
-            for linea in sv:
-
-                if re.search(regex,linea.lower()):
-                    ip = re.search(r'ip:\s+(\d+\.\d+\.\d+\.\d+):',linea).group(1)
-                    puerto = re.search(r'ip:\s+\d+\.\d+\.\d+\.\d+:(\d+)',linea).group(1)
-                    pais = re.search(r'pais:\s+([^|]+)',linea).group(1).strip()
-                    server = McServer(ip=ip,puerto=int(puerto),pais=pais)
-                    server.obtener_data()
-                    print(server)
-                    contador += 1
-            print(f'\nservers encontrados: {contador}\n')
-    except FileNotFoundError: 
-        print('\nno se encontro el archivo\n')
-    except Exception as e:
-        print(f'hubo un problema al filtrar los servidores: {e}')
-        
-def eliminar_clones():
-    try:
-        with open(servers,'r',encoding=codif) as sv1:
-            data = set(sv1)
-        with open(servers,'w',encoding=codif) as sv2:
-            sv2.writelines(data)
-    except FileNotFoundError:
-        # se ignora el error
-        ...
-
-    
-    
-def guardar_sv(server : str):
-    'guardado de servidores en formato utf-8'
-    try:
-        with open(servers,'a',encoding=codif) as temp:
-            temp.write(server)
-
-    except:
-        print('server no guardado por un error\n')
+def mostrar(lista,version=None,porversion = True):
+    'muestra los server cuando se buscan por version o pais'
+    for ip in lista:
+        IP = ip.split(':')[0]
+        puerto = ip.split(':')[1]
+        server = McServer(ip=IP,puerto=puerto)
+        data = server.obtener_data()
+        if porversion:
+            if data == 'online' and re.search(version,server.info[2]): # doble filtrado
+                print(server)
+        else: # por pais
+            if data == 'online':
+                print(server)
 
 
 def leer_tag():
     'funcion que lee los tags (palabras clave) y los retorna'
     try:
-    
         with open(tags_info,'r') as tags:
             for tag in tags:
                 yield tag
+
     except FileNotFoundError:
         print('\nno se encontraron los tags ...\n')
 
@@ -72,15 +41,15 @@ def servers_online(tag : str):
 
         if server.obtener_data() == 'online':
             print(server)
-            guardar_sv(server=server.info)
+            db.insertar(dato=server.info)
             
 
 def Buscar_Servers():
-    'llama a las funciones necesarias para iniciar la busqueda de servers'
+    'llama a las funciones necesarias para iniciar la busqueda de servers (busqueda de rstreo, no busqueda en db)'
     print('\n[#] rastreando servers de minecraft java, esto va a llevar tiempo ...\n')
     tags = leer_tag()
     for tag in tags:
         servers_online(tag=tag)
-    eliminar_clones()
+    
 
 

@@ -4,7 +4,7 @@
 import subprocess
 import os
 from mcserver import McServer
-from servers import guardar_sv
+from db import insertar
 
 
 # 130 61
@@ -55,5 +55,5 @@ def ejecutar_barrido():
         bot = McServer(ip=linea.replace('\n',''),puerto=25565)
         if bot.obtener_data() == 'online':
             print(bot)
-            guardar_sv(bot.info)
+            insertar(bot.info)
     os.remove(STDOUT)

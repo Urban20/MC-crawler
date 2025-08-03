@@ -1,8 +1,9 @@
 # modulo encargado de la UI del programa
 
 from tkinter import  *
-from servers import Buscar_Servers,filtrar_info
+from servers import Buscar_Servers
 from gopython import ejecutar_barrido
+from db import buscar_version,buscar_pais
 
 
 titulo = 'MC Crawler'
@@ -37,12 +38,20 @@ def empaquetar():
     'esta funcion contiene TODOS los elementos de la interfaz grafica'
     ui = UI(dimension,titulo)
     ui.crear_pantalla()
+    # menu de rastreos
     ui.agregar_etiqueta('Rastrear servers por crawling:',13)
     ui.crear_boton('Buscar servidores',Buscar_Servers)
     ui.agregar_etiqueta('Rastrear servers por barridos (mas agresivo, CUIDADO):',13)
     ui.crear_boton('barrido',ejecutar_barrido)
-    ui.agregar_etiqueta('buscar server por palabra clave: ',13)
+    # menu de rastreos
+
+    # busquedas - inputs
+    ui.agregar_etiqueta('buscar server por version: ',13)
     salida = ui.crear_input()
-    ui.crear_boton('buscar',lambda : filtrar_info(salida.get()))
+    ui.crear_boton('buscar version',lambda : buscar_version(salida.get()))
+    ui.agregar_etiqueta('buscar server por pais: ',13)
+    salida2 = ui.crear_input()
+    ui.crear_boton('buscar pais',lambda : buscar_pais(salida2.get()))
+    # busquedas - inputs
     mainloop()
     

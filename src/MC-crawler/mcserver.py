@@ -34,7 +34,7 @@ class McServer():
             self.p_onlines = re.findall(r"name='(\S+)'",str(estado.players.sample))
             self.uuid = re.findall(r"id='(\S+)'",str(estado.players.sample))
             self.p_data = list(zip(self.p_onlines,self.uuid))
-            self.info = f'ip: {self.direccion} | | pais: {self.pais} | version: {self.version}\n'
+            self.info = (self.direccion,self.pais,self.version)
             
             return self.estado
         
