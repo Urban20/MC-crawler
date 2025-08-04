@@ -1,3 +1,5 @@
+'modulo que maneja la logica de la base de datos sqlite'
+
 import sqlite3 as sq
 import servers
 

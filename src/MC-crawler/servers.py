@@ -1,4 +1,4 @@
-# modulo que se ocupa del manejo de archivos e informacion
+'modulo puente entre la base de datos y el programa'
 
 from data import *
 from mcserver import  *

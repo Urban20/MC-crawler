@@ -1,5 +1,5 @@
-# pequeño script que comunica go con python
-# barre bloques de ips para detectar puertos abiertos de interes
+'''pequeño script que comunica go con python
+barre bloques de ips para detectar puertos abiertos de interes'''
 
 import subprocess
 import os
@@ -26,7 +26,7 @@ def ejecutar_bin():
 
     'automatiza la ejecucion del ejecutable de go'
     try:
-        dir = os.getcwd()
+        os.getcwd()
         
         print('\n[+] barriendo bloques de ips, esto puede llevar tiempo ...\n ')
         print('NO cierres el programa')
@@ -45,7 +45,7 @@ def leer_stdout():
         with open(STDOUT,'r') as ips:
             for ip in ips:
                 yield ip
-    except Exception as e:
+    except:
         print('\n no se pudo leer el archivo de salida\n')
 
 

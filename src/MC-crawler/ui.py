@@ -1,4 +1,4 @@
-# modulo encargado de la UI del programa
+'modulo encargado de la UI del programa'
 
 from tkinter import  *
 from servers import Buscar_Servers
