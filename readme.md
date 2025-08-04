@@ -65,13 +65,13 @@ pip install -r requirements.txt
 python main.py
 ```
 
-> 💡 **Tip:** Para el modo escaneo necesitas el binario `escan.exe` 
+> 💡 **Tip:** Para el modo escaneo necesitas el binario `escan.exe` , lo podés encontrar en : https://github.com/Urban20/MC-crawler/releases
 
 ---
 
 ## Ética de uso ⚖️  
 
-- 🔒 Solo escanear redes propias o con permiso  
+- 🔒 Evitar un uso excesivo de escaneos de barrido
 - 📵 Nunca saturar servidores  
 
 ---
