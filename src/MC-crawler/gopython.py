@@ -23,16 +23,16 @@ BINARIO = 'escan.exe'
 
 
 def ejecutar_bin():
+    'automatiza la ejecucion del bin de go'
 
-    'automatiza la ejecucion del ejecutable de go'
     try:
         os.getcwd()
-        
-        print('\n[+] barriendo bloques de ips, esto puede llevar tiempo ...\n ')
-        print('NO cierres el programa')
-        for n0,n1 in [(130,61),(54,36),(14,178),(151,80)]:
-            com = subprocess.Popen([BINARIO,'-n0',str(n0),'-n1',str(n1),'-hl',str(HILOS)],shell=True)
-        com.wait()
+        # para /24
+        subprocess.Popen([BINARIO,'-n0','149','-n1','88','-n2','39','-hl',str(HILOS),'-b24'],shell=True).wait()
+
+        for n0,n1 in [(130,61),(54,36),(14,178),(151,80)]: # parametros para barrido de /16
+            com1 = subprocess.Popen([BINARIO,'-n0',str(n0),'-n1',str(n1),'-hl',str(HILOS)],shell=True)
+        com1.wait()
 
         print('\n[+] finalizado\n')
     except Exception as e:
@@ -48,12 +48,18 @@ def leer_stdout():
     except:
         print('\n no se pudo leer el archivo de salida\n')
 
-
-def ejecutar_barrido():
-    ejecutar_bin()
+def procesar_lineas():
     for linea in leer_stdout():
-        bot = McServer(ip=linea.replace('\n',''),puerto=25565)
+        bot = McServer(ip=linea.replace('\n',''))
         if bot.obtener_data() == 'online':
             print(bot)
             insertar(bot.info)
+
+
+def ejecutar_barrido():
+    print('\n[+] barriendo bloques de ips, esto puede llevar tiempo ...\n ')
+    print('NO cierres el programa')
+    ejecutar_bin()
+    procesar_lineas()
+    
     os.remove(STDOUT)
