@@ -41,7 +41,7 @@ def empaquetar():
     # menu de rastreos
     ui.agregar_etiqueta('Rastrear servers por crawling:',13)
     ui.crear_boton('Buscar servidores',Buscar_Servers)
-    ui.agregar_etiqueta('Rastrear servers por barridos (mas agresivo, CUIDADO):',13)
+    ui.agregar_etiqueta('Rastrear servers por barridos:',13)
     ui.crear_boton('barrido',ejecutar_barrido)
     # menu de rastreos
 
