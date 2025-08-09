@@ -28,7 +28,11 @@ def ejecutar_bin():
     try:
         os.getcwd()
         # para /24
-        subprocess.Popen([BINARIO,'-n0','149','-n1','88','-n2','39','-hl',str(HILOS),'-b24'],shell=True).wait()
+
+        for n0,n1,n2 in [(149,88,39),(50,20,200),(50,20,248),(63,135,164),(64,94,92),(66,179,22),(66,179,218),
+                        (66,248,192),(74,112,76),(74,117,200)]:
+            subprocess.Popen([BINARIO,'-n0',str(n0),'-n1',str(n1),'-n2',str(n2),'-hl',str(HILOS),'-b24'],shell=True).wait()
+        
 
         for n0,n1 in [(130,61),(54,36),(14,178),(151,80)]: # parametros para barrido de /16
             com1 = subprocess.Popen([BINARIO,'-n0',str(n0),'-n1',str(n1),'-hl',str(HILOS)],shell=True)
