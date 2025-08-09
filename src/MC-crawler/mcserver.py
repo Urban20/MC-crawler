@@ -1,12 +1,13 @@
 'obtiene informacion de los servidores de minecraft edicion java'
 
-
+import datetime
 from mcstatus import JavaServer
 import re
 
 class McServer():
     'esta clase es la encargada de obtener el estado y la informacion de los servidores'
     def __init__(self,ip : str,puerto=25565,pais='desconocido'):
+        self.fecha = datetime.datetime.today().isoformat(sep=' ',timespec='seconds')
         self.pais = pais
         self.ip = ip
         self.puerto = puerto
@@ -34,7 +35,7 @@ class McServer():
             self.p_onlines = re.findall(r"name='(\S+)'",str(estado.players.sample))
             self.uuid = re.findall(r"id='(\S+)'",str(estado.players.sample))
             self.p_data = list(zip(self.p_onlines,self.uuid))
-            self.info = (self.direccion,self.pais,self.version)
+            self.info = (self.direccion,self.pais,self.version,self.fecha)
             
             return self.estado
         
