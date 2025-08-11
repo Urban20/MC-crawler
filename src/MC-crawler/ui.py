@@ -3,7 +3,7 @@
 from tkinter import  *
 from servers import Buscar_Servers
 from gopython import ejecutar_barrido
-from db import buscar_version,buscar_pais
+from db import buscar_version,buscar_pais,purgar
 
 
 titulo = 'MC Crawler'
@@ -43,6 +43,8 @@ def empaquetar():
     ui.crear_boton('Buscar servidores',Buscar_Servers)
     ui.agregar_etiqueta('Rastrear servers por barridos:',13)
     ui.crear_boton('barrido',ejecutar_barrido)
+    ui.agregar_etiqueta('Purgar servers inactivos:',13)
+    ui.crear_boton('purgar',purgar)
     # menu de rastreos
 
     # busquedas - inputs

@@ -2,11 +2,27 @@
 
 import sqlite3 as sq
 import servers
+from mcserver import McServer
 
 conec = sq.connect('servers.db')
 cursor = conec.cursor()
 cursor.execute('CREATE TABLE IF NOT EXISTS servers(ip PRIMARY KEY,pais TEXT,version TEXT, fecha TEXT)')
 
+def purgar():
+    'funcion que borra servers que esten offline cuando el usuario da la orden'
+    try:
+        cursor.execute('SELECT ip FROM servers')
+        for ip in cursor:
+            ipv4 = ip[0].split(':')[0]
+            puerto = ip[0].split(':')[1]
+            sv = McServer(ip=ipv4,puerto=puerto)
+            if sv.obtener_data() == 'offline':
+                cursor.execute('DELETE FROM servers WHERE ip = ?',ip)
+                conec.commit()
+                print(f'[-] server {ipv4} eliminado de la db')
+    except Exception as e:
+        print(f'\n[-] hubo un problema al intentar purgar la db\n{e}')
+    
 def insertar(dato : tuple):
     try:
         cursor.execute('INSERT INTO servers VALUES(?,?,?,?)',dato)
