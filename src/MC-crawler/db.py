@@ -11,15 +11,39 @@ cursor.execute('CREATE TABLE IF NOT EXISTS servers(ip PRIMARY KEY,pais TEXT,vers
 def purgar():
     'funcion que borra servers que esten offline cuando el usuario da la orden'
     try:
-        cursor.execute('SELECT ip FROM servers')
-        for ip in cursor:
-            ipv4 = ip[0].split(':')[0]
-            puerto = ip[0].split(':')[1]
-            sv = McServer(ip=ipv4,puerto=puerto)
-            if sv.obtener_data() == 'offline':
-                cursor.execute('DELETE FROM servers WHERE ip = ?',ip)
+        selector = conec.cursor() # nuevo cursor que selecciona e itera
+        selector.execute('SELECT ip, version FROM servers')
+        for datos in selector:
+            try:
+                ipv4 = datos[0].split(':')[0]
+                puerto = datos[0].split(':')[1]
+                version_db = datos[1]
+                ip_puerto = datos[0]
+                sv = McServer(ip=ipv4,puerto=puerto)
+                sv.obtener_data()
+
+                if sv.estado == 'offline':
+                    cursor.execute('DELETE FROM servers WHERE ip = ?',(ip_puerto,))
+                    print(f'\033[0;31m[-] server {ipv4} eliminado de la db\033[0m')
+
+                elif sv.version != version_db:
+                    cursor.execute('UPDATE servers SET version = ? WHERE ip = ?', 
+                                (sv.version, ip_puerto))
+                    print(f'[↑] ACTUALIZADO: {ip_puerto} | version ({version_db} → {sv.version})')
+                
+                else: 
+                    print(f'\033[0;32m[✓] {ipv4} esta en orden\033[0m')
+                
                 conec.commit()
-                print(f'[-] server {ipv4} eliminado de la db')
+
+            except Exception as e:
+
+                print(f'hubo un problema con {ipv4}: {e}')
+                continue
+            
+            
+        
+
     except Exception as e:
         print(f'\n[-] hubo un problema al intentar purgar la db\n{e}')
     
@@ -41,7 +65,7 @@ def buscar_version(version : str):
         servers.mostrar(cursor,version)
 
     
-    except Exception as e: print('error ',e)
+    except : ...
 
 def buscar_pais(pais : str):
     'pide el pais y devuelve las ips'
@@ -52,7 +76,7 @@ def buscar_pais(pais : str):
 
         servers.mostrar(cursor,porversion=False)
     
-    except Exception as e: print('error ',e)
+    except : ...
 
 
 
