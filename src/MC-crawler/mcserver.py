@@ -6,8 +6,11 @@ import re
 
 class McServer():
     'esta clase es la encargada de obtener el estado y la informacion de los servidores'
-    def __init__(self,ip : str,puerto=25565,pais='desconocido'):
+    def __init__(self,ip : str,puerto=25565,pais='desconocido',fecha_otorgada = None):
         self.fecha = datetime.datetime.today().isoformat(sep=' ',timespec='seconds')
+        self.fecha_otogada = fecha_otorgada
+        # fecha otorgada: es la fecha que se encuentra en la db para mostrar como info
+        # no tiene relacion con self.fecha
         self.pais = pais
         self.ip = ip
         self.puerto = puerto
@@ -48,6 +51,8 @@ class McServer():
         if self.estado == 'online':
 
             return f'''\n-----------------------------------------
+            registrado el dia : {self.fecha_otogada} 
+
             estado: {self.estado}
 
             ip: {self.direccion}

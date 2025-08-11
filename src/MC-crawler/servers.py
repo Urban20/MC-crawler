@@ -10,10 +10,12 @@ servers = 'servers.data'
 
 def mostrar(lista,version=None,porversion = True):
     'muestra los server cuando se buscan por version o pais'
-    for ip in lista:
-        IP = ip.split(':')[0]
-        puerto = ip.split(':')[1]
-        server = McServer(ip=IP,puerto=puerto)
+    for elem in lista:
+        IP = elem[0].split(':')[0]
+        puerto = elem[0].split(':')[1]
+        pais = elem[1]
+        fecha = elem[2]
+        server = McServer(ip=IP,puerto=puerto,pais=pais,fecha_otorgada=fecha)
         data = server.obtener_data()
         if porversion:
             if data == 'online' and re.search(version,server.info[2]): # doble filtrado

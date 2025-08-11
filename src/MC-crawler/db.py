@@ -36,9 +36,9 @@ def buscar_version(version : str):
 
     print(f'\n[...] se muestra busqueda segun "{version}"\n')
     try:
-        cursor.execute(f'SELECT ip FROM servers WHERE version LIKE ? ORDER BY fecha DESC',(f'%{version}',))
-        ips = [ip[0] for ip in cursor] # ip:puerto
-        servers.mostrar(ips,version)
+        cursor.execute(f'SELECT ip, pais, fecha FROM servers WHERE version LIKE ? ORDER BY fecha DESC',(f'%{version}',))
+        
+        servers.mostrar(cursor,version)
 
     
     except Exception as e: print('error ',e)
@@ -48,9 +48,9 @@ def buscar_pais(pais : str):
 
     print(f'\n[...] se muestra busqueda segun "{pais}"\n')
     try:
-        cursor.execute(f'SELECT ip FROM servers WHERE pais = ? ORDER BY fecha DESC',(pais,))
-        ips = [pais[0] for pais in cursor]
-        servers.mostrar(ips,porversion=False)
+        cursor.execute(f'SELECT ip, pais, fecha FROM servers WHERE pais = ? ORDER BY fecha DESC',(pais,))
+
+        servers.mostrar(cursor,porversion=False)
     
     except Exception as e: print('error ',e)
 
