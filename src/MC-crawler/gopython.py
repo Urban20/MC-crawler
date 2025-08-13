@@ -34,7 +34,7 @@ def ejecutar_bin():
             subprocess.Popen([BINARIO,'-n0',str(n0),'-n1',str(n1),'-n2',str(n2),'-hl',str(HILOS),'-b24'],shell=True).wait()
         
 
-        for n0,n1 in [(130,61),(54,36),(14,178),(151,80)]: # parametros para barrido de /16
+        for n0,n1 in [(130,61),(54,36),(14,178),(151,80),(54,38),(116,202),(116,203),(136,243)]: # parametros para barrido de /16
             com1 = subprocess.Popen([BINARIO,'-n0',str(n0),'-n1',str(n1),'-hl',str(HILOS)],shell=True)
         com1.wait()
 
