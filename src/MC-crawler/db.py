@@ -12,13 +12,14 @@ def purgar():
     'funcion que borra servers que esten offline cuando el usuario da la orden'
     try:
         selector = conec.cursor() # nuevo cursor que selecciona e itera
-        selector.execute('SELECT ip, version FROM servers')
+        selector.execute('SELECT ip, version, fecha FROM servers')
         for datos in selector:
             try:
                 ipv4 = datos[0].split(':')[0]
                 puerto = datos[0].split(':')[1]
                 version_db = datos[1]
                 ip_puerto = datos[0]
+                fecha_db = datos[2]
                 sv = McServer(ip=ipv4,puerto=puerto)
                 sv.obtener_data()
 
@@ -27,9 +28,9 @@ def purgar():
                     print(f'\033[0;31m[-] server {ipv4} eliminado de la db\033[0m')
 
                 elif sv.version != version_db:
-                    cursor.execute('UPDATE servers SET version = ? WHERE ip = ?', 
-                                (sv.version, ip_puerto))
-                    print(f'[↑] ACTUALIZADO: {ip_puerto} | version ({version_db} → {sv.version})')
+                    cursor.execute('UPDATE servers SET version = ?, fecha = ? WHERE ip = ?', 
+                                (sv.version,sv.fecha, ip_puerto))
+                    print(f'[↑] ACTUALIZADO: {ip_puerto} | version ({version_db} → {sv.version}) | {fecha_db} → {sv.fecha}')
                 
                 else: 
                     print(f'\033[0;32m[✓] {ipv4} esta en orden\033[0m')
