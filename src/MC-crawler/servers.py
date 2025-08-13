@@ -3,13 +3,36 @@
 from data import *
 from mcserver import  *
 import db
+from os import remove
 
 tags_info = 'tags.txt'
-servers = 'servers.data'
+
+
+def archivo(server,fecha,arch : str):
+    'archivo temporal que retiene los servers filtrados para una mejor lectura'
+    
+    with open(arch,'a',encoding='utf-8') as sv:
+        info = f'''
+        \n
+        {server.direccion}|
+        motd {server.motd.replace('\n','')} | 
+        version {server.version} | 
+        jugadores {server.p_data}
+        registrado el {fecha}\n'''
+        sv.write(info)
+    
 
 
 def mostrar(lista,version=None,porversion = True):
     'muestra los server cuando se buscan por version o pais'
+    arch = 'filtrados.txt' # archivos donde se guardan los servers filtrados temporales
+
+    try:
+        remove(arch)
+        
+    except FileNotFoundError: ...
+
+
     for elem in lista:
         IP = elem[0].split(':')[0]
         puerto = elem[0].split(':')[1]
@@ -20,9 +43,12 @@ def mostrar(lista,version=None,porversion = True):
         if porversion:
             if data == 'online' and re.search(version,server.info[2]): # doble filtrado
                 print(server)
+                archivo(server=server,fecha=fecha,arch=arch)
         else: # por pais
             if data == 'online':
                 print(server)
+                archivo(server=server,fecha=fecha,arch=arch)
+        
 
 
 def leer_tag():
