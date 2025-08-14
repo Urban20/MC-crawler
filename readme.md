@@ -1,39 +1,34 @@
-# MC-crawler 🕹️🌍  
+# MC-crawler 
 
-## ¿Qué es esto? 🔍  
+Es un rastreador de servidores de Minecraft Java, tanto públicos como privados (servidores pensados para jugar entre amigos).
 
-**MC-crawler** es un explorador que rastrea servidores de *Minecraft Java Edition* por todo el mundo. Un rastreador simple pero efectivo de servidores tanto públicos como ocultos (pensado para jugar unicamente entre amigos)
+Rastrea servidores en todo el mundo con ayuda de fuentes abiertas basandose en palabras clave de las descripciones de los servidores y escaneos de grandes cantidades de bloques de direcciones ips asociadas a hostings de plataformas en el puerto 25565.
+
+La informacion obtenida de dichos servidores se aloja en una base de datos que puede ser consultada segun las versiones o pais de origen del servidor a investigar
 
 
-## Para qué sirve 🚀  
-- 🎯 **Descubrir servidores** activos en cualquier país  
-- 📊 **Analizar información clave**: jugadores online, versión, MOTD  
-- 🔍 **Buscar por palabras clave (tags)** (ej: "survival", "minigames")  
-- 🌐 **Detectar servidores "ocultos"** mediante escaneo de redes  
 
----
+## Características
 
-## Características únicas   
-
-### 1. Doble método de rastreo  
+#### 1. Doble método de rastreo  
 ```python
-# Método 1: Búsqueda inteligente (menos intrusiva)
+# Método 1: Búsqueda por fuentes públicas
 bot = Crawler(tag="minecraft")
 for ip, país in bot.info():
     # Verifica servidor...
 
 # Método 2: 
-ejecutar_barrido()  # Usa binario Go para máxima velocidad
+ejecutar_barrido()  # Usa binario de Go para escanear bloques de ipv4 por cuenta propia
 ```
 
-### 2. Interfaz simple
-### Imagen de la Interfaz:
+#### 2. Interfaz simple
+
 
 <p align="center">
-  <img src="https://i.postimg.cc/TYgkm314/demo.png" alt="demo" width="800">
+  <img src="https://i.postimg.cc/cLnHkpN7/demo.png)](https://postimg.cc/nXnpCwrM" alt="demo" width="800">
 </p>
 
-### 3. Guardado persistente
+#### 3. Guardado en base de datos sqlite
 ```markdown
 | IP             | País       | Versión    |
 | x.x.1.5        | Argentina  | 1.19.4     | 
@@ -42,6 +37,11 @@ ejecutar_barrido()  # Usa binario Go para máxima velocidad
 ```
 
 ---
+
+#### 4. Actualizacion de servidores
+permite verificar si un servidor ya no se encuentra online, de ser asi lo elimina de la db.
+
+También permite actualizar las versiones de los servidores que siguen en linea pero que modificaron su versión
 
 ## Requisitos e instalación ⬇️  
 
@@ -65,13 +65,6 @@ pip install -r requirements.txt
 python main.py
 ```
 
-> 💡 **Tip:** Para el modo escaneo necesitas el binario `escan.exe` , lo podés encontrar en : https://github.com/Urban20/MC-crawler/releases
-
----
-
-## Ética de uso ⚖️  
-
-- 🔒 Evitar un uso excesivo de escaneos de barrido
-- 📵 Nunca saturar servidores  
+> 💡 **Tip:** Para el modo escaneo necesitas el binario `escan.exe` , podés obtenerlo en  https://github.com/Urban20/MC-crawler/releases
 
 ---
