@@ -6,7 +6,7 @@ import re
 
 class McServer():
     'esta clase es la encargada de obtener el estado y la informacion de los servidores'
-    def __init__(self,ip : str,puerto=25565,pais='desconocido',fecha_otorgada = None):
+    def __init__(self,ip : str,puerto=25565,pais='desconocido',fecha_otorgada = None,timeout = 1):
         self.fecha = datetime.datetime.today().isoformat(sep=' ',timespec='seconds')
         self.fecha_otogada = fecha_otorgada
         # fecha otorgada: es la fecha que se encuentra en la db para mostrar como info
@@ -22,7 +22,7 @@ class McServer():
         self.max_jugadores = None
         self.version = None
         self.p_onlines = None
-        self.timeout = 1
+        self.timeout = timeout
         self.info = None
     def obtener_data(self):
         'metodo que actualiza la informacion de un servidor'

@@ -68,8 +68,10 @@ def servers_online(tag : str):
         server = McServer(ip=ip,puerto=25565,pais=pais)
 
         if server.obtener_data() == 'online':
-            print(server)
-            db.insertar(dato=server.info)
+            try:
+                db.insertar(dato=server.info)
+                print(server)
+            except: ...
             
 
 def Buscar_Servers():

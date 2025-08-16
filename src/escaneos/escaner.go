@@ -93,7 +93,7 @@ func Ejecucion24(n1 int, n2 int, n3 int, lim chan struct{}) {
 			defer func() { <-lim }()
 
 			dir := fmt.Sprintf("%s:%d", ip, 25565)
-			cx, conerr := net.DialTimeout("tcp", dir, time.Second*1)
+			cx, conerr := net.DialTimeout("tcp", dir, time.Millisecond*300)
 			if conerr == nil {
 				defer cx.Close()
 				fmt.Println(ip)

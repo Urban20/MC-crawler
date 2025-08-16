@@ -49,11 +49,11 @@ def purgar():
         print(f'\n[-] hubo un problema al intentar purgar la db\n{e}')
     
 def insertar(dato : tuple):
-    try:
-        cursor.execute('INSERT INTO servers VALUES(?,?,?,?)',dato)
-        conec.commit()
+    
+    cursor.execute('INSERT INTO servers VALUES(?,?,?,?)',dato)
+    conec.commit()
 
-    except Exception as e: print(f'error al insertar dato {e}')
+    
 
 
 def buscar_version(version : str):   

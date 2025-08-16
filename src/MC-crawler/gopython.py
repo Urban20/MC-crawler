@@ -17,7 +17,7 @@ STDOUT = 'ip_escan.data' # no modificar
 #  puede saturar tu equipo, ancho de banda
 #  y simular un ataque D.O.S (no es la idea)
 #  a mayor numero, mayor velocidad de escaneo pero mayor riesgo
-HILOS = 50 
+HILOS = 100 
 
 BINARIO = 'escan.exe'
 
@@ -30,7 +30,7 @@ def ejecutar_bin():
         # para /24
 
         for n0,n1,n2 in [(149,88,39),(50,20,200),(50,20,248),(63,135,164),(64,94,92),(66,179,22),(66,179,218),
-                        (66,248,192),(74,112,76),(74,117,200)]:
+                        (66,248,192),(74,112,76),(74,117,200),(199,195,140)]:
             subprocess.Popen([BINARIO,'-n0',str(n0),'-n1',str(n1),'-n2',str(n2),'-hl',str(HILOS),'-b24'],shell=True).wait()
         
 
@@ -54,16 +54,20 @@ def leer_stdout():
 
 def procesar_lineas():
     for linea in leer_stdout():
-        bot = McServer(ip=linea.replace('\n',''))
+        bot = McServer(ip=linea.replace('\n',''),timeout=0.3)
         if bot.obtener_data() == 'online':
-            print(bot)
-            insertar(bot.info)
+            try:
+                insertar(bot.info)
+                print(bot)
+            except:
+                ...
 
 
 def ejecutar_barrido():
     print('\n[+] barriendo bloques de ips, esto puede llevar tiempo ...\n ')
     print('NO cierres el programa')
     ejecutar_bin()
+    print('\n[+] barrido finalizado\nhaciendo ping a los servidores ...\n')
     procesar_lineas()
     
     os.remove(STDOUT)

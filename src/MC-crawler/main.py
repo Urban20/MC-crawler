@@ -5,5 +5,8 @@ from db import conec
 
 
 if __name__ == '__main__':
-    empaquetar()
-    conec.close()
+    try:
+        empaquetar()
+        conec.close()
+    except Exception as e:
+        print(f'\nhubo un problema: {e}')
