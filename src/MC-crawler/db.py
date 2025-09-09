@@ -28,8 +28,9 @@ def purgar():
                     print(f'\033[0;31m[-] server {ipv4} eliminado de la db\033[0m')
 
                 elif sv.version != version_db:
+                    sv.verificar_crackeado()
                     cursor.execute('UPDATE servers SET version = ?, fecha = ? WHERE ip = ?', 
-                                (sv.version,sv.fecha, ip_puerto))
+                                (sv.version, sv.fecha, ip_puerto))
                     print(f'[↑] ACTUALIZADO: {ip_puerto} | version ({version_db} → {sv.version}) | {fecha_db} → {sv.fecha}')
                 
                 else: 
@@ -49,11 +50,9 @@ def purgar():
         print(f'\n[-] hubo un problema al intentar purgar la db\n{e}')
     
 def insertar(dato : tuple):
-    
+
     cursor.execute('INSERT INTO servers VALUES(?,?,?,?)',dato)
     conec.commit()
-
-    
 
 
 def buscar_version(version : str):   
@@ -63,7 +62,7 @@ def buscar_version(version : str):
     try:
         cursor.execute(f'SELECT ip, pais, fecha FROM servers WHERE version LIKE ? ORDER BY fecha DESC',(f'%{version}',))
         
-        servers.mostrar(cursor,version)
+        servers.mostrar(lista=cursor,version=version)
 
     
     except : ...

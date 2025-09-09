@@ -15,16 +15,15 @@ def archivo(server,fecha,arch : str):
         info = f'''
         \n
         {server.direccion}|
+        veredicto {server.veredicto}
         motd {server.motd.replace('\n','')} | 
         version {server.version} | 
         jugadores {server.p_data}
         registrado el {fecha}\n'''
         sv.write(info)
-    
-
-
-def mostrar(lista,version=None,porversion = True):
-    'muestra los server cuando se buscan por version o pais'
+                
+def mostrar(lista : list,version=None,porversion = True):
+    'muestra los server cuando se buscan por version o pais (estan en la db)'
     arch = 'filtrados.txt' # archivos donde se guardan los servers filtrados temporales
 
     try:
@@ -40,6 +39,8 @@ def mostrar(lista,version=None,porversion = True):
         fecha = elem[2]
         server = McServer(ip=IP,puerto=puerto,pais=pais,fecha_otorgada=fecha)
         data = server.obtener_data()
+        server.verificar_crackeado()
+
         if porversion:
             if data == 'online' and re.search(version,server.info[2]): # doble filtrado
                 print(server)
@@ -48,8 +49,6 @@ def mostrar(lista,version=None,porversion = True):
             if data == 'online':
                 print(server)
                 archivo(server=server,fecha=fecha,arch=arch)
-        
-
 
 def leer_tag():
     'funcion que lee los tags (palabras clave) y los retorna'
@@ -62,12 +61,13 @@ def leer_tag():
         print('\nno se encontraron los tags ...\n')
 
 def servers_online(tag : str):
-    'imprime los servidores que encuentre online'
+    'imprime los servidores que encuentre online por crawling'
     bot = Crawler(tag=tag)
     for ip,pais in bot.info():
         server = McServer(ip=ip,puerto=25565,pais=pais)
 
         if server.obtener_data() == 'online':
+            server.verificar_crackeado()
             try:
                 db.insertar(dato=server.info)
                 print(server)

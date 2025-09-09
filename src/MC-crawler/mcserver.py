@@ -3,6 +3,7 @@
 import datetime
 from mcstatus import JavaServer
 import re
+import MCuuid
 
 class McServer():
     'esta clase es la encargada de obtener el estado y la informacion de los servidores'
@@ -24,6 +25,9 @@ class McServer():
         self.p_onlines = None
         self.timeout = timeout
         self.info = None
+        self.veredicto = ''
+        self.crackeado = 0 # inicialmente se toma el server como premium (0)
+        # que self.crackeado sea crackeado = 1 no garantiza que realmente sea no premium pero da una estimacion
     def obtener_data(self):
         'metodo que actualiza la informacion de un servidor'
         try:
@@ -35,9 +39,9 @@ class McServer():
             self.jugadores_online = estado.players.online
             self.motd = estado.motd.to_plain().replace('\n',' ').replace('\r', ' ').strip()
             self.estado = 'online'
-            self.p_onlines = re.findall(r"name='(\S+)'",str(estado.players.sample))
-            self.uuid = re.findall(r"id='(\S+)'",str(estado.players.sample))
-            self.p_data = list(zip(self.p_onlines,self.uuid))
+            self.p_onlines = re.findall(r"name='(\S+)'",str(estado.players.sample)) # lista de jugadores online 
+            self.uuid = re.findall(r"id='(\S+)'",str(estado.players.sample)) # lista de uuids
+            self.p_data = list(zip(self.p_onlines,self.uuid)) # tupla (jugador, uuid)
             self.info = (self.direccion,self.pais,self.version,self.fecha)
             
             return self.estado
@@ -45,13 +49,34 @@ class McServer():
         except:
 
             return self.estado
+        
+    def verificar_crackeado(self):
+        '''obtiene un verdedicto respecto a si el server es crackeado o no
+        
+        lo calcula en tiempo real'''
+        
+        try:
+            if self.p_data and self.estado == 'online':
+                uuid_calculado = MCuuid.uuid_Offline(self.p_onlines[0])
+                if uuid_calculado == self.uuid[0]:
+                    self.crackeado = 1    
+        except AttributeError: ...
 
     def __str__(self):
-        
+
+        if self.p_data and self.crackeado == 0:
+            self.veredicto = '\033[0;31mposiblemente premium\033[0m'
+        elif self.p_data and self.crackeado == 1:
+            self.veredicto = '\033[0;32mposiblemente crackeado\033[0m'
+        else:
+            self.veredicto = 'indeterminado'
+    
         if self.estado == 'online':
 
             return f'''\n-----------------------------------------
-            registrado el dia : {self.fecha_otogada} 
+            veredicto: {self.veredicto}
+
+            registrado el dia: {self.fecha_otogada} 
 
             estado: {self.estado}
 
