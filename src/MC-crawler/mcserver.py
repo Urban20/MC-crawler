@@ -64,10 +64,12 @@ class McServer():
 
     def __str__(self):
 
-        if self.p_data and self.crackeado == 0:
-            self.veredicto = '\033[0;31mposiblemente premium\033[0m'
-        elif self.p_data and self.crackeado == 1:
+        if self.p_data and self.crackeado == 1:
             self.veredicto = '\033[0;32mposiblemente crackeado\033[0m'
+
+        elif self.p_data and self.crackeado == 0 and re.search(r'\w+-\w+-4\w+-\w+-\w+',self.uuid[0]):
+            self.veredicto = '\033[0;31mposiblemente premium\033[0m'
+            
         else:
             self.veredicto = 'indeterminado'
     

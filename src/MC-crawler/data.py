@@ -2,6 +2,7 @@
 
 import requests
 import re
+import sys
 
 class Crawler():
     'la clase Crawler es la encargada de la obtencion de los datos'
@@ -20,6 +21,9 @@ class Crawler():
                     
                 for ip,pais in zip(ips,paises):
                     yield (ip,pais)
+            else:
+                print('\n[!] scraping no disponible\n')
+                sys.exit(0)
 
         except Exception as e:
             print(f'hubo un problema al consultar los recursos: {e}')
