@@ -19,6 +19,8 @@ LOGO = f'''   *           '     *
          /  |  \\   buscador de servers de Minecraft java           
         /   |   \\      *                        '          *
        /    |    \\   {FONDO_V}Escrito por => Urb@n{RESET}
+       
+github : https://github.com/Urban20
 '''
 ADVERTENCIA = f'{AMARILLO}\n[!] advertencia: El antivirus puede bloquear el correcto funcionamiento del programa y/o dar falsos positivos\n{RESET}'
 
