@@ -56,6 +56,7 @@ def procesar_lineas():
     for linea in leer_stdout():
         bot = McServer(ip=linea.replace('\n',''),timeout=0.3)
         if bot.obtener_data() == 'online':
+            bot.verificar_crackeado()
             try:
                 insertar(bot.info)
                 print(bot)

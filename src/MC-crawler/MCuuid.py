@@ -10,4 +10,3 @@ def uuid_Offline(usuario : str):
     hash.update(payload.encode())
     hash_md5 = hash.hexdigest()
     return str(uuid.UUID(hex=hash_md5,version=version_uuid))
-
