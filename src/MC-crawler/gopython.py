@@ -65,6 +65,7 @@ def procesar_lineas():
 
 
 def ejecutar_barrido():
+    
     print('\n[+] barriendo bloques de ips, esto puede llevar tiempo ...\n ')
     print('NO cierres el programa')
     ejecutar_bin()

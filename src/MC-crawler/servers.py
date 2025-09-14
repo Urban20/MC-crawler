@@ -4,6 +4,7 @@ from data import *
 from mcserver import  *
 import db
 from os import remove
+import ui 
 
 tags_info = 'tags.txt'
 
@@ -24,6 +25,12 @@ def archivo(server,fecha,arch : str):
                 
 def mostrar(lista : list,version=None,porversion = True):
     'muestra los server cuando se buscan por version o pais (estan en la db)'
+
+    
+    contador = 0 # contador de servidores por pagina
+    n_pagina = 1 
+    LIMITE = 10 # limite de servers por pagina
+
     arch = 'filtrados.txt' # archivos donde se guardan los servers filtrados temporales
 
     try:
@@ -45,10 +52,29 @@ def mostrar(lista : list,version=None,porversion = True):
             if data == 'online' and re.search(version,server.info[2]): # doble filtrado
                 print(server)
                 archivo(server=server,fecha=fecha,arch=arch)
+                contador+=1
         else: # por pais
             if data == 'online':
                 print(server)
                 archivo(server=server,fecha=fecha,arch=arch)
+                contador+=1
+
+
+        if contador >= LIMITE:
+            ui.interfaz.bloqueada = True
+            ui.interfaz.actualizar_estado()
+            entrada = str(input('[1] siguiente pagina >> ')).strip()
+            if entrada == '1':
+                n_pagina+=1
+                print(f'\n------------------\npagina numero: {n_pagina}\n------------------\n')
+                contador = 0
+                
+            else:
+                ui.interfaz.bloqueada = False
+                ui.interfaz.actualizar_estado()
+                break
+
+            
 
 def leer_tag():
     'funcion que lee los tags (palabras clave) y los retorna'

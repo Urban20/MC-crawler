@@ -4,12 +4,14 @@ import sqlite3 as sq
 import servers
 from mcserver import McServer
 
+
 conec = sq.connect('servers.db')
 cursor = conec.cursor()
 cursor.execute('CREATE TABLE IF NOT EXISTS servers(ip PRIMARY KEY,pais TEXT,version TEXT, fecha TEXT)')
 
 def purgar():
     'funcion que borra servers que esten offline cuando el usuario da la orden'
+    
     try:
         selector = conec.cursor() # nuevo cursor que selecciona e itera
         selector.execute('SELECT ip, version, fecha FROM servers')
@@ -48,7 +50,7 @@ def purgar():
 
     except Exception as e:
         print(f'\n[-] hubo un problema al intentar purgar la db\n{e}')
-    
+        
 def insertar(dato : tuple):
 
     cursor.execute('INSERT INTO servers VALUES(?,?,?,?)',dato)
@@ -69,7 +71,7 @@ def buscar_version(version : str):
 
 def buscar_pais(pais : str):
     'pide el pais y devuelve las ips'
-
+    
     print(f'\n[...] se muestra busqueda segun "{pais}"\n')
     try:
         cursor.execute(f'SELECT ip, pais, fecha FROM servers WHERE pais = ? ORDER BY fecha DESC',(pais,))

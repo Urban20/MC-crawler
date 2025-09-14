@@ -9,6 +9,7 @@ titulo = 'MC Crawler'
 dimension = '500x400'
 color_boton = '#3A07AB'
 BLANCO = '#FFFFFF'
+TAMAÑO_ETIQUETA = 13
 
 class UI():
     'la clase UI es la encargada de manejar la interfaz grafica'
@@ -16,6 +17,16 @@ class UI():
         self.dimension = dimensiones
         self.titulo = titulo
         self.pantalla = customtkinter.CTk()
+        self.bloqueada = False # si es True la interfaz ignora al usuario
+
+    def actualizar_estado(self):
+        if self.bloqueada:
+            estado = 'disabled'
+        else:
+            estado = 'normal'
+
+        for funcion in self.pantalla.winfo_children():
+            funcion.configure(state=estado)
 
     def crear_input(self):
         entrada = customtkinter.CTkEntry(self.pantalla,fg_color='transparent')
@@ -42,29 +53,29 @@ class UI():
         customtkinter.set_default_color_theme(color_string='blue')
         self.pantalla.title(self.titulo)
         self.pantalla.geometry(self.dimension)
+        
         return self.pantalla
 
+interfaz = UI(dimension,titulo)
 
 def empaquetar():
     'esta funcion contiene TODOS los elementos de la interfaz grafica'
-    ui = UI(dimension,titulo)
-    pantalla = ui.crear_pantalla()
+    
+    pantalla = interfaz.crear_pantalla()
     # menu de rastreos
-    ui.agregar_etiqueta('Rastrear servers por crawling:',13)
-    ui.crear_boton('Buscar servidores',Buscar_Servers)
-    ui.agregar_etiqueta('Rastrear servers por barridos:',13)
-    ui.crear_boton('barrido',ejecutar_barrido)
-    ui.agregar_etiqueta('Purgar servers inactivos:',13)
-    ui.crear_boton('purgar',purgar)
+    interfaz.agregar_etiqueta('Rastrear servers por crawling:',TAMAÑO_ETIQUETA)
+    interfaz.crear_boton('Buscar servidores',Buscar_Servers)
+    interfaz.agregar_etiqueta('Rastrear servers por barridos:',TAMAÑO_ETIQUETA)
+    interfaz.crear_boton('barrido',ejecutar_barrido)
+    interfaz.agregar_etiqueta('Purgar servers inactivos:',TAMAÑO_ETIQUETA)
+    interfaz.crear_boton('purgar',purgar)
     # menu de rastreos
 
     # busquedas - inputs
-    ui.agregar_etiqueta('buscar server por version: ',13)
-    salida = ui.crear_input()
-    ui.crear_boton('buscar version',lambda : buscar_version(salida.get()))
-    ui.agregar_etiqueta('buscar server por pais: ',13)
-    salida2 = ui.crear_input()
-    ui.crear_boton('buscar pais',lambda : buscar_pais(salida2.get()))
-   
+    interfaz.agregar_etiqueta('buscar server por version: ',TAMAÑO_ETIQUETA)
+    salida = interfaz.crear_input()
+    interfaz.crear_boton('buscar version',lambda : buscar_version(salida.get()))
+    interfaz.agregar_etiqueta('buscar server por pais: ',TAMAÑO_ETIQUETA)
+    salida2 = interfaz.crear_input()
+    interfaz.crear_boton('buscar pais',lambda : buscar_pais(salida2.get()))
     pantalla.mainloop()
-    
