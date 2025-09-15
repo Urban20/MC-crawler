@@ -66,13 +66,15 @@ def mostrar(lista : list,version=None,porversion = True):
             entrada = str(input('[1] siguiente pagina >> ')).strip()
             if entrada == '1':
                 n_pagina+=1
-                print(f'\n------------------\npagina numero: {n_pagina}\n------------------\n')
+                print(f'\033[0;105m\n------------------\npagina numero: {n_pagina}\n------------------\n\033[0m')
                 contador = 0
                 
             else:
                 ui.interfaz.bloqueada = False
                 ui.interfaz.actualizar_estado()
                 break
+    ui.interfaz.bloqueada = False
+    ui.interfaz.actualizar_estado()
 
             
 
