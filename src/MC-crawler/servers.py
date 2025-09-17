@@ -92,7 +92,10 @@ def servers_online(tag : str):
     'imprime los servidores que encuentre online por crawling'
     bot = Crawler(tag=tag)
     for ip,pais in bot.info():
-        server = McServer(ip=ip,puerto=25565,pais=pais)
+        if pais == None:
+            server = McServer(ip=ip,puerto=25565)
+        else:
+            server = McServer(ip=ip,puerto=25565,pais=pais)
 
         if server.obtener_data() == 'online':
             server.verificar_crackeado()

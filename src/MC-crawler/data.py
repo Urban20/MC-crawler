@@ -1,4 +1,4 @@
-# scraper de servidores de minecraft - base de datos externa
+'scraper de servidores de minecraft - base de datos externa'
 
 import requests
 import re
@@ -7,15 +7,16 @@ import sys
 class Crawler():
     'la clase Crawler es la encargada de la obtencion de los datos'
 
-    # aviso:
-    # Para volúmenes grandes de datos o mayor confiabilidad,
-    # se recomienda el uso de la API oficial de Shodan.
-    # NO abuses del scraping: se debe utilizar con cautela
-    # el codigo proporcionado NO esta pensado para scraping masivo
-    # ni solicitudes masivas.
+    '''
+    aviso:
+    Para volúmenes grandes de datos o mayor confiabilidad,
+    se recomienda el uso de la API oficial de Shodan.
+    NO abuses del scraping: se debe utilizar con cautela
+    el codigo proporcionado NO esta pensado para scraping masivo
+    ni solicitudes masivas.
 
-    # NO me hago responsable por el uso abusivo que se le pueda dar a esta
-    # funcionalidad.
+    NO me hago responsable por el uso abusivo que se le pueda dar a esta
+    funcionalidad.'''
 
 
     def __init__(self,tag):
@@ -29,7 +30,11 @@ class Crawler():
             if web.status_code == 200:
                 
                 ips = re.findall(r'>(\d+\.\d+\.\d+\.\d+)<',web.text)
-                paises = re.findall(r'<img src=\S+ title="([^"]+)"',web.text)
+                paises = re.findall(r'title="([^"]+)[0-9A-Za-z"= ]+class="flag"',web.text)
+                
+
+                while len(paises) != len(ips):
+                    paises.append(None)
                     
                 for ip,pais in zip(ips,paises):
                     yield (ip,pais)
@@ -38,5 +43,5 @@ class Crawler():
                 sys.exit(0)
 
         except Exception as e:
-            print(f'hubo un problema al consultar los recursos: {e}')
+            print(f'\nhubo un problema al consultar los recursos:\n{e}\n')
 
