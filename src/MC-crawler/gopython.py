@@ -5,7 +5,7 @@ import subprocess
 import os
 from mcserver import McServer
 from db import insertar
-
+from servers import conectividad
 
 # 130 61
 # 54.36.0.0/14 178.32.0.0/15 151.80.0.0/16
@@ -65,11 +65,11 @@ def procesar_lineas():
 
 
 def ejecutar_barrido():
-    
-    print('\n[+] barriendo bloques de ips, esto puede llevar tiempo ...\n ')
-    print('NO cierres el programa')
-    ejecutar_bin()
-    print('\n[+] barrido finalizado\nhaciendo ping a los servidores ...\n')
-    procesar_lineas()
-    
-    os.remove(STDOUT)
+    if conectividad():
+        print('\n[+] barriendo bloques de ips, esto puede llevar tiempo ...\n ')
+        print('NO cierres el programa')
+        ejecutar_bin()
+        print('\n[+] barrido finalizado\nhaciendo ping a los servidores ...\n')
+        procesar_lineas()
+        
+        os.remove(STDOUT)

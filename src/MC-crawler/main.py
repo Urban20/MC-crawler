@@ -24,11 +24,11 @@ github : https://github.com/Urban20
 '''
 ADVERTENCIA = f'{AMARILLO}\n[!] advertencia: El antivirus puede bloquear el correcto funcionamiento del programa y/o dar falsos positivos\n{RESET}'
 
-if __name__ == '__main__':
+if __name__ == '__main__': 
     try:
         print(LOGO)
         print(ADVERTENCIA)
         empaquetar()
-        conec.close()
+        conec.close()            
     except Exception as e:
         print(f'\nhubo un problema: {e}')

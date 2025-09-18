@@ -5,8 +5,18 @@ from mcserver import  *
 import db
 from os import remove
 import ui 
+from ping3 import ping
 
 tags_info = 'tags.txt'
+
+def conectividad():
+    'funcion que verifica si hay conexion a internet haciendo ping al dns de google'
+    try:
+        timeout = 3
+        return ping('8.8.8.8',timeout=timeout) != None
+    except Exception: 
+        print('\n[-] sin conexion o conexion debil\n')
+        return False
 
 
 def archivo(server,fecha,arch : str):
@@ -107,10 +117,11 @@ def servers_online(tag : str):
 
 def Buscar_Servers():
     'llama a las funciones necesarias para iniciar la busqueda de servers (busqueda de rstreo, no busqueda en db)'
-    print('\n[#] rastreando servers de minecraft java, esto va a llevar tiempo ...\n')
-    tags = leer_tag()
-    for tag in tags:
-        servers_online(tag=tag)
+    if conectividad():
+        print('\n[#] rastreando servers de minecraft java, esto va a llevar tiempo ...\n')
+        tags = leer_tag()
+        for tag in tags:
+            servers_online(tag=tag)
     
 
 

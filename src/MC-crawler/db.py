@@ -12,11 +12,12 @@ cursor.execute('CREATE TABLE IF NOT EXISTS servers(ip PRIMARY KEY,pais TEXT,vers
 def purgar():
     'funcion que borra servers que esten offline cuando el usuario da la orden'
     
-    try:
-        selector = conec.cursor() # nuevo cursor que selecciona e itera
-        selector.execute('SELECT ip, version, fecha FROM servers')
-        for datos in selector:
-            try:
+    if servers.conectividad():   
+        try:
+            selector = conec.cursor() # nuevo cursor que selecciona e itera
+            selector.execute('SELECT ip, version, fecha FROM servers')
+            for datos in selector:
+                
                 ipv4 = datos[0].split(':')[0]
                 puerto = datos[0].split(':')[1]
                 version_db = datos[1]
@@ -35,22 +36,14 @@ def purgar():
                                 (sv.version, sv.fecha, ip_puerto))
                     print(f'[↑] ACTUALIZADO: {ip_puerto} | version ({version_db} → {sv.version}) | {fecha_db} → {sv.fecha}')
                 
-                else: 
-                    print(f'\033[0;32m[✓] {ipv4} esta en orden\033[0m')
                 
-                conec.commit()
+                conec.commit()         
+                
+        except Exception as e:
+            print(f'\n[-] hubo un problema al intentar purgar la db\n{e}')
 
-            except Exception as e:
 
-                print(f'hubo un problema con {ipv4}: {e}')
-                continue
             
-            
-        
-
-    except Exception as e:
-        print(f'\n[-] hubo un problema al intentar purgar la db\n{e}')
-        
 def insertar(dato : tuple):
 
     cursor.execute('INSERT INTO servers VALUES(?,?,?,?)',dato)
