@@ -35,9 +35,10 @@ class Crawler():
                 for ip,pais in zip(ips,paises):
                     
                     try:
-                        yield (ip,pais.get('title').strip())
+                        pais = pais.get('title').strip()
                     except AttributeError:
-                        yield (ip,None)
+                        pais = None
+                    yield (ip,pais)
                         
             else:
                 print(f'\n[!] scraping no disponible\ncodigo de estado : {web.status_code}\n')
