@@ -3,6 +3,7 @@
 import requests
 import re
 import sys
+from bs4 import BeautifulSoup
 
 class Crawler():
     'la clase Crawler es la encargada de la obtencion de los datos'
@@ -30,14 +31,14 @@ class Crawler():
             if web.status_code == 200:
                 
                 ips = re.findall(r'>(\d+\.\d+\.\d+\.\d+)<',web.text)
-                paises = re.findall(r'title="([^"]+)[0-9A-Za-z"= ]+class="flag"',web.text)
-                
-
-                while len(paises) != len(ips):
-                    paises.append(None)
-                    
+                paises = BeautifulSoup(web.text,'html.parser').find_all('img',class_='flag')   
                 for ip,pais in zip(ips,paises):
-                    yield (ip,pais)
+                    
+                    try:
+                        yield (ip,pais.get('title').strip())
+                    except AttributeError:
+                        yield (ip,None)
+                        
             else:
                 print(f'\n[!] scraping no disponible\ncodigo de estado : {web.status_code}\n')
                 sys.exit(0)
