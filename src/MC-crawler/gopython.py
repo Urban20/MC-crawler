@@ -21,6 +21,13 @@ HILOS = 100
 
 BINARIO = './escan'
 
+BLOQUES24 = [(149,88,39),
+            (63,135,164),(64,94,92),
+            (74,112,76),(74,117,200),(199,195,140)]
+
+BLOQUES16= [(130,61),(54,36),(14,178),(151,80),(50,20),
+           (54,38),(116,202),(116,203),(136,243),(66,179),(66,248)] 
+
 
 def ejecutar_bin():
     'automatiza la ejecucion del bin de go'
@@ -29,12 +36,11 @@ def ejecutar_bin():
         os.getcwd()
         # para /24
 
-        for n0,n1,n2 in [(149,88,39),(50,20,200),(50,20,248),(63,135,164),(64,94,92),(66,179,22),(66,179,218),
-                        (66,248,192),(74,112,76),(74,117,200),(199,195,140)]:
+        for n0,n1,n2 in BLOQUES24:
             subprocess.Popen([BINARIO,'-n0',str(n0),'-n1',str(n1),'-n2',str(n2),'-hl',str(HILOS),'-b24']).wait()
         
 
-        for n0,n1 in [(130,61),(54,36),(14,178),(151,80),(54,38),(116,202),(116,203),(136,243)]: # parametros para barrido de /16
+        for n0,n1 in BLOQUES16: # parametros para barrido de /16
             com1 = subprocess.Popen([BINARIO,'-n0',str(n0),'-n1',str(n1),'-hl',str(HILOS)])
         com1.wait()
 
@@ -57,11 +63,10 @@ def procesar_lineas():
         bot = McServer(ip=linea.replace('\n',''),timeout=0.3)
         if bot.obtener_data() == 'online':
             bot.verificar_crackeado()
-            try:
-                insertar(bot.info)
-                print(bot)
-            except:
-                ...
+        
+            insertar(bot.info)
+            print(bot)
+            
 
 
 def ejecutar_barrido():
