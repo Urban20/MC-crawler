@@ -3,7 +3,7 @@
 import sqlite3 as sq
 import servers
 from mcserver import McServer
-
+import sys
 
 conec = sq.connect('servers.db')
 cursor = conec.cursor()
@@ -45,10 +45,15 @@ def purgar():
 
             
 def insertar(dato : tuple):
-
-    cursor.execute('INSERT INTO servers VALUES(?,?,?,?)',dato)
-    conec.commit()
-
+    try:
+        cursor.execute('INSERT INTO servers VALUES(?,?,?,?)',dato)
+        conec.commit()
+    except sq.IntegrityError:
+        ...
+    except (sq.DatabaseError) as e:
+        print(f'\n[!] error en la db : {e}\n')
+        sys.exit(1)
+   
 
 def buscar_version(version : str):   
     'pide la version y devuelve las ips'
