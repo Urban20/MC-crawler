@@ -110,8 +110,8 @@ def servers_online(tag : str):
         if server.obtener_data() == 'online':
             server.verificar_crackeado()
         
-            db.insertar(dato=server.info)
-            print(server)
+            db.insertar(dato=server.info,server=server)
+            
             
             
 

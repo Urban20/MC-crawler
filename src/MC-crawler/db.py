@@ -14,6 +14,10 @@ def purgar():
     
     if servers.conectividad():   
         try:
+            borrados = 0
+            actualizados = 0
+
+            print('\n[...] iniciando purga de servidores\nNO cierres el programa\n')
             selector = conec.cursor() # nuevo cursor que selecciona e itera
             selector.execute('SELECT ip, version, fecha FROM servers')
             for datos in selector:
@@ -29,25 +33,28 @@ def purgar():
                 if sv.estado == 'offline':
                     cursor.execute('DELETE FROM servers WHERE ip = ?',(ip_puerto,))
                     print(f'\033[0;31m[-] server {ipv4} eliminado de la db\033[0m')
+                    borrados+=1
 
                 elif sv.version != version_db:
                     sv.verificar_crackeado()
                     cursor.execute('UPDATE servers SET version = ?, fecha = ? WHERE ip = ?', 
                                 (sv.version, sv.fecha, ip_puerto))
                     print(f'[↑] ACTUALIZADO: {ip_puerto} | version ({version_db} → {sv.version}) | {fecha_db} → {sv.fecha}')
-                
+                    actualizados+=1
                 
                 conec.commit()         
                 
+            print(f'\npurga finalizada\nservers eliminados (offlines): {borrados} | servers actualizados: {actualizados}\n')
         except Exception as e:
             print(f'\n[-] hubo un problema al intentar purgar la db\n{e}')
 
 
             
-def insertar(dato : tuple):
+def insertar(dato : tuple,server :McServer):
     try:
         cursor.execute('INSERT INTO servers VALUES(?,?,?,?)',dato)
         conec.commit()
+        print(server)
     except sq.IntegrityError:
         ...
     except (sq.DatabaseError) as e:

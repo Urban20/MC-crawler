@@ -8,7 +8,7 @@ RESET = '\033[0m '
 FONDO_V = '\033[0;105m'
 AMARILLO = '\033[0;33m'
 
-VERSION = 'V2.2'
+VERSION = 'V2.3'
 
 LOGO = f'''   *           '     *
                   *   '            '  *          *
