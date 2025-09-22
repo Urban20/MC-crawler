@@ -21,19 +21,17 @@ HILOS = 100
 
 BINARIO = './escan'
 
-BLOQUES24 = [(149,88,39),
-            (63,135,164),(64,94,92),
-            (74,112,76),(74,117,200),(199,195,140)]
+BLOQUES24 = [(64,94,92),(74,112,76),(74,117,200),(199,195,140)]
 
-BLOQUES16= [(130,61),(54,36),(14,178),(151,80),(50,20),
-           (54,38),(116,202),(116,203),(136,243),(66,179),(66,248)] 
+BLOQUES16= [(130,61),(54,36),(14,178),(151,80),(50,20),(149,88),
+           (54,38),(116,202),(116,203),(136,243),(66,179),(66,248),(63,135)] 
 
 
 def ejecutar_bin():
     'automatiza la ejecucion del bin de go'
 
     try:
-        os.getcwd()
+        
         # para /24
 
         for n0,n1,n2 in BLOQUES24:
@@ -64,8 +62,8 @@ def procesar_lineas():
         if bot.obtener_data() == 'online':
             bot.verificar_crackeado()
         
-            insertar(bot.info)
-            print(bot)
+            insertar(dato=bot.info,server=bot)
+            
             
 
 
