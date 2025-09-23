@@ -33,39 +33,43 @@ def archivo(server,fecha,arch : str):
         jugadores {server.p_data}
         registrado el {fecha}\n'''
         sv.write(info)
-                
+
 def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool = False):
     'muestra los server cuando se buscan por version o pais (estan en la db)'
 
     
     contador = 0 # contador de servidores por pagina
-    n_pagina = 1 
     LIMITE = 10 # limite de servers por pagina
-
     arch = 'filtrados.txt' # archivos donde se guardan los servers filtrados temporales
+    n_pagina = 1
 
     try:
         remove(arch)
         
     except FileNotFoundError: ...
 
+    for tupla in lista:
+        IP = tupla[0].split(':')[0]
+        puerto = tupla[0].split(':')[1]
+        fecha = tupla[-1]
 
-    for elem in lista:
-        IP = elem[0].split(':')[0]
-        puerto = elem[0].split(':')[1]
-        fecha = elem[2]
-        if not crackeados:
-            pais = elem[1]
-            server = McServer(ip=IP,puerto=puerto,pais=pais,fecha_otorgada=fecha)
-        else:
+        if crackeados:
+
             server = McServer(ip=IP,puerto=puerto,fecha_otorgada=fecha)
+
+        else:  
+            pais = tupla[1]      
+            server = McServer(ip=IP,puerto=puerto,pais=pais,fecha_otorgada=fecha)
+        
+            
 
         data = server.obtener_data()
         server.verificar_crackeado()
+        registrar_crackeado(server=server)
 
-        if crackeados and data == 'online':
+        if crackeados:
             print(server)
-        
+
         elif porversion:
             if data == 'online' and re.search(version,server.info[2]): # doble filtrado
                 print(server)
@@ -76,9 +80,9 @@ def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool
                 print(server)
                 archivo(server=server,fecha=fecha,arch=arch)
 
-        contador+=1        
+        contador+=1     
 
-        # paginado
+        # paginado -----------------------------------------
         if contador >= LIMITE:
             ui.interfaz.bloqueada = True
             ui.interfaz.actualizar_estado()
@@ -92,10 +96,10 @@ def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool
                 ui.interfaz.bloqueada = False
                 ui.interfaz.actualizar_estado()
                 break
+        # paginado -----------------------------------------
     ui.interfaz.bloqueada = False
     ui.interfaz.actualizar_estado()
-
-            
+    
 
 def leer_tag():
     'funcion que lee los tags (palabras clave) y los retorna'
@@ -128,7 +132,7 @@ def registrar_crackeado(server : McServer):
             db.insertar(espacios='(?,?,?)',
                         tabla=db.TABLA2,
                         cursor=db.cursor2,
-                        dato=(server.ip,server.version,server.fecha),
+                        dato=(server.direccion,server.version,server.fecha),
                         conex=db.conec2)
             
         except IntegrityError:

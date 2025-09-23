@@ -3,7 +3,7 @@
 import customtkinter
 from servers import Buscar_Servers
 from gopython import ejecutar_barrido
-from db import buscar_version,buscar_pais,purgar
+from db import buscar_version,buscar_pais,purgar,buscar_crackeados
 
 VERSION = 'V2.3'
 titulo = 'MC Crawler ' + VERSION
@@ -70,6 +70,8 @@ def empaquetar():
     interfaz.crear_boton('barrido',ejecutar_barrido)
     interfaz.agregar_etiqueta('Purgar servers inactivos:',TAMAÑO_ETIQUETA)
     interfaz.crear_boton('purgar',purgar)
+    interfaz.agregar_etiqueta('buscar posibles servers crackeados',TAMAÑO_ETIQUETA)
+    interfaz.crear_boton('buscar',buscar_crackeados)
     # menu de rastreos
 
     # busquedas - inputs

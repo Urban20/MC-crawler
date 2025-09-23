@@ -108,7 +108,7 @@ def buscar_crackeados():
     
     print(f'\n[...] se muestra busqueda de posible servers no premium')
     try:
-        cursor2.execute(f'SELECT ip,fecha FROM {TABLA2} ORDER BY fecha DESC')
+        cursor2.execute(f'SELECT ip,VERSION,FECHA FROM {TABLA2} ORDER BY FECHA DESC')
 
         servers.mostrar(lista=cursor2,porversion=False,crackeados=True)
     
