@@ -5,7 +5,8 @@ from servers import Buscar_Servers
 from gopython import ejecutar_barrido
 from db import buscar_version,buscar_pais,purgar
 
-titulo = 'MC Crawler'
+VERSION = 'V2.3'
+titulo = 'MC Crawler ' + VERSION
 dimension = '500x400'
 color_boton = '#3A07AB'
 BLANCO = '#FFFFFF'

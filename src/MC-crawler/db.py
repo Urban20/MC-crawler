@@ -1,16 +1,40 @@
-'modulo que maneja la logica de la base de datos sqlite'
+'''modulo que maneja la logica de las bases de datos sqlite del programa:
+
+- base de datos global (todos los servidores encontrados independientemente su configuracion)
+
+- base de datos de servidores no premium (base de datos secundaria)'''
 
 import sqlite3 as sq
 import servers
 from mcserver import McServer
-import sys
 
-conec = sq.connect('servers.db')
+# este modulo maneja dos bases de datos:
+# por un lado, la base de datos general donde estan TODOS los servidores
+# por el otro , se guardan servidores no premium (base de datos mas volatil y a corto plazo)
+
+# base de datos principal (todos los servers):
+DB = 'servers.db'
+TABLA = 'servers'
+
+# base de datos secundaria (solo los posibles crackeados):
+DB2 = 'crackeados.db'
+TABLA2 = 'server_np'
+
+# tabla principal de serves historicos (todos)
+conec = sq.connect(DB)
 cursor = conec.cursor()
-cursor.execute('CREATE TABLE IF NOT EXISTS servers(ip PRIMARY KEY,pais TEXT,version TEXT, fecha TEXT)')
+cursor.execute(f'CREATE TABLE IF NOT EXISTS {TABLA}(ip PRIMARY KEY,pais TEXT,version TEXT, fecha TEXT)')
+
+# tabla a la db de servers crackeados
+conec2 = sq.connect(DB2)
+cursor2 = conec2.cursor()
+cursor2.execute(f'CREATE TABLE IF NOT EXISTS {TABLA2}(ip PRIMARY KEY, VERSION TEXT,FECHA TEXT)')
+
 
 def purgar():
-    'funcion que borra servers que esten offline cuando el usuario da la orden'
+    '''funcion que borra servers que esten offline cuando el usuario da la orden
+    
+    purga la base de datos principal (todos los servers)'''
     
     if servers.conectividad():   
         try:
@@ -19,7 +43,7 @@ def purgar():
 
             print('\n[...] iniciando purga de servidores\nNO cierres el programa\n')
             selector = conec.cursor() # nuevo cursor que selecciona e itera
-            selector.execute('SELECT ip, version, fecha FROM servers')
+            selector.execute(f'SELECT ip, version, fecha FROM {TABLA}')
             for datos in selector:
                 
                 ipv4 = datos[0].split(':')[0]
@@ -31,13 +55,13 @@ def purgar():
                 sv.obtener_data()
 
                 if sv.estado == 'offline':
-                    cursor.execute('DELETE FROM servers WHERE ip = ?',(ip_puerto,))
+                    cursor.execute(f'DELETE FROM {TABLA} WHERE ip = ?',(ip_puerto,))
                     print(f'\033[0;31m[-] server {ipv4} eliminado de la db\033[0m')
                     borrados+=1
 
                 elif sv.version != version_db:
                     sv.verificar_crackeado()
-                    cursor.execute('UPDATE servers SET version = ?, fecha = ? WHERE ip = ?', 
+                    cursor.execute(f'UPDATE {TABLA} SET version = ?, fecha = ? WHERE ip = ?', 
                                 (sv.version, sv.fecha, ip_puerto))
                     print(f'[↑] ACTUALIZADO: {ip_puerto} | version ({version_db} → {sv.version}) | {fecha_db} → {sv.fecha}')
                     actualizados+=1
@@ -47,27 +71,21 @@ def purgar():
             print(f'\npurga finalizada\nservers eliminados (offlines): {borrados} | servers actualizados: {actualizados}\n')
         except Exception as e:
             print(f'\n[-] hubo un problema al intentar purgar la db\n{e}')
+ 
+def insertar(dato : tuple,espacios :str = '(?,?,?,?)',tabla :str = TABLA,cursor = cursor,conex = conec):
+    
+    'inserta valores en las bases de datos'
 
+    cursor.execute(f'INSERT INTO {tabla} VALUES{espacios}',dato)
+    conex.commit()
 
-            
-def insertar(dato : tuple,server :McServer):
-    try:
-        cursor.execute('INSERT INTO servers VALUES(?,?,?,?)',dato)
-        conec.commit()
-        print(server)
-    except sq.IntegrityError:
-        ...
-    except (sq.DatabaseError) as e:
-        print(f'\n[!] error en la db : {e}\n')
-        sys.exit(1)
-   
 
 def buscar_version(version : str):   
     'pide la version y devuelve las ips'
 
     print(f'\n[...] se muestra busqueda segun "{version}"\n')
     try:
-        cursor.execute(f'SELECT ip, pais, fecha FROM servers WHERE version LIKE ? ORDER BY fecha DESC',(f'%{version}',))
+        cursor.execute(f'SELECT ip, pais, fecha FROM {TABLA} WHERE version LIKE ? ORDER BY fecha DESC',(f'%{version}',))
         
         servers.mostrar(lista=cursor,version=version)
 
@@ -79,12 +97,22 @@ def buscar_pais(pais : str):
     
     print(f'\n[...] se muestra busqueda segun "{pais}"\n')
     try:
-        cursor.execute(f'SELECT ip, pais, fecha FROM servers WHERE pais = ? ORDER BY fecha DESC',(pais,))
+        cursor.execute(f'SELECT ip, pais, fecha FROM {TABLA} WHERE pais = ? ORDER BY fecha DESC',(pais,))
 
-        servers.mostrar(cursor,porversion=False)
+        servers.mostrar(lista=cursor,porversion=False)
     
     except : ...
 
+def buscar_crackeados():
+    'itera con los servers que determine como no premium'
+    
+    print(f'\n[...] se muestra busqueda de posible servers no premium')
+    try:
+        cursor2.execute(f'SELECT ip,fecha FROM {TABLA2} ORDER BY fecha DESC')
+
+        servers.mostrar(lista=cursor2,porversion=False,crackeados=True)
+    
+    except : ...
 
 
 

@@ -4,8 +4,7 @@ barre bloques de ips para detectar puertos abiertos de interes'''
 import subprocess
 import os
 from mcserver import McServer
-from db import insertar
-from servers import conectividad
+import servers
 
 # 130 61
 # 54.36.0.0/14 178.32.0.0/15 151.80.0.0/16
@@ -61,14 +60,15 @@ def procesar_lineas():
         bot = McServer(ip=linea.replace('\n',''),timeout=0.3)
         if bot.obtener_data() == 'online':
             bot.verificar_crackeado()
-        
-            insertar(dato=bot.info,server=bot)
+
+            servers.registrar_server(server=bot)
+            servers.registrar_crackeado(server=bot)
             
             
 
 
 def ejecutar_barrido():
-    if conectividad():
+    if servers.conectividad():
         print('\n[+] barriendo bloques de ips, esto puede llevar tiempo ...\n ')
         print('NO cierres el programa')
         ejecutar_bin()

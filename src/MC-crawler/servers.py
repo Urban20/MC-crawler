@@ -2,8 +2,9 @@
 
 from data import *
 from mcserver import  *
-import db
+from sqlite3 import DatabaseError,IntegrityError
 from os import remove
+import db
 import ui 
 from ping3 import ping
 
@@ -33,7 +34,7 @@ def archivo(server,fecha,arch : str):
         registrado el {fecha}\n'''
         sv.write(info)
                 
-def mostrar(lista : list,version=None,porversion = True):
+def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool = False):
     'muestra los server cuando se buscan por version o pais (estan en la db)'
 
     
@@ -52,24 +53,32 @@ def mostrar(lista : list,version=None,porversion = True):
     for elem in lista:
         IP = elem[0].split(':')[0]
         puerto = elem[0].split(':')[1]
-        pais = elem[1]
         fecha = elem[2]
-        server = McServer(ip=IP,puerto=puerto,pais=pais,fecha_otorgada=fecha)
+        if not crackeados:
+            pais = elem[1]
+            server = McServer(ip=IP,puerto=puerto,pais=pais,fecha_otorgada=fecha)
+        else:
+            server = McServer(ip=IP,puerto=puerto,fecha_otorgada=fecha)
+
         data = server.obtener_data()
         server.verificar_crackeado()
 
-        if porversion:
+        if crackeados and data == 'online':
+            print(server)
+        
+        elif porversion:
             if data == 'online' and re.search(version,server.info[2]): # doble filtrado
                 print(server)
                 archivo(server=server,fecha=fecha,arch=arch)
-                contador+=1
+                
         else: # por pais
             if data == 'online':
                 print(server)
                 archivo(server=server,fecha=fecha,arch=arch)
-                contador+=1
 
+        contador+=1        
 
+        # paginado
         if contador >= LIMITE:
             ui.interfaz.bloqueada = True
             ui.interfaz.actualizar_estado()
@@ -98,22 +107,48 @@ def leer_tag():
     except FileNotFoundError:
         print('\nno se encontraron los tags ...\n')
 
+
+def registrar_server(server : McServer):
+    'esta funcion recicla la logica para insertar el server en db de servers historicos (todos) e imprimirlo'
+    try:
+        db.insertar(dato=server.info)
+        print(server)
+
+    except IntegrityError:
+        ...
+    except DatabaseError as e:
+        print(f'\n[!] error en la db : {e}\n')
+        sys.exit(1)
+
+def registrar_crackeado(server : McServer):
+    'guarda server en base de datos de no premium si efectivamente lo es'
+    if server.crackeado == 1:
+        # insertar en la tabla de los no premium (crackeados)
+        try:
+            db.insertar(espacios='(?,?,?)',
+                        tabla=db.TABLA2,
+                        cursor=db.cursor2,
+                        dato=(server.ip,server.version,server.fecha),
+                        conex=db.conec2)
+            
+        except IntegrityError:
+            ...            
+            
+
 def servers_online(tag : str):
     'imprime los servidores que encuentre online por crawling'
     bot = Crawler(tag=tag)
     for ip,pais in bot.info():
         if pais == None:
-            server = McServer(ip=ip,puerto=25565)
+            servermc = McServer(ip=ip,puerto=25565)
         else:
-            server = McServer(ip=ip,puerto=25565,pais=pais)
+            servermc = McServer(ip=ip,puerto=25565,pais=pais)
 
-        if server.obtener_data() == 'online':
-            server.verificar_crackeado()
-        
-            db.insertar(dato=server.info,server=server)
-            
-            
-            
+        if servermc.obtener_data() == 'online':
+            servermc.verificar_crackeado()
+            registrar_server(server=servermc)
+            registrar_crackeado(server=servermc)
+
 
 def Buscar_Servers():
     'llama a las funciones necesarias para iniciar la busqueda de servers (busqueda de rstreo, no busqueda en db)'

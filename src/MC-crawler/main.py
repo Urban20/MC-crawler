@@ -1,4 +1,4 @@
-from ui import empaquetar
+from ui import empaquetar,VERSION
 from db import conec
 from colorama import init
 
@@ -7,8 +7,6 @@ VIOLETA = '\033[0;95m'
 RESET = '\033[0m '
 FONDO_V = '\033[0;105m'
 AMARILLO = '\033[0;33m'
-
-VERSION = 'V2.3'
 
 LOGO = f'''   *           '     *
                   *   '            '  *          *
