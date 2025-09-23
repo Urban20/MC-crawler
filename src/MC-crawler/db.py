@@ -74,7 +74,7 @@ def purgar():
  
 def insertar(dato : tuple,espacios :str = '(?,?,?,?)',tabla :str = TABLA,cursor = cursor,conex = conec):
     
-    'inserta valores en las bases de datos'
+    'inserta valores en las bases de datos que se le asigne'
 
     cursor.execute(f'INSERT INTO {tabla} VALUES{espacios}',dato)
     conex.commit()

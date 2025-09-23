@@ -76,7 +76,7 @@ class McServer():
         if self.estado == 'online':
 
             return f'''\n-----------------------------------------
-            veredicto: {self.veredicto}
+            veredicto basado en jugador/es: {self.veredicto}
 
             registrado el dia: {self.fecha_otogada} 
 

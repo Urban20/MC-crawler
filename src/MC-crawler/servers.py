@@ -35,7 +35,7 @@ def archivo(server,fecha,arch : str):
         sv.write(info)
 
 def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool = False):
-    'muestra los server cuando se buscan por version o pais (estan en la db)'
+    'maneja la logica de muestreo y paginado de los servers cuando se buscan desde las dbs'
 
     
     contador = 0 # contador de servidores por pagina
@@ -60,29 +60,36 @@ def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool
         else:  
             pais = tupla[1]      
             server = McServer(ip=IP,puerto=puerto,pais=pais,fecha_otorgada=fecha)
-        
-            
 
         data = server.obtener_data()
         server.verificar_crackeado()
-        registrar_crackeado(server=server)
+
+        # registra los servers que se van mostrando en consola en tiempo real
+        if not crackeados:
+            registrar_crackeado(server=server)
+            
 
         if crackeados:
             print(server)
 
-        elif porversion:
-            if data == 'online' and re.search(version,server.info[2]): # doble filtrado
+        else:    
+        
+            if porversion and data == 'online' and re.search(version,server.info[2]):
+                # doble filtrado
                 print(server)
+                   
                 archivo(server=server,fecha=fecha,arch=arch)
-                
-        else: # por pais
-            if data == 'online':
-                print(server)
-                archivo(server=server,fecha=fecha,arch=arch)
-
-        contador+=1     
+                    
+            else: # por pais
+                if data == 'online':
+                    print(server)
+                      
+                    archivo(server=server,fecha=fecha,arch=arch)
+                                     
+        contador+=1  
 
         # paginado -----------------------------------------
+        #  esta seccion detiene el muestreo cada cierto limite y pregunta si deseas continuar
         if contador >= LIMITE:
             ui.interfaz.bloqueada = True
             ui.interfaz.actualizar_estado()
@@ -95,6 +102,7 @@ def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool
             else:
                 ui.interfaz.bloqueada = False
                 ui.interfaz.actualizar_estado()
+                contador = 0
                 break
         # paginado -----------------------------------------
     ui.interfaz.bloqueada = False
@@ -102,7 +110,7 @@ def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool
     
 
 def leer_tag():
-    'funcion que lee los tags (palabras clave) y los retorna'
+    'funcion que lee los tags (palabras clave) en el archivo tags y los retorna'
     try:
         with open(tags_info,'r') as tags:
             for tag in tags:
