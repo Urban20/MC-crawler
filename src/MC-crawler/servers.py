@@ -70,7 +70,8 @@ def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool
             
 
         if crackeados:
-            print(server)
+            if data == 'online':
+                print(server)
 
         else:    
         
@@ -102,7 +103,7 @@ def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool
             else:
                 ui.interfaz.bloqueada = False
                 ui.interfaz.actualizar_estado()
-                contador = 0
+                
                 break
         # paginado -----------------------------------------
     ui.interfaz.bloqueada = False
