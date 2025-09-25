@@ -70,9 +70,13 @@ def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool
             
 
         if crackeados:
-            if data == 'online':
+            version_db = tupla[1]
+            
+            if data == 'online' and version_db == server.version:
                 print(server)
-
+            else:
+                db.eliminar_crackeado(server.direccion)
+                continue
         else:    
         
             if porversion and data == 'online' and re.search(version,server.info[2]):

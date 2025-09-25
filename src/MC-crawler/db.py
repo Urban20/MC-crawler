@@ -30,6 +30,10 @@ conec2 = sq.connect(DB2)
 cursor2 = conec2.cursor()
 cursor2.execute(f'CREATE TABLE IF NOT EXISTS {TABLA2}(ip PRIMARY KEY, VERSION TEXT,FECHA TEXT)')
 
+def eliminar_crackeado(direccion : str):
+    cursor2.execute(f'DELETE FROM {TABLA2} WHERE ip = ?',(direccion,))
+    conec2.commit()
+    print(f'\n{direccion} eliminado de db no-premium\n')
 
 def purgar():
     '''funcion que borra servers que esten offline cuando el usuario da la orden
@@ -43,7 +47,7 @@ def purgar():
 
             print('\n[...] iniciando purga de servidores\nNO cierres el programa\n')
             selector = conec.cursor() # nuevo cursor que selecciona e itera
-            selector.execute(f'SELECT ip, version, fecha FROM {TABLA}')
+            selector.execute(f"SELECT ip, version, fecha FROM {TABLA} WHERE fecha <= date('now','-30 days')")
             for datos in selector:
                 
                 ipv4 = datos[0].split(':')[0]

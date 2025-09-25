@@ -10,6 +10,7 @@ import servers
 # 54.36.0.0/14 178.32.0.0/15 151.80.0.0/16
 
 STDOUT = 'ip_escan.data' # no modificar 
+TIMEOUT = 0.3
 
 # para HILOS:
 #  cuidado con subir demasiado este numero,
@@ -23,7 +24,9 @@ BINARIO = './escan'
 BLOQUES24 = [(64,94,92),(74,112,76),(74,117,200),(199,195,140)]
 
 BLOQUES16= [(130,61),(54,36),(14,178),(151,80),(50,20),(149,88),
-           (54,38),(116,202),(116,203),(136,243),(66,179),(66,248),(63,135)] 
+           (54,38),(116,202),(116,203),(136,243),(66,179),(66,248),
+           (63,135),(188,34),(188,40),(162,33),(173,240),(15,204),(51,81)
+           ,(135,148)] 
 
 
 def ejecutar_bin():
@@ -57,7 +60,7 @@ def leer_stdout():
 
 def procesar_lineas():
     for linea in leer_stdout():
-        bot = McServer(ip=linea.replace('\n',''),timeout=0.3)
+        bot = McServer(ip=linea.replace('\n',''),timeout=TIMEOUT)
         if bot.obtener_data() == 'online':
             bot.verificar_crackeado()
 
@@ -68,6 +71,11 @@ def procesar_lineas():
 
 
 def ejecutar_barrido():
+
+    try:
+        os.remove(STDOUT)
+    except FileNotFoundError: ...
+
     if servers.conectividad():
         print('\n[+] barriendo bloques de ips, esto puede llevar tiempo ...\n ')
         print('NO cierres el programa')
@@ -75,4 +83,4 @@ def ejecutar_barrido():
         print('\n[+] barrido finalizado\nhaciendo ping a los servidores ...\n')
         procesar_lineas()
         
-        os.remove(STDOUT)
+        
