@@ -7,12 +7,12 @@ import MCuuid
 
 class McServer():
     'esta clase es la encargada de obtener el estado y la informacion de los servidores'
-    def __init__(self,ip : str,puerto=25565,pais='desconocido',fecha_otorgada = None,timeout = 1):
+    def __init__(self,ip : str,puerto=25565,fecha_otorgada = None,timeout = 1):
         self.fecha = datetime.datetime.today().isoformat(sep=' ',timespec='seconds')
         self.fecha_otogada = fecha_otorgada
         # fecha otorgada: es la fecha que se encuentra en la db para mostrar como info
         # no tiene relacion con self.fecha
-        self.pais = pais
+        self.pais = '' # ya no se utiliza (obsoleto)
         self.ip = ip
         self.puerto = puerto
         self.direccion = self.ip + ':' + str(self.puerto)
@@ -33,7 +33,6 @@ class McServer():
         try:
             server = JavaServer.lookup(address=self.direccion,timeout=self.timeout)
             estado = server.status()
-
             self.version = estado.version.name
             self.max_jugadores = estado.players.max
             self.jugadores_online = estado.players.online
@@ -83,8 +82,6 @@ class McServer():
             estado: {self.estado}
 
             ip: {self.direccion}
-
-            pais: {self.pais}
 
             motd: {self.motd}
 

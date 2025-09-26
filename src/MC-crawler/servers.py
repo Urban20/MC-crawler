@@ -54,14 +54,10 @@ def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool
         puerto = tupla[0].split(':')[1]
         fecha = tupla[-1]
 
-        if crackeados:
 
-            server = McServer(ip=IP,puerto=puerto,fecha_otorgada=fecha)
+        server = McServer(ip=IP,puerto=puerto,fecha_otorgada=fecha)
 
-        else:  
-            pais = tupla[1]      
-            server = McServer(ip=IP,puerto=puerto,pais=pais,fecha_otorgada=fecha)
-
+        
         data = server.obtener_data()
         server.verificar_crackeado()
 
@@ -79,18 +75,14 @@ def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool
                 db.eliminar_crackeado(server.direccion)
                 continue
         else:    
-        
+            
             if porversion and data == 'online' and re.search(version,server.info[2]):
                 # doble filtrado
                 print(server)
                    
                 archivo(server=server,fecha=fecha,arch=arch)
                     
-            else: # por pais
-                if data == 'online':
-                    print(server)
-                      
-                    archivo(server=server,fecha=fecha,arch=arch)
+            
                                      
         contador+=1  
 

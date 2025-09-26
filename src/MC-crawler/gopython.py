@@ -18,7 +18,7 @@ TIMEOUT = 0.3
 #  puede saturar tu equipo, ancho de banda
 #  y simular un ataque D.O.S (no es la idea)
 #  a mayor numero, mayor velocidad de escaneo pero mayor riesgo
-HILOS = 100 
+HILOS = 50 
 
 BINARIO = './escan'
 

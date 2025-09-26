@@ -8,6 +8,13 @@ RESET = '\033[0m '
 FONDO_V = '\033[0;105m'
 AMARILLO = '\033[0;33m'
 
+
+# AUTOR: Urb@n - Matias Urbaneja
+# USO RESPONSABLE: Este programa realiza escaneos de direcciones IP y puede generar tráfico elevado.
+# RECOMIENDO NO ABUSAR DE LOS ESCANEOS.
+# NOTA : El antivirus puede bloquear el funcionamiento o marcarlo como falso positivo.
+
+
 LOGO = f'''   *           '     *
                   *   '            '  *          *
       _______----_______                          '       *   

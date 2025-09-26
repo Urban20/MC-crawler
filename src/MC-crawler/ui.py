@@ -2,7 +2,7 @@
 
 import customtkinter
 from gopython import ejecutar_barrido
-from db import buscar_version,buscar_pais,purgar,buscar_crackeados
+from db import buscar_version,purgar,buscar_crackeados
 
 VERSION = 'V3.0' # version del programa
 titulo = 'MC Crawler ' + VERSION
@@ -75,7 +75,4 @@ def empaquetar():
     interfaz.agregar_etiqueta('buscar server por version: ',TAMAÑO_ETIQUETA)
     salida = interfaz.crear_input()
     interfaz.crear_boton('buscar version',lambda : buscar_version(salida.get()))
-    interfaz.agregar_etiqueta('buscar server por pais: ',TAMAÑO_ETIQUETA)
-    salida2 = interfaz.crear_input()
-    interfaz.crear_boton('buscar pais',lambda : buscar_pais(salida2.get()))
     pantalla.mainloop()

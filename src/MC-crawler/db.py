@@ -24,6 +24,7 @@ TABLA2 = 'server_np'
 conec = sq.connect(DB)
 cursor = conec.cursor()
 cursor.execute(f'CREATE TABLE IF NOT EXISTS {TABLA}(ip PRIMARY KEY,pais TEXT,version TEXT, fecha TEXT)')
+# pais queda obsoleto en la db
 
 # tabla a la db de servers crackeados
 conec2 = sq.connect(DB2)
@@ -89,23 +90,13 @@ def buscar_version(version : str):
 
     print(f'\n[...] se muestra busqueda segun "{version}"\n')
     try:
-        cursor.execute(f'SELECT ip, pais, fecha FROM {TABLA} WHERE version LIKE ? ORDER BY fecha DESC',(f'%{version}',))
+        cursor.execute(f'SELECT ip,fecha FROM {TABLA} WHERE version LIKE ? ORDER BY fecha DESC',(f'%{version}',))
         
         servers.mostrar(lista=cursor,version=version)
 
     
     except : ...
 
-def buscar_pais(pais : str):
-    'pide el pais y devuelve las ips'
-    
-    print(f'\n[...] se muestra busqueda segun "{pais}"\n')
-    try:
-        cursor.execute(f'SELECT ip, pais, fecha FROM {TABLA} WHERE pais = ? ORDER BY fecha DESC',(pais,))
-
-        servers.mostrar(lista=cursor,porversion=False)
-    
-    except : ...
 
 def buscar_crackeados():
     'itera con los servers que determine como no premium'
