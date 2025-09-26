@@ -7,6 +7,7 @@ from os import remove
 import db
 import ui 
 from ping3 import ping
+import sys
 
 tags_info = 'tags.txt'
 
@@ -114,16 +115,6 @@ def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool
     ui.interfaz.actualizar_estado()
     
 
-def leer_tag():
-    'funcion que lee los tags (palabras clave) en el archivo tags y los retorna'
-    try:
-        with open(tags_info,'r') as tags:
-            for tag in tags:
-                yield tag
-
-    except FileNotFoundError:
-        print('\nno se encontraron los tags ...\n')
-
 
 def registrar_server(server : McServer):
     'esta funcion recicla la logica para insertar el server en db de servers historicos (todos) e imprimirlo'
@@ -152,28 +143,7 @@ def registrar_crackeado(server : McServer):
             ...            
             
 
-def servers_online(tag : str):
-    'imprime los servidores que encuentre online por crawling'
-    bot = Crawler(tag=tag)
-    for ip,pais in bot.info():
-        if pais == None:
-            servermc = McServer(ip=ip,puerto=25565)
-        else:
-            servermc = McServer(ip=ip,puerto=25565,pais=pais)
 
-        if servermc.obtener_data() == 'online':
-            servermc.verificar_crackeado()
-            registrar_server(server=servermc)
-            registrar_crackeado(server=servermc)
-
-
-def Buscar_Servers():
-    'llama a las funciones necesarias para iniciar la busqueda de servers (busqueda de rstreo, no busqueda en db)'
-    if conectividad():
-        print('\n[#] rastreando servers de minecraft java, esto va a llevar tiempo ...\n')
-        tags = leer_tag()
-        for tag in tags:
-            servers_online(tag=tag)
     
 
 

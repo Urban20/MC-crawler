@@ -1,7 +1,6 @@
 'modulo encargado de la UI del programa'
 
 import customtkinter
-from servers import Buscar_Servers
 from gopython import ejecutar_barrido
 from db import buscar_version,buscar_pais,purgar,buscar_crackeados
 
@@ -64,8 +63,6 @@ def empaquetar():
     
     pantalla = interfaz.crear_pantalla()
     # menu de rastreos
-    interfaz.agregar_etiqueta('Rastrear servers por crawling:',TAMAÑO_ETIQUETA)
-    interfaz.crear_boton('Buscar servidores',Buscar_Servers)
     interfaz.agregar_etiqueta('Rastrear servers por barridos:',TAMAÑO_ETIQUETA)
     interfaz.crear_boton('barrido',ejecutar_barrido)
     interfaz.agregar_etiqueta('Purgar servers inactivos:',TAMAÑO_ETIQUETA)

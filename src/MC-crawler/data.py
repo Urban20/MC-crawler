@@ -1,49 +1,27 @@
-'scraper de servidores de minecraft - base de datos externa'
-
 import requests
 import re
-import sys
-from bs4 import BeautifulSoup
-
-class Crawler():
-    'la clase Crawler es la encargada de la obtencion de los datos'
-
-    '''
-    aviso:
-    Para volúmenes grandes de datos o mayor confiabilidad,
-    se recomienda el uso de la API oficial de Shodan.
-    NO abuses del scraping: se debe utilizar con cautela
-    el codigo proporcionado NO esta pensado para scraping masivo
-    ni solicitudes masivas.
-
-    NO me hago responsable por el uso abusivo que se le pueda dar a esta
-    funcionalidad.'''
+import random
 
 
-    def __init__(self,tag):
-        self.tag = tag
-        self.url = 'https://www.shodan.io/search?query='  
-        
-    def info(self):
-        try:
+
+def obtener_bloque_web(url : str):
+    try:
+        LIMITE = 10
+        user_ag ={ 'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36'
+        }
+
+        web = requests.get(url,headers=user_ag)
+
+        if web.status_code == 200:
+            rangos = re.findall(r'(\d+)\.(\d+)\.0\.0',web.text)
+
+            print('\n[+] rangos obtenidos\n')
             
-            web = requests.get(self.url+self.tag,headers={'User-Agent': 'Mozilla/5.0'})
-            if web.status_code == 200:
-                
-                ips = re.findall(r'>(\d+\.\d+\.\d+\.\d+)<',web.text)
-                paises = BeautifulSoup(web.text,'html.parser').find_all('img',class_='flag')   
-                for ip,pais in zip(ips,paises):
-                    
-                    try:
-                        pais = pais.get('title').strip()
-                    except AttributeError:
-                        pais = None
-                    yield (ip,pais)
-                        
-            else:
-                print(f'\n[!] scraping no disponible\ncodigo de estado : {web.status_code}\n')
-                sys.exit(0)
+            return random.sample(rangos,k=min(len(rangos),LIMITE))
+        
+        else: 
+            raise ConnectionError
 
-        except Exception as e:
-            print(f'\nhubo un problema al consultar los recursos:\n{e}\n')
-
+    except (requests.ConnectionError,requests.ConnectTimeout) as e:
+        print(f'\n[+] no se pudo obtener el rango ip: {e}\n')
+        return []   
