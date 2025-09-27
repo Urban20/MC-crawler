@@ -32,7 +32,8 @@ cursor2 = conec2.cursor()
 cursor2.execute(f'CREATE TABLE IF NOT EXISTS {TABLA2}(ip PRIMARY KEY, VERSION TEXT,FECHA TEXT)')
 
 def eliminar_crackeado(direccion : str):
-    cursor2.execute(f'DELETE FROM {TABLA2} WHERE ip = ?',(direccion,))
+    eliminar = conec2.cursor()
+    eliminar.execute(f'DELETE FROM {TABLA2} WHERE ip = ?',(direccion,))
     conec2.commit()
     print(f'\n{direccion} eliminado de db no-premium\n')
 
