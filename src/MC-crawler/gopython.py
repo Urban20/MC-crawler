@@ -11,7 +11,7 @@ import data
 # 54.36.0.0/14 178.32.0.0/15 151.80.0.0/16
 
 STDOUT = 'ip_escan.data' # no modificar 
-TIMEOUT = 0.3
+TIMEOUT = 0.6
 
 # para HILOS:
 #  cuidado con subir demasiado este numero,
