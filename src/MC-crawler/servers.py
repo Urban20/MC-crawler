@@ -107,12 +107,15 @@ def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool
     ui.interfaz.actualizar_estado()
     
 
-
+servers_encontrados = 0 # cuenta los servers encontrados
+# se muestra en consola en procesar_lineas() en gopython.py
 def registrar_server(server : McServer):
     'esta funcion recicla la logica para insertar el server en db de servers historicos (todos) e imprimirlo'
+    global servers_encontrados
     try:
         db.insertar(dato=server.info)
         print(server)
+        servers_encontrados+=1
 
     except IntegrityError:
         ...

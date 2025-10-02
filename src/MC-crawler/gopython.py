@@ -77,7 +77,7 @@ def procesar_lineas():
 
             servers.registrar_server(server=bot)
             servers.registrar_crackeado(server=bot)
-            
+    print(f'\nservidores nuevos encontrados: {servers.servers_encontrados}')        
             
 
 
