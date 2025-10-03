@@ -72,7 +72,7 @@ def leer_stdout():
 def procesar_lineas():
     for linea in leer_stdout():
         bot = McServer(ip=linea.replace('\n',''),timeout=TIMEOUT)
-        if bot.obtener_data() == 'online':
+        if bot.obtener_data(reintentos=2) == 'online':
             bot.verificar_crackeado()
 
             servers.registrar_server(server=bot)

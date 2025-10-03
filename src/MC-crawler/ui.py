@@ -4,7 +4,7 @@ import customtkinter
 from gopython import ejecutar_barrido
 from db import buscar_version,purgar,buscar_crackeados
 
-VERSION = 'V3.0' # version del programa
+VERSION = 'V3.1' # version del programa
 titulo = 'MC Crawler ' + VERSION
 dimension = '500x400'
 color_boton = '#3A07AB'

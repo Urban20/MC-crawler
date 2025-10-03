@@ -28,26 +28,29 @@ class McServer():
         self.veredicto = ''
         self.crackeado = 0 # inicialmente se toma el server como premium (0)
         # que self.crackeado sea crackeado = 1 no garantiza que realmente sea no premium pero da una estimacion
-    def obtener_data(self):
+    def obtener_data(self,reintentos : int = 1):
         'metodo que actualiza la informacion de un servidor'
-        try:
-            server = JavaServer.lookup(address=self.direccion,timeout=self.timeout)
-            estado = server.status()
-            self.version = estado.version.name
-            self.max_jugadores = estado.players.max
-            self.jugadores_online = estado.players.online
-            self.motd = estado.motd.to_plain().replace('\n',' ').replace('\r', ' ').strip()
-            self.estado = 'online'
-            self.p_onlines = re.findall(r"name='(\S+)'",str(estado.players.sample)) # lista de jugadores online 
-            self.uuid = re.findall(r"id='(\S+)'",str(estado.players.sample)) # lista de uuids
-            self.p_data = list(zip(self.p_onlines,self.uuid)) # tupla (jugador, uuid)
-            self.info = (self.direccion,self.pais,self.version,self.fecha)
-            
-            return self.estado
+        for _ in range(reintentos):
+            try:
+                server = JavaServer.lookup(address=self.direccion,timeout=self.timeout)
+                estado = server.status()
+                self.version = estado.version.name
+                self.max_jugadores = estado.players.max
+                self.jugadores_online = estado.players.online
+                self.motd = estado.motd.to_plain().replace('\n',' ').replace('\r', ' ').strip()
+                self.estado = 'online'
+                self.p_onlines = re.findall(r"name='(\S+)'",str(estado.players.sample)) # lista de jugadores online 
+                self.uuid = re.findall(r"id='(\S+)'",str(estado.players.sample)) # lista de uuids
+                self.p_data = list(zip(self.p_onlines,self.uuid)) # tupla (jugador, uuid)
+                self.info = (self.direccion,self.pais,self.version,self.fecha)
+                
+                return self.estado
+            except TimeoutError:
+                continue
+            except :
+                break
         
-        except:
-
-            return self.estado
+        return self.estado
         
     def verificar_crackeado(self):
         '''obtiene un verdedicto respecto a si el server es crackeado o no
