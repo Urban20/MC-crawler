@@ -7,6 +7,7 @@ permite escanear rangos de ips especificos
 import (
 	"flag"
 	"fmt"
+	"math/rand"
 	"net"
 	"os"
 	"sync"
@@ -14,8 +15,9 @@ import (
 )
 
 const (
-	PUERTO = 25565
-	STDOUT = "ip_escan.data" // donde se desvia el stdout, no modificar
+	PUERTO  = 25565
+	STDOUT  = "ip_escan.data" // donde se desvia el stdout, no modificar
+	TIMEOUT = 30
 )
 
 var n0 = flag.Int("n0", 0, "")
@@ -87,10 +89,13 @@ func Ejecucion24(n1 int, n2 int, n3 int, lim chan struct{}) {
 
 		lim <- struct{}{}
 		wg.Add(1)
+		n := rand.Intn(TIMEOUT)
 
 		go func() {
 			defer wg.Done()
 			defer func() { <-lim }()
+
+			time.Sleep(time.Duration(n) * time.Millisecond)
 
 			dir := fmt.Sprintf("%s:%d", ip, PUERTO)
 			cx, conerr := net.DialTimeout("tcp", dir, time.Millisecond*300)
@@ -112,10 +117,13 @@ func Ejecucion16(n0 int, n1 int, lim chan struct{}) {
 	for ip := range Barrido16(n0, n1) {
 		wg.Add(1)
 		lim <- struct{}{}
-
+		n := rand.Intn(TIMEOUT)
 		go func() {
+
 			defer wg.Done()
 			defer func() { <-lim }() //liberar el espacio para otra goroutine
+
+			time.Sleep(time.Duration(n) * time.Millisecond)
 
 			dir := fmt.Sprintf("%s:%d", ip, PUERTO)
 
