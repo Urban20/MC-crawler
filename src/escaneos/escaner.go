@@ -15,9 +15,9 @@ import (
 )
 
 const (
-	PUERTO  = 25565
-	STDOUT  = "ip_escan.data" // donde se desvia el stdout, no modificar
-	TIMEOUT = 30
+	PUERTO   = 25565
+	STDOUT   = "ip_escan.data" // donde se desvia el stdout, no modificar
+	N_RANDOM = 30
 )
 
 var n0 = flag.Int("n0", 0, "")
@@ -89,7 +89,7 @@ func Ejecucion24(n1 int, n2 int, n3 int, lim chan struct{}) {
 
 		lim <- struct{}{}
 		wg.Add(1)
-		n := rand.Intn(TIMEOUT)
+		n := rand.Intn(N_RANDOM)
 
 		go func() {
 			defer wg.Done()
@@ -117,7 +117,7 @@ func Ejecucion16(n0 int, n1 int, lim chan struct{}) {
 	for ip := range Barrido16(n0, n1) {
 		wg.Add(1)
 		lim <- struct{}{}
-		n := rand.Intn(TIMEOUT)
+		n := rand.Intn(N_RANDOM)
 		go func() {
 
 			defer wg.Done()
