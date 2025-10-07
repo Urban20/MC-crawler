@@ -7,6 +7,7 @@
 import sqlite3 as sq
 import servers
 from mcserver import McServer
+import consola
 
 # este modulo maneja dos bases de datos:
 # por un lado, la base de datos general donde estan TODOS los servidores
@@ -44,6 +45,7 @@ def purgar():
     
     if servers.conectividad():   
         try:
+            consola.limpiar()
             borrados = 0
             actualizados = 0
 
@@ -88,7 +90,7 @@ def insertar(dato : tuple,espacios :str = '(?,?,?,?)',tabla :str = TABLA,cursor 
 
 def buscar_version(version : str):   
     'pide la version y devuelve las ips'
-
+    consola.limpiar()
     print(f'\n[...] se muestra busqueda segun "{version}"\n')
     try:
         cursor.execute(f'SELECT ip,fecha FROM {TABLA} WHERE version LIKE ? ORDER BY fecha DESC',(f'%{version}',))
@@ -101,7 +103,7 @@ def buscar_version(version : str):
 
 def buscar_crackeados():
     'itera con los servers que determine como no premium'
-    
+    consola.limpiar()
     print(f'\n[...] se muestra busqueda de posible servers no premium')
     try:
         cursor2.execute(f'SELECT ip,VERSION,FECHA FROM {TABLA2} ORDER BY FECHA DESC')

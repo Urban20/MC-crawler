@@ -8,6 +8,7 @@ import db
 import ui 
 from ping3 import ping
 import sys
+import consola
 
 tags_info = 'tags.txt'
 
@@ -70,7 +71,7 @@ def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool
             version_db = tupla[1]
             
             if data == 'online' and version_db == server.version:
-                print(server)
+                server.print()
             else:
                 db.eliminar_crackeado(server.direccion)
                 continue
@@ -78,7 +79,7 @@ def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool
             
             if porversion and data == 'online' and re.search(version,server.info[2]):
                 # doble filtrado
-                print(server)
+                server.print()
                    
                 archivo(server=server,fecha=fecha,arch=arch)
                     
@@ -94,7 +95,7 @@ def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool
             entrada = str(input('[1] siguiente pagina >> ')).strip()
             if entrada == '1':
                 n_pagina+=1
-                print(f'\033[0;105m\n------------------\npagina numero: {n_pagina}\n------------------\n\033[0m')
+                consola.pagina(n_pagina)
                 contador = 0
                 
             else:
@@ -114,7 +115,7 @@ def registrar_server(server : McServer):
     global servers_encontrados
     try:
         db.insertar(dato=server.info)
-        print(server)
+        server.print()
         servers_encontrados+=1
 
     except IntegrityError:

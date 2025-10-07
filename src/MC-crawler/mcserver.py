@@ -4,6 +4,7 @@ import datetime
 from mcstatus import JavaServer
 import re
 import MCuuid
+import consola
 
 class McServer():
     'esta clase es la encargada de obtener el estado y la informacion de los servidores'
@@ -64,7 +65,7 @@ class McServer():
                     self.crackeado = 1    
         except AttributeError: ...
 
-    def __str__(self):
+    def print(self):
 
         if self.p_data and self.crackeado == 1:
             self.veredicto = '\033[0;32mposiblemente crackeado\033[0m'
@@ -74,17 +75,18 @@ class McServer():
             
         else:
             self.veredicto = 'indeterminado'
+
+
+        titulo = f'IP : {self.direccion}'
     
         if self.estado == 'online':
 
-            return f'''\n-----------------------------------------
+            cuerpo = f'''
             veredicto basado en jugador/es: {self.veredicto}
 
             registrado el dia: {self.fecha_otogada} 
 
             estado: {self.estado}
-
-            ip: {self.direccion}
 
             motd: {self.motd}
 
@@ -93,14 +95,14 @@ class McServer():
             version: {self.version}
 
             jugadores online: {self.p_data}
-            \n-----------------------------------------
-            '''
             
+            '''
+
+            consola.info_server(cuerpo=cuerpo, titulo=titulo)
         else:
             
-            return f'''
-            {self.direccion} - estado : {self.estado}
-            '''
+            print(f'{self.direccion} - estado : {self.estado}')
+
         
 
     
