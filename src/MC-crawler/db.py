@@ -32,6 +32,29 @@ conec2 = sq.connect(DB2)
 cursor2 = conec2.cursor()
 cursor2.execute(f'CREATE TABLE IF NOT EXISTS {TABLA2}(ip PRIMARY KEY, VERSION TEXT,FECHA TEXT)')
 
+def verificar_actualizacion(server : McServer):
+    '''esta funcion verifica actualizaciones cuando
+
+    se produce una excepcion de tipo sqlite.integrityerror en registrar_server()
+
+    en el modulo de servers.py'''
+    actualizar = conec.cursor()
+    server_db = actualizar.execute(f'SELECT version FROM {TABLA} WHERE ip = ?',(server.direccion,))
+    version_db = server_db.fetchone()[0]
+    
+    if server.version != version_db:
+        actualizar_server(sv=server,ip_puerto=server.direccion)
+        print(f'\n{server.direccion} fue actualizado\n')
+
+
+def actualizar_server(sv : McServer, ip_puerto):
+    'funcion simple que abstrae el comando de sqlite para actualizar servidores'
+
+    cursor.execute(f'UPDATE {TABLA} SET version = ?, fecha = ? WHERE ip = ?', 
+                                (sv.version, sv.fecha, ip_puerto))
+    conec.commit()
+
+
 def eliminar_crackeado(direccion : str):
     eliminar = conec2.cursor()
     eliminar.execute(f'DELETE FROM {TABLA2} WHERE ip = ?',(direccion,))
@@ -66,15 +89,15 @@ def purgar():
                     cursor.execute(f'DELETE FROM {TABLA} WHERE ip = ?',(ip_puerto,))
                     print(f'\033[0;31m[-] server {ipv4} eliminado de la db\033[0m')
                     borrados+=1
-
+                    conec.commit()   
+                      
                 elif sv.version != version_db:
                     sv.verificar_crackeado()
-                    cursor.execute(f'UPDATE {TABLA} SET version = ?, fecha = ? WHERE ip = ?', 
-                                (sv.version, sv.fecha, ip_puerto))
+                    actualizar_server(sv=sv,ip_puerto=ip_puerto)
                     print(f'[↑] ACTUALIZADO: {ip_puerto} | version ({version_db} → {sv.version}) | {fecha_db} → {sv.fecha}')
                     actualizados+=1
                 
-                conec.commit()         
+                    
                 
             print(f'\npurga finalizada\nservers eliminados (offlines): {borrados} | servers actualizados: {actualizados}\n')
         except Exception as e:

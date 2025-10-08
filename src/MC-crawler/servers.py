@@ -118,8 +118,10 @@ def registrar_server(server : McServer):
         server.print()
         servers_encontrados+=1
 
-    except IntegrityError:
-        ...
+    except IntegrityError: # agregar para verificar server y comparar versiones
+        db.verificar_actualizacion(server)
+        server.print()
+
     except DatabaseError as e:
         print(f'\n[!] error en la db : {e}\n')
         sys.exit(1)

@@ -12,3 +12,4 @@ MC-crawlerBIN.rar
 *.build
 bin/
 log.txt
+tests.py
