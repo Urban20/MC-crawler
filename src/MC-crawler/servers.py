@@ -120,7 +120,7 @@ def registrar_server(server : McServer):
 
     except IntegrityError: # agregar para verificar server y comparar versiones
         db.verificar_actualizacion(server)
-        server.print()
+        
 
     except DatabaseError as e:
         print(f'\n[!] error en la db : {e}\n')

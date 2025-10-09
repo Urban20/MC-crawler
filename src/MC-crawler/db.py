@@ -44,7 +44,8 @@ def verificar_actualizacion(server : McServer):
     
     if server.version != version_db:
         actualizar_server(sv=server,ip_puerto=server.direccion)
-        print(f'\n{server.direccion} fue actualizado\n')
+        print(f'\n{server.direccion} fue actualizado\nversion {version_db} → {server.version}\n')
+        server.print()
 
 
 def actualizar_server(sv : McServer, ip_puerto):
