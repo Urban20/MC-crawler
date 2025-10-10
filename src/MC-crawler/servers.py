@@ -17,6 +17,9 @@ def conectividad():
     try:
         timeout = 3
         return ping('8.8.8.8',timeout=timeout) != None
+    except PermissionError:
+        print('\n[-] se requieren privilegios elevados\n')
+        return False
     except Exception: 
         print('\n[-] sin conexion o conexion debil\n')
         return False
