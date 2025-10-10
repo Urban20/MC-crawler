@@ -24,7 +24,20 @@ pip install -r requirements.txt
 
 3. Consigue el archivo `escan` (escáner de IPs):
    - Windows: Descarga `escan.exe` [click](https://github.com/Urban20/MC-crawler/releases)
-   - Linux: Compílalo vos mismo con Go
+   - Linux: Compílalo vos mismo con Go:
+
+   `1. instalar Golang`
+
+   `2. acceder a la carpeta de escaneos/`
+
+   `3. ejecutar el comando`: 
+   ```
+   go build .
+   
+   ```
+   `4. arrastrar el bonario generado a la carpeta principal (MC-crawler/)`
+   
+   
 
 4. Ejecuta:
 ```bash
