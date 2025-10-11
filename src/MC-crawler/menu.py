@@ -19,6 +19,7 @@ class Menu():
         '''
         self.ejecutando = True
         self.color = color_panel
+        self.msgcontinuar = 'ENTER para continuar' 
 
     def iniciar(self):
 
@@ -32,8 +33,10 @@ class Menu():
             match opcion:
                 case '0':
                     ejecutar_barrido()
+                    input(self.msgcontinuar)
                 case '1':
                     purgar()
+                    input(self.msgcontinuar)
                 case '2':
                     buscar_crackeados()
                 case '3':

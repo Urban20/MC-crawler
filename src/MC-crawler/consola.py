@@ -5,7 +5,7 @@ from colorama import init
 
 
 init()
-VERSION = 'V3.2' # version del programa
+VERSION = 'V4.0' # version del programa
 VIOLETA = '\033[0;95m'
 RESET = '\033[0m '
 FONDO_V = '\033[0;105m'
