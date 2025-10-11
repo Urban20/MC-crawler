@@ -5,7 +5,6 @@ from mcserver import  *
 from sqlite3 import DatabaseError,IntegrityError
 from os import remove
 import db
-import ui 
 from ping3 import ping
 import sys
 import consola
@@ -93,8 +92,7 @@ def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool
         # paginado -----------------------------------------
         #  esta seccion detiene el muestreo cada cierto limite y pregunta si deseas continuar
         if contador >= LIMITE:
-            ui.interfaz.bloqueada = True
-            ui.interfaz.actualizar_estado()
+
             entrada = str(input('[1] siguiente pagina >> ')).strip()
             if entrada == '1':
                 n_pagina+=1
@@ -102,15 +100,11 @@ def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool
                 contador = 0
                 
             else:
-                ui.interfaz.bloqueada = False
-                ui.interfaz.actualizar_estado()
                 
+
                 break
         # paginado -----------------------------------------
-    ui.interfaz.bloqueada = False
-    ui.interfaz.actualizar_estado()
     
-
 servers_encontrados = 0 # cuenta los servers encontrados
 # se muestra en consola en procesar_lineas() en gopython.py
 def registrar_server(server : McServer):

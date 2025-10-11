@@ -6,7 +6,6 @@ import os
 from mcserver import McServer
 import servers
 import data
-import consola
 
 # 130 61
 # 54.36.0.0/14 178.32.0.0/15 151.80.0.0/16
@@ -89,7 +88,6 @@ def ejecutar_barrido():
     except FileNotFoundError: ...
 
     if servers.conectividad():
-        consola.limpiar()
         print('\n[+] barriendo bloques de ips, esto puede llevar tiempo ...\n ')
         print('NO cierres el programa')
         ejecutar_bin()

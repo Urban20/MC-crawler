@@ -1,4 +1,4 @@
-from ui import empaquetar
+from menu import Menu
 from db import conec
 import consola
 
@@ -13,7 +13,8 @@ if __name__ == '__main__':
     try:
         print(consola.LOGO)
         print(consola.ADVERTENCIA)
-        empaquetar()
+        menu = Menu()
+        menu.iniciar()
         conec.close()            
     except Exception as e:
         print(f'\nhubo un problema: {e}')
