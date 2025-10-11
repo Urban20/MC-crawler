@@ -7,7 +7,6 @@ Un programa para encontrar servidores de Minecraft. Escanea direcciones IP y rec
 - Escanea bloques de IPs buscando servidores de Minecraft
 - Detecta si los servidores son premium o permiten jugadores no premium
 - Guarda la información en una base de datos local
-- Tiene interfaz gráfica para facilitar el uso
 
 ## Cómo instalarlo
 
@@ -49,7 +48,7 @@ instalalo compilado para Windows (version .exe): [click](https://github.com/Urba
 
 ## Cómo se usa
 
-La interfaz tiene 4 botones principales: 
+Opciones: 
 
 - **Barrido**: Busca nuevos servidores
 - **Purgar**: Elimina servidores que ya no están online

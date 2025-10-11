@@ -11,8 +11,8 @@ import consola
 
 if __name__ == '__main__': 
     try:
-        print(consola.LOGO)
-        print(consola.ADVERTENCIA)
+        consola.limpiar()
+        
         menu = Menu()
         menu.iniciar()
         conec.close()            
