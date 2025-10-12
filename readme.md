@@ -2,6 +2,11 @@
 
 Un programa para encontrar servidores de Minecraft. Escanea direcciones IP y recopila información sobre servidores activos guardandolos en una base de datos.
 
+## Vista previa
+<p align="center">
+  <img src="https://i.postimg.cc/6p41sY6d/demo.png" alt="McCrawler Demo" width="800" style="border-radius: 8px">
+</p>
+
 ## Qué hace
 
 - Escanea bloques de IPs buscando servidores de Minecraft
