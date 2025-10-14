@@ -13,7 +13,7 @@ class Menu():
         self.mensaje = '''
         0: Ejecutar barrido
         1: Purgar servidores
-        2: Buscar servers crackeados
+        2: Buscar POSIBLES servers crackeados
         3: Buscar version
         4: Salir del programa
         '''

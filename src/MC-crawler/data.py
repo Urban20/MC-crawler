@@ -15,13 +15,13 @@ def obtener_bloque_web(url : str,regex : str = r'(\d+)\.(\d+)\.0\.0'):
         if web.status_code == 200:
             rangos = re.findall(regex,web.text)
 
-            print('\n[+] rangos obtenidos\n')
             
-            return random.sample(rangos,k=min(len(rangos),LIMITE))
+            
+            return (random.sample(rangos,k=min(len(rangos),LIMITE)),'ok')
         
         else: 
             raise ConnectionError
 
     except (requests.ConnectionError,requests.ConnectTimeout) as e:
-        print(f'\n[+] no se pudo obtener el rango ip: {e}\n')
-        return []   
+        
+        return ([],'fallo')   

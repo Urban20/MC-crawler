@@ -2,6 +2,9 @@ from rich.console import Console
 from rich.markdown import Markdown
 import sys
 from colorama import init
+from rich.table import Table
+from rich.live import Live
+import time
 
 
 init()
@@ -24,6 +27,17 @@ LOGO = f'''   *           '     *
                     github : https://github.com/Urban20
 '''
 ADVERTENCIA = f'{AMARILLO}\n[!] advertencia: El antivirus puede bloquear el correcto funcionamiento del programa y/o dar falsos positivos\n{RESET}'
+
+def crear_tabla(estados : list):
+    tabla = Table(title='rangos',expand=True,)
+    tabla.add_column('servicio',justify='center')
+    tabla.add_column('estado',justify='center')
+
+    with Live(tabla):
+        for servicio,estado in zip(['oracle','amazonaws','google'],estados):
+            tabla.add_row(servicio,estado)
+            time.sleep(0.5)
+
 
 def limpiar():
     sys.stdout.write('\033c')

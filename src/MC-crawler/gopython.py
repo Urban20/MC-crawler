@@ -2,6 +2,7 @@
 barre bloques de ips para detectar puertos abiertos de interes'''
 
 import subprocess
+import consola
 import os
 from mcserver import McServer
 import servers
@@ -29,9 +30,12 @@ GOOGLE = 'https://www.gstatic.com/ipranges/cloud.json'
 def ejecutar_bin():
     'automatiza la ejecucion del bin de go'
     regex16 = r'(\d+)\.(\d+)\.0\.0/16'
-    rango1 = data.obtener_bloque_web(url=ORACLE)
-    rango2 = data.obtener_bloque_web(url=AMAZON,regex=regex16)
-    rango3 = data.obtener_bloque_web(url=GOOGLE,regex=regex16)
+    rango1,estado1 = data.obtener_bloque_web(url=ORACLE)
+    rango2,estado2 = data.obtener_bloque_web(url=AMAZON,regex=regex16)
+    rango3,estado3 = data.obtener_bloque_web(url=GOOGLE,regex=regex16)
+
+    consola.crear_tabla([estado1,estado2,estado3])
+
     bloques = rango1 + rango2 + rango3
 
     if bloques:
