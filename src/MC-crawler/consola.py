@@ -46,7 +46,6 @@ def info_server(cuerpo : str,titulo : str =''):
 
 
 def pagina(n_pagina : int):
-    etiqueta = f'# {FONDO_V}Pagina {n_pagina}{RESET}'
+    etiqueta = f'# Pagina {n_pagina}'
     consola = Console()
-    md = Markdown(etiqueta)
-    consola.print(md)
+    consola.print(Markdown(etiqueta,style='white'),style='medium_purple3')
