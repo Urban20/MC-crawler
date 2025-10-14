@@ -6,6 +6,7 @@ from db import buscar_version,purgar,buscar_crackeados
 from rich.panel import Panel
 from rich import print
 import consola
+from servers import conectividad
 
 class Menu():
     def __init__(self,color_panel = 'medium_purple3'):
@@ -29,19 +30,24 @@ class Menu():
             consola.limpiar()
             print(panel)
             opcion = str(input('[#] seleccionar opcion > ')).strip()
-
+            
             match opcion:
                 case '0':
-                    ejecutar_barrido()
+                    if conectividad():
+                        ejecutar_barrido()
                     input(self.msgcontinuar)
                 case '1':
-                    purgar()
+                    if conectividad():
+                        purgar()
                     input(self.msgcontinuar)
                 case '2':
-                    buscar_crackeados()
+                    if conectividad():
+                        buscar_crackeados()
+                    input(self.msgcontinuar)
                 case '3':
                     version = str(input('version > ')).strip()
                     buscar_version(version=version)
+                    input(self.msgcontinuar)
                 case '4':
                     self.ejecutando = False
                 case _:

@@ -15,7 +15,9 @@ def conectividad():
     'funcion que verifica si hay conexion a internet haciendo ping al dns de google'
     try:
         timeout = 3
-        return ping('8.8.8.8',timeout=timeout) != None
+        if ping('8.8.8.8',timeout=timeout) == None:
+            raise Exception
+        return True
     except PermissionError:
         print('\n[-] se requieren privilegios elevados\n')
         return False

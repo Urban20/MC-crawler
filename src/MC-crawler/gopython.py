@@ -91,11 +91,10 @@ def ejecutar_barrido():
         os.remove(STDOUT)
     except FileNotFoundError: ...
 
-    if servers.conectividad():
-        print('\n[+] barriendo bloques de ips, esto puede llevar tiempo ...\n ')
-        print('NO cierres el programa')
-        ejecutar_bin()
-        print('\n[+] barrido finalizado\nhaciendo ping a los servidores ...\n')
-        procesar_lineas()
+    print('\n[+] barriendo bloques de ips, esto puede llevar tiempo ...\n ')
+    print('NO cierres el programa')
+    ejecutar_bin()
+    print('\n[+] barrido finalizado\nhaciendo ping a los servidores ...\n')
+    procesar_lineas()
         
         

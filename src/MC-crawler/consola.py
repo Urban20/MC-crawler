@@ -29,7 +29,7 @@ LOGO = f'''   *           '     *
 ADVERTENCIA = f'{AMARILLO}\n[!] advertencia: El antivirus puede bloquear el correcto funcionamiento del programa y/o dar falsos positivos\n{RESET}'
 
 def crear_tabla(estados : list):
-    tabla = Table(title='rangos',expand=True,)
+    tabla = Table(expand=True,)
     tabla.add_column('servicio',justify='center')
     tabla.add_column('estado',justify='center')
 
