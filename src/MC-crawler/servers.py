@@ -75,7 +75,7 @@ def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool
         if crackeados:
             version_db = tupla[1]
             
-            if data == 'online' and version_db == server.version:
+            if data == 'online' and version_db == server.version and server.veredicto != '\033[0;31mposiblemente premium\033[0m':
                 server.print()
             else:
                 db.eliminar_crackeado(server.direccion)

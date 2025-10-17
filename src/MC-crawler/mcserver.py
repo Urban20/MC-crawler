@@ -62,19 +62,21 @@ class McServer():
             if self.p_data and self.estado == 'online':
                 uuid_calculado = MCuuid.uuid_Offline(self.p_onlines[0])
                 if uuid_calculado == self.uuid[0]:
-                    self.crackeado = 1    
+                    self.crackeado = 1 
+
+
+            if self.p_data and self.crackeado == 1:
+                self.veredicto = '\033[0;32mposiblemente crackeado\033[0m'
+
+            elif self.p_data and self.crackeado == 0 and re.search(r'\w+-\w+-4\w+-\w+-\w+',self.uuid[0]):
+                self.veredicto = '\033[0;31mposiblemente premium\033[0m'
+            
+            else:
+                self.veredicto = 'indeterminado'
+   
         except AttributeError: ...
 
     def print(self):
-
-        if self.p_data and self.crackeado == 1:
-            self.veredicto = '\033[0;32mposiblemente crackeado\033[0m'
-
-        elif self.p_data and self.crackeado == 0 and re.search(r'\w+-\w+-4\w+-\w+-\w+',self.uuid[0]):
-            self.veredicto = '\033[0;31mposiblemente premium\033[0m'
-            
-        else:
-            self.veredicto = 'indeterminado'
 
 
         titulo = f'IP : {self.direccion}'
