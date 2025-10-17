@@ -7,19 +7,20 @@ import os
 from mcserver import McServer
 import servers
 import data
+import configuracion
 
 # 130 61
 # 54.36.0.0/14 178.32.0.0/15 151.80.0.0/16
 
 STDOUT = 'ip_escan.data' # no modificar 
-TIMEOUT = 0.6
+TIMEOUT = configuracion.TIMEOUT
 
 # para HILOS:
 #  cuidado con subir demasiado este numero,
 #  puede saturar tu equipo, ancho de banda
 #  y simular un ataque D.O.S (no es la idea)
 #  a mayor numero, mayor velocidad de escaneo pero mayor riesgo
-HILOS = 1000
+HILOS = configuracion.HILOS
 
 BINARIO = './escan'
 

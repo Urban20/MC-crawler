@@ -8,8 +8,10 @@ import db
 from ping3 import ping
 import sys
 import consola
+import configuracion
 
-tags_info = 'tags.txt'
+
+arch = configuracion.FILTRADOS # archivos donde se guardan los servers filtrados temporales
 
 def conectividad():
     'funcion que verifica si hay conexion a internet haciendo ping al dns de google'
@@ -46,7 +48,6 @@ def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool
     
     contador = 0 # contador de servidores por pagina
     LIMITE = 10 # limite de servers por pagina
-    arch = 'filtrados.txt' # archivos donde se guardan los servers filtrados temporales
     n_pagina = 1
 
     try:

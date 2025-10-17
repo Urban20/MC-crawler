@@ -7,6 +7,9 @@ from rich.panel import Panel
 from rich import print
 import consola
 from servers import conectividad
+import configuracion
+
+
 
 class Menu():
     def __init__(self,color_panel = 'medium_purple3'):
@@ -17,9 +20,10 @@ class Menu():
         2: Buscar POSIBLES servers crackeados
         3: Buscar version
         4: Salir del programa
+        5: ver configuración
         '''
         self.ejecutando = True
-        self.color = color_panel
+        self.color = configuracion.COLOR
         self.msgcontinuar = 'ENTER para continuar' 
 
     def iniciar(self):
@@ -50,6 +54,9 @@ class Menu():
                     input(self.msgcontinuar)
                 case '4':
                     self.ejecutando = False
+                case '5':
+                    consola.ver_config()
+                    input(self.msgcontinuar)
                 case _:
             
                     continue

@@ -1,13 +1,18 @@
 from rich.console import Console
 from rich.markdown import Markdown
+from rich.panel import Panel
+import rich
 import sys
 from colorama import init
 from rich.table import Table
 from rich.live import Live
 import time
+import configuracion
 
 
 init()
+consola = Console()
+
 VERSION = 'V4.1' # version del programa
 VIOLETA = '\033[0;95m'
 RESET = '\033[0m '
@@ -27,6 +32,27 @@ LOGO = f'''   *           '     *
                     github : https://github.com/Urban20
 '''
 ADVERTENCIA = f'{AMARILLO}\n[!] advertencia: El antivirus puede bloquear el correcto funcionamiento del programa y/o dar falsos positivos\n{RESET}'
+
+def ver_config():
+    config = f'''
+
+    - REDES:
+
+     hilos: {configuracion.HILOS}
+     tiempo de espera entre server: {configuracion.TIMEOUT}
+
+    - ARCHIVOS:
+
+     archivo de guardado .txt: {configuracion.FILTRADOS}
+
+    - DISEÑO:
+
+     tema: {configuracion.COLOR}
+    '''
+
+    rich.print(Panel(config,title='configuracion'))
+
+    
 
 def crear_tabla(estados : list):
     tabla = Table(expand=True,)
@@ -61,5 +87,4 @@ def info_server(cuerpo : str,titulo : str =''):
 
 def pagina(n_pagina : int):
     etiqueta = f'# Pagina {n_pagina}'
-    consola = Console()
-    consola.print(Markdown(etiqueta,style='white'),style='medium_purple3')
+    consola.print(Markdown(etiqueta,style='white'),style=configuracion.COLOR)
