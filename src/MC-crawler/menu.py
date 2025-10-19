@@ -1,4 +1,4 @@
-'modulo encargado de la UI del programa'
+'modulo encargado del menu del programa'
 
 
 from gopython import ejecutar_barrido
@@ -6,7 +6,7 @@ from db import buscar_version,purgar,buscar_crackeados
 from rich.panel import Panel
 from rich import print
 import consola
-from servers import conectividad
+from servers import conectividad,iniciar_busqueda
 import configuracion
 
 
@@ -49,7 +49,7 @@ class Menu():
                         buscar_crackeados()
                     input(self.msgcontinuar)
                 case '3':
-                    version = str(input('version > ')).strip()
+                    version = iniciar_busqueda()
                     buscar_version(version=version)
                     input(self.msgcontinuar)
                 case '4':

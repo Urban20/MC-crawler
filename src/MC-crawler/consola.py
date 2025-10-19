@@ -13,6 +13,7 @@ import configuracion
 init()
 consola = Console()
 
+NEGRITA = '\033[1m'
 VERSION = 'V4.1' # version del programa
 VIOLETA = '\033[0;95m'
 RESET = '\033[0m '
@@ -65,11 +66,12 @@ def crear_tabla(estados : list):
             time.sleep(0.5)
 
 
-def limpiar():
+def limpiar(logo = True):
     sys.stdout.write('\033c')
     sys.stdout.flush()
-    print(LOGO)
-    print(ADVERTENCIA)
+    if logo:
+        print(LOGO)
+        print(ADVERTENCIA)
 
 
 def info_server(cuerpo : str,titulo : str =''):

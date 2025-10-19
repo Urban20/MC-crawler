@@ -1,4 +1,7 @@
-'modulo puente entre la base de datos y el programa'
+'''modulo puente entre la base de datos y el programa
+
+provee funciones relacionadas directamente con la busqueda de servidores y
+conectividad del programa '''
 
 from data import *
 from mcserver import  *
@@ -9,9 +12,32 @@ from ping3 import ping
 import sys
 import consola
 import configuracion
+import shutil
 
 
 arch = configuracion.FILTRADOS # archivos donde se guardan los servers filtrados temporales
+
+def iniciar_busqueda():
+    'imprime la busqueda de servidores de forma artistica'
+    consola.limpiar(logo=False)
+    x,_ = shutil.get_terminal_size()
+
+    logo=r'''
+    ////////////////////////////////////////////////////////////
+// __  __            ____                    _            //
+//|  \/  | ___      / ___|_ __ __ ___      _| | ___ _ __  //
+//| |\/| |/ __|____| |   | '__/ _` \ \ /\ / / |/ _ \ '__| //
+//| |  | | (_|_____| |___| | | (_| |\ V  V /| |  __/ |    //
+//|_|  |_|\___|     \____|_|  \__,_| \_/\_/ |_|\___|_|    //
+////////////////////////////////////////////////////////////
+     '''
+    for linea in logo.strip().splitlines():
+        print(linea.center(x))
+
+    print(consola.NEGRITA+'Buscador de servidores.'.center(x)+consola.RESET)
+    for _ in range(2):
+        print('_'*x+'\n')
+    return str(input(consola.NEGRITA+'Buscar version >> '+consola.RESET)).strip()
 
 def conectividad():
     'funcion que verifica si hay conexion a internet haciendo ping al dns de google'
