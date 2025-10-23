@@ -40,7 +40,7 @@ def ver_config():
     - REDES:
 
      hilos: {configuracion.HILOS}
-     tiempo de espera entre server: {configuracion.TIMEOUT}
+     tiempo de espera entre server: {configuracion.TIMEOUT} seg
 
     - ARCHIVOS:
 
