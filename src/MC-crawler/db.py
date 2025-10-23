@@ -94,6 +94,7 @@ def purgar():
             elif sv.version != version_db:
                 sv.verificar_crackeado()
                 actualizar_server(sv=sv,ip_puerto=ip_puerto)
+                servers.registrar_crackeado(sv)
                 print(f'[↑] ACTUALIZADO: {ip_puerto} | version ({version_db} → {sv.version}) | {fecha_db} → {sv.fecha}')
                 actualizados+=1
             
