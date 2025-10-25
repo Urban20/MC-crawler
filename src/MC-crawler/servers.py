@@ -17,7 +17,7 @@ import shutil
 
 arch = configuracion.FILTRADOS # archivos donde se guardan los servers filtrados temporales
 
-def iniciar_busqueda():
+def iniciar_busqueda(crackeados : bool = False):
     'imprime la busqueda de servidores de forma artistica'
     consola.limpiar(logo=False)
     x,_ = shutil.get_terminal_size()
@@ -34,9 +34,10 @@ def iniciar_busqueda():
     for linea in logo.strip().splitlines():
         print(linea.center(x))
 
-    print(consola.NEGRITA+'Buscador de servidores.'.center(x)+consola.RESET)
+    print(consola.NEGRITA+'Busqueda NO premium'.center(x)+consola.RESET if crackeados else consola.NEGRITA+'Busqueda global'.center(x)+consola.RESET)
     for _ in range(2):
-        print('_'*x+'\n')
+        print('_'*x+'\n')  
+
     return str(input(consola.NEGRITA+'Buscar version >> '+consola.RESET)).strip()
 
 def conectividad():
@@ -96,23 +97,22 @@ def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool
         # registra los servers que se van mostrando en consola en tiempo real
         if not crackeados:
             registrar_crackeado(server=server)
-            
+                     
+        if porversion and data == 'online' and re.search(version,server.info[2]):
+            # doble filtrado
+            if crackeados:
+                version_db = tupla[1]
 
-        if crackeados:
-            version_db = tupla[1]
-            
-            if data == 'online' and version_db == server.version and server.veredicto != '\033[0;31mposiblemente premium\033[0m':
-                server.print()
+                if version_db == server.version and server.veredicto != '\033[0;31mposiblemente premium\033[0m':
+                    server.print()
+                    
+                else:
+                    db.eliminar_crackeado(server.direccion)
+                    continue
             else:
-                db.eliminar_crackeado(server.direccion)
-                continue
-        else:    
-            
-            if porversion and data == 'online' and re.search(version,server.info[2]):
-                # doble filtrado
                 server.print()
-                   
-                archivo(server=server,fecha=fecha,arch=arch)
+                
+            archivo(server=server,fecha=fecha,arch=arch)
                     
             
                                      

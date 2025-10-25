@@ -125,14 +125,14 @@ def buscar_version(version : str):
     except : ...
 
 
-def buscar_crackeados():
+def buscar_crackeados(version : str):
     'itera con los servers que determine como no premium'
     
     print(f'\n[...] se muestra busqueda de posible servers no premium')
     try:
-        cursor2.execute(f'SELECT ip,VERSION,FECHA FROM {TABLA2} ORDER BY FECHA DESC')
+        cursor2.execute(f'SELECT ip,VERSION,FECHA FROM {TABLA2} WHERE version LIKE ? ORDER BY FECHA DESC',(f'%{version}',))
 
-        servers.mostrar(lista=cursor2,porversion=False,crackeados=True)
+        servers.mostrar(lista=cursor2,crackeados=True,version=version)
     
     except : ...
 

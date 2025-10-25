@@ -14,7 +14,7 @@ init()
 consola = Console()
 
 NEGRITA = '\033[1m'
-VERSION = 'V5.0' # version del programa
+VERSION = 'V5.1' # version del programa
 VIOLETA = '\033[0;95m'
 RESET = '\033[0m '
 FONDO_V = '\033[0;105m'

@@ -18,7 +18,7 @@ class Menu():
         0: Ejecutar barrido
         1: Purgar servidores
         2: Buscar POSIBLES servers crackeados
-        3: Buscar version
+        3: Buscar version (premiums y no premiums)
         4: Salir del programa
         5: ver configuración
         '''
@@ -33,7 +33,7 @@ class Menu():
         while self.ejecutando:
             consola.limpiar()
             print(panel)
-            opcion = str(input('[#] seleccionar opcion > ')).strip()
+            opcion = str(input('[#] seleccionar opcion >> ')).strip()
             
             match opcion:
                 case '0':
@@ -46,7 +46,8 @@ class Menu():
                     input(self.msgcontinuar)
                 case '2':
                     if conectividad():
-                        buscar_crackeados()
+                        version = iniciar_busqueda(crackeados=True)
+                        buscar_crackeados(version)
                     input(self.msgcontinuar)
                 case '3':
                     version = iniciar_busqueda()
