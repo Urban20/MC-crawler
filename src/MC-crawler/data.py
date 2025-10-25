@@ -1,7 +1,15 @@
+'modulo encargado de la obtencion de los rangos ip'
 import requests
 import re
 import random
 
+# otros bloques ip fijos
+OTROS = [(130,61),(54,36),(14,178),(151,80),(50,20),(149,88),
+      (54,38),(116,202),(116,203),(136,243),(66,179),(66,248),
+      (63,135),(188,34),(188,40),(162,33),(173,240),(15,204),(51,81),
+      (135,148)] 
+
+OTROS_random = random.sample(OTROS,k=5)
 
 
 def obtener_bloque_web(url : str,regex : str = r'(\d+)\.(\d+)\.0\.0'):

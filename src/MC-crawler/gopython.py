@@ -27,10 +27,6 @@ BINARIO = './escan'
 ORACLE = 'https://docs.oracle.com/en-us/iaas/tools/public_ip_ranges.json'
 AMAZON = 'https://ip-ranges.amazonaws.com/ip-ranges.json'
 GOOGLE = 'https://www.gstatic.com/ipranges/cloud.json'
-OTROS = [(130,61),(54,36),(14,178),(151,80),(50,20),(149,88),
-      (54,38),(116,202),(116,203),(136,243),(66,179),(66,248),
-      (63,135),(188,34),(188,40),(162,33),(173,240),(15,204),(51,81),
-      (135,148)] 
 
 def ejecutar_bin():
     'automatiza la ejecucion del bin de go'
@@ -45,10 +41,12 @@ def ejecutar_bin():
 
     if bloques:
         print('\n[+] utilizando bloques web y predefinidos\n')
-        BLOQUES16 = bloques + OTROS
+
+        BLOQUES16 = bloques + data.OTROS_random
+
     else:
         print('\n[+] utilizando solo bloques predefinidos\n')
-        BLOQUES16 = OTROS
+        BLOQUES16 = data.OTROS
     try:
     
         for n0,n1 in BLOQUES16: # parametros para barrido de /16
