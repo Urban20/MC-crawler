@@ -12,9 +12,9 @@ OTROS = [(130,61),(54,36),(14,178),(151,80),(50,20),(149,88),
 OTROS_random = random.sample(OTROS,k=5)
 
 
-def obtener_bloque_web(url : str,regex : str = r'(\d+)\.(\d+)\.0\.0'):
+def obtener_bloque_web(url : str,regex : str = r'(\d+)\.(\d+)\.0\.0',limite : int = 10):
     try:
-        LIMITE = 10
+        
         user_ag ={ 'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36'
         }
 
@@ -25,7 +25,7 @@ def obtener_bloque_web(url : str,regex : str = r'(\d+)\.(\d+)\.0\.0'):
 
             
             
-            return (random.sample(rangos,k=min(len(rangos),LIMITE)),'ok')
+            return (random.sample(rangos,k=min(len(rangos),limite)),'ok')
         
         else: 
             raise ConnectionError
