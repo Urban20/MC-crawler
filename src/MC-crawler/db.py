@@ -27,6 +27,14 @@ cursor = conec.cursor()
 cursor.execute(f'CREATE TABLE IF NOT EXISTS {TABLA}(ip PRIMARY KEY,pais TEXT,version TEXT, fecha TEXT)')
 # pais queda obsoleto en la db
 
+def contar_indexados():
+    contados1 = conec.cursor()
+    contados2 = conec2.cursor()
+
+    n_globales = int(contados1.execute(f'SELECT COUNT(*) FROM {TABLA}').fetchone()[0])
+    n_crackeados = int(contados2.execute(f'SELECT COUNT(*) from {TABLA2}').fetchone()[0])
+    return (n_globales,n_crackeados)
+
 # tabla a la db de servers crackeados
 conec2 = sq.connect(DB2)
 cursor2 = conec2.cursor()
