@@ -106,7 +106,7 @@ def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool
             if crackeados:
                 version_db = tupla[1]
 
-                if version_db == server.version and server.veredicto != '\033[0;31mposiblemente premium\033[0m':
+                if version_db == server.version and server.veredicto != server.ET_PREM:
                     server.print()
                     
                 else:

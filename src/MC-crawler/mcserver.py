@@ -29,6 +29,13 @@ class McServer():
         self.veredicto = ''
         self.crackeado = 0 # inicialmente se toma el server como premium (0)
         # que self.crackeado sea crackeado = 1 no garantiza que realmente sea no premium pero da una estimacion
+
+        # etiquetas
+        self.ET_CRACK = '\033[0;32mposiblemente crackeado\033[0m'
+        self.ET_PREM = '\033[0;31mposiblemente premium\033[0m'
+        self.ET_IND = 'indeterminado'
+
+
     def obtener_data(self,reintentos : int = 1):
         'metodo que actualiza la informacion de un servidor'
         for _ in range(reintentos):
@@ -66,13 +73,15 @@ class McServer():
 
 
             if self.p_data and self.crackeado == 1:
-                self.veredicto = '\033[0;32mposiblemente crackeado\033[0m'
+                
+                self.veredicto = self.ET_CRACK
 
             elif self.p_data and self.crackeado == 0 and re.search(r'\w+-\w+-4\w+-\w+-\w+',self.uuid[0]):
-                self.veredicto = '\033[0;31mposiblemente premium\033[0m'
+                
+                self.veredicto = self.ET_PREM
             
             else:
-                self.veredicto = 'indeterminado'
+                self.veredicto = self.ET_IND
    
         except AttributeError: ...
 
