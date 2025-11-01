@@ -91,7 +91,7 @@ def purgar():
             ip_puerto = datos[0]
             fecha_db = datos[2]
             sv = McServer(ip=ipv4,puerto=puerto)
-            sv.obtener_data()
+            sv.obtener_data(reintentos=2)
 
             if sv.estado == 'offline':
                 cursor.execute(f'DELETE FROM {TABLA} WHERE ip = ?',(ip_puerto,))
