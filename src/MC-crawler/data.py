@@ -9,7 +9,7 @@ OTROS = [(130,61),(54,36),(14,178),(151,80),(50,20),(149,88),
       (63,135),(188,34),(188,40),(162,33),(173,240),(15,204),(51,81),
       (135,148)] 
 
-OTROS_random = random.sample(OTROS,k=5)
+OTROS_random = random.sample(OTROS,k=2)
 
 
 def obtener_bloque_web(url : str,regex : str = r'(\d+)\.(\d+)\.0\.0',limite : int = 10):

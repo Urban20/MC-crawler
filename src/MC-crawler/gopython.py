@@ -27,6 +27,7 @@ BINARIO = './escan'
 ORACLE = 'https://docs.oracle.com/en-us/iaas/tools/public_ip_ranges.json'
 AMAZON = 'https://ip-ranges.amazonaws.com/ip-ranges.json'
 GOOGLE = 'https://www.gstatic.com/ipranges/cloud.json'
+HETZNER = 'https://stat.ripe.net/data/announced-prefixes/data.json?resource=AS24940'
 
 def ejecutar_bin():
     'automatiza la ejecucion del bin de go'
@@ -34,10 +35,11 @@ def ejecutar_bin():
     rango1,estado1 = data.obtener_bloque_web(url=ORACLE)
     rango2,estado2 = data.obtener_bloque_web(url=AMAZON,regex=regex16)
     rango3,estado3 = data.obtener_bloque_web(url=GOOGLE,regex=regex16)
+    rango4,estado4 = data.obtener_bloque_web(url=HETZNER,regex=regex16,limite=5)
 
-    consola.crear_tabla([estado1,estado2,estado3])
+    consola.crear_tabla([estado1,estado2,estado3,estado4])
 
-    bloques = rango1 + rango2 + rango3 # bloques de rango web
+    bloques = rango1 + rango2 + rango3 + rango4# bloques de rango web
 
     if bloques:
         print('\n[+] utilizando bloques web y predefinidos\n')

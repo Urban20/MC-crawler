@@ -61,7 +61,7 @@ def crear_tabla(estados : list):
     tabla.add_column('estado',justify='center')
 
     with Live(tabla):
-        for servicio,estado in zip(['oracle','amazonaws','google'],estados):
+        for servicio,estado in zip(['Oracle','Amazonaws','Google','Hetzner'],estados):
             tabla.add_row(servicio,estado)
             time.sleep(0.5)
 
