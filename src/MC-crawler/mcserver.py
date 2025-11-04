@@ -66,20 +66,26 @@ class McServer():
         '''obtiene un verdedicto respecto a si el server es crackeado o no
         
         lo calcula en tiempo real'''
+        try:
+            if self.estado == 'online':
+                bot = Bot(ip=self.ip,puerto=int(self.puerto),timeout=self.timeout)
+                bot.conexion(num_proto=self.protocolo)
+                bot.loguear()
+                bot.leer_paquete()
         
-        if self.estado == 'online':
-            bot = Bot(ip=self.ip,puerto=self.puerto)
-            bot.conexion(num_proto=self.protocolo)
-            bot.loguear()
-            bot.leer_paquete()
-    
-            if re.search('whitelist',bot.respuesta_str.lower()) or bot.numero_estado == 3:
-                self.veredicto = self.ET_CRACK
-            elif bot.numero_estado == 1:
-                self.veredicto = self.ET_PREM
-            else:
-                self.veredicto = self.ET_IND
-            
+                if bot.numero_estado == 3 or re.search(r'whitelisted|white-listed',bot.respuesta_str.lower()):     
+
+                    self.veredicto = self.ET_CRACK
+
+                elif bot.numero_estado == 1:
+
+                    self.veredicto = self.ET_PREM
+
+                else:
+                    self.veredicto = self.ET_IND
+
+        except Exception as e:
+            print(f'\nno se pudo determinar el veredicto del servidor {self.ip}: {e}\n')    
     def print(self):
 
 

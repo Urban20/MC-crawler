@@ -3,7 +3,11 @@ from mcproto.connection import TCPSyncConnection
 from mcproto.protocol.base_io import StructFormat
 import MCuuid
 
-
+# este bot se conecta a los servidores y determina por medio de la respuesta
+# si se trata de un servidor no premium o premium
+# TENER EN CUENTA : el bot no se refleja en el juego pero puede verse en la consola
+# del servidor
+# autor : Urban - Matias Urbaneja
 
 class Bot():
     'bot no premium para Minecraft java'
@@ -17,7 +21,7 @@ class Bot():
         self.__conex = ''
         self.respuerta = None # respuesta del server cuando responda
         self.respuesta_str = None 
-        self.numero_estado = 0
+        self.numero_estado = 0 # inicialmente aparece en 0 (no premium)
         self.conectado = False
   
     def conexion(self,num_proto : int = 47):
@@ -37,16 +41,17 @@ class Bot():
             self.__conex.write_varint(len(paquete))
             self.__conex.write(paquete)
             self.conectado = True
-        except TimeoutError:
-            print(f'\nerror de conexion para {self.ip}\n')
+        except:
+            print(f'{self.usuario} >> no se pudo conecta a {self.ip}')
+
     def loguear(self):
         if self.conectado:
             uuid = MCuuid.uuid_Offline(self.usuario,string=False)
             buff = Buffer()
             buff.write_varint(self.paquete_inicial)
             buff.write_utf(self.usuario)
-        
             buff.write(uuid.bytes)
+
             self.__conex.write_varint(len(buff))
             self.__conex.write(buff)
 
