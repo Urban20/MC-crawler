@@ -5,6 +5,7 @@ from mcstatus import JavaServer
 import re
 import MCuuid
 import consola
+from bot import Bot
 
 class McServer():
     'esta clase es la encargada de obtener el estado y la informacion de los servidores'
@@ -26,6 +27,7 @@ class McServer():
         self.p_onlines = None
         self.timeout = timeout
         self.info = None
+        self.protocolo = 47
         self.veredicto = ''
         self.crackeado = 0 # inicialmente se toma el server como premium (0)
         # que self.crackeado sea crackeado = 1 no garantiza que realmente sea no premium pero da una estimacion
@@ -51,7 +53,7 @@ class McServer():
                 self.uuid = re.findall(r"id='(\S+)'",str(estado.players.sample)) # lista de uuids
                 self.p_data = list(zip(self.p_onlines,self.uuid)) # tupla (jugador, uuid)
                 self.info = (self.direccion,self.pais,self.version,self.fecha)
-                
+                self.protocolo = estado.version.protocol    
                 return self.estado
             except TimeoutError:
                 continue
@@ -65,26 +67,19 @@ class McServer():
         
         lo calcula en tiempo real'''
         
-        try:
-            if self.p_data and self.estado == 'online':
-                uuid_calculado = MCuuid.uuid_Offline(self.p_onlines[0])
-                if uuid_calculado == self.uuid[0]:
-                    self.crackeado = 1 
-
-
-            if self.p_data and self.crackeado == 1:
-                
+        if self.estado == 'online':
+            bot = Bot(ip=self.ip,puerto=self.puerto)
+            bot.conexion(num_proto=self.protocolo)
+            bot.loguear()
+            bot.leer_paquete()
+    
+            if re.search('whitelist',bot.respuesta_str.lower()) or bot.numero_estado == 3:
                 self.veredicto = self.ET_CRACK
-
-            elif self.p_data and self.crackeado == 0 and re.search(r'\w+-\w+-4\w+-\w+-\w+',self.uuid[0]):
-                
+            elif bot.numero_estado == 1:
                 self.veredicto = self.ET_PREM
-            
             else:
                 self.veredicto = self.ET_IND
-   
-        except AttributeError: ...
-
+            
     def print(self):
 
 
