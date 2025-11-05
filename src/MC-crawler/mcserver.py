@@ -3,7 +3,6 @@
 import datetime
 from mcstatus import JavaServer
 import re
-import MCuuid
 import consola
 from bot import Bot
 
@@ -53,8 +52,9 @@ class McServer():
                 self.uuid = re.findall(r"id='(\S+)'",str(estado.players.sample)) # lista de uuids
                 self.p_data = list(zip(self.p_onlines,self.uuid)) # tupla (jugador, uuid)
                 self.info = (self.direccion,self.pais,self.version,self.fecha)
-                self.protocolo = estado.version.protocol    
-                return self.estado
+                self.protocolo = estado.version.protocol  
+
+                return self.estado            
             except TimeoutError:
                 continue
             except :
@@ -70,12 +70,13 @@ class McServer():
             if self.estado == 'online':
                 bot = Bot(ip=self.ip,puerto=int(self.puerto),timeout=self.timeout)
                 bot.conexion(num_proto=self.protocolo)
-                bot.loguear()
+                bot.loguear(version=self.version)
                 bot.leer_paquete()
         
                 if bot.numero_estado == 3 or re.search(r'whitelisted|white-listed',bot.respuesta_str.lower()):     
 
                     self.veredicto = self.ET_CRACK
+                    self.crackeado = 1
 
                 elif bot.numero_estado == 1:
 
