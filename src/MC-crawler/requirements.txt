@@ -3,3 +3,4 @@ Requests==2.32.4
 colorama==0.4.6
 ping3==5.1.5
 rich==14.1.0
+mcproto==0.6.0
