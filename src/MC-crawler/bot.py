@@ -66,7 +66,7 @@ class Bot():
             varint = self.__conex.read_varint()
             n_resp = self.__conex.read(varint)
             self.respuerta = n_resp
-            self.respuesta_str = str(n_resp)
+            self.respuesta_str = n_resp.decode(errors='replace')
             buffer = Buffer(n_resp).read_varint()
             self.numero_estado = buffer
             self.__conex.close()
