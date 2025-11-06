@@ -13,3 +13,4 @@ MC-crawlerBIN.rar
 bin/
 log.txt
 tests.py
+*.dist
