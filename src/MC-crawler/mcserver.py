@@ -17,6 +17,8 @@ class McServer():
         self.ip = ip
         self.puerto = puerto
         self.direccion = self.ip + ':' + str(self.puerto)
+
+        # informacion
         self.estado = 'offline'
         self.jugadores_online = ''
         self.motd = ''
@@ -27,7 +29,10 @@ class McServer():
         self.timeout = timeout
         self.info = None
         self.protocolo = 47
+
+        # caracteristicas del server
         self.withelist = False
+        self.modeado = False
         self.veredicto = ''
         self.crackeado = 0 # inicialmente se toma el server como premium (0)
         # que self.crackeado sea crackeado = 1 no garantiza que realmente sea no premium pero da una estimacion
@@ -68,7 +73,7 @@ class McServer():
         
         lo calcula en tiempo real'''
         try:
-            # REVISAR LA LOGICA
+            
             if self.estado == 'online':
                 bot = Bot(ip=self.ip,puerto=int(self.puerto),timeout=self.timeout)
                 bot.conexion(num_proto=self.protocolo)
@@ -79,11 +84,18 @@ class McServer():
         
                     case 0: 
 
-                        if re.search(r'whitelisted|white-listed',bot.respuesta_str.lower()):
+                        if re.search(r'whitelist|whitelisted|white-listed',
+                                     bot.respuesta_str.lower()):
         
                             self.veredicto = self.ET_CRACK
                             self.crackeado = 1
                             self.withelist = True
+
+                        elif re.search(r'mods|forge',bot.respuesta_str.lower()):
+
+                            self.veredicto = self.ET_CRACK
+                            self.crackeado = 1
+                            self.modeado = True
 
                         else:
                             self.veredicto = self.ET_IND
@@ -114,6 +126,8 @@ class McServer():
             veredicto basado en jugador/es: {self.veredicto}
 
             whitelist encontrada: {self.withelist}
+
+            mods encontrados: {self.modeado}
 
             registrado el dia: {self.fecha_otogada} 
 
