@@ -27,6 +27,7 @@ class McServer():
         self.timeout = timeout
         self.info = None
         self.protocolo = 47
+        self.withelist = False
         self.veredicto = ''
         self.crackeado = 0 # inicialmente se toma el server como premium (0)
         # que self.crackeado sea crackeado = 1 no garantiza que realmente sea no premium pero da una estimacion
@@ -67,26 +68,41 @@ class McServer():
         
         lo calcula en tiempo real'''
         try:
+            # REVISAR LA LOGICA
             if self.estado == 'online':
                 bot = Bot(ip=self.ip,puerto=int(self.puerto),timeout=self.timeout)
                 bot.conexion(num_proto=self.protocolo)
                 bot.loguear(version=self.version)
                 bot.leer_paquete()
+
+                match bot.numero_estado:
         
-                if bot.numero_estado == 3 or re.search(r'whitelisted|white-listed',bot.respuesta_str.lower()):     
+                    case 0: 
 
-                    self.veredicto = self.ET_CRACK
-                    self.crackeado = 1
+                        if re.search(r'whitelisted|white-listed',bot.respuesta_str.lower()):
+        
+                            self.veredicto = self.ET_CRACK
+                            self.crackeado = 1
+                            self.withelist = True
 
-                elif bot.numero_estado == 1:
+                        else:
+                            self.veredicto = self.ET_IND
 
-                    self.veredicto = self.ET_PREM
+                    case 3:
 
-                else:
-                    self.veredicto = self.ET_IND
+                        self.veredicto = self.ET_CRACK
+                        self.crackeado = 1
 
-        except Exception as e:
-            print(f'\nno se pudo determinar el veredicto del servidor {self.ip}: {e}\n')    
+                    case 1:
+
+                        self.veredicto = self.ET_PREM
+
+                    case _:
+                        self.veredicto = self.ET_IND
+
+        except:
+            ...
+                
     def print(self):
 
 
@@ -96,6 +112,8 @@ class McServer():
 
             cuerpo = f'''
             veredicto basado en jugador/es: {self.veredicto}
+
+            whitelist encontrada: {self.withelist}
 
             registrado el dia: {self.fecha_otogada} 
 
