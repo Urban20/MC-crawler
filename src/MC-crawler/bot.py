@@ -5,11 +5,11 @@ import MCuuid
 import re
 
 # este bot se conecta a los servidores y determina por medio de la respuesta
-# si se trata de un servidor no premium o premium
+# si se trata de un servidor no premium o premium, ademas se puede inferir si tiene mods o whitelist
+# pero tiene un pequeño margen de error
 # TENER EN CUENTA :
-# - el bot no se refleja en el juego pero puede verse en la consola del servidor
-# - puede no funcionar bien en todas las versiones por diferencias en el protocolo
-# autor : Urban - Matias Urbaneja
+# - el bot no se refleja en el juego pero puede verse en la consola del servidor porque no completa el login
+# - puede no funcionar bien en todas las versiones por diferencias en el protocolo (1.19 y 1.20 confirmado)
 
 class Bot():
     'bot no premium para Minecraft java'
