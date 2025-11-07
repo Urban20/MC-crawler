@@ -30,17 +30,20 @@ class McServer():
         self.info = None
         self.protocolo = 47
 
-        # caracteristicas del server
-        self.withelist = False
-        self.modeado = False
-        self.veredicto = ''
-        self.crackeado = 0 # inicialmente se toma el server como premium (0)
-        # que self.crackeado sea crackeado = 1 no garantiza que realmente sea no premium pero da una estimacion
 
         # etiquetas
         self.ET_CRACK = '\033[0;32mposiblemente crackeado\033[0m'
         self.ET_PREM = '\033[0;31mposiblemente premium\033[0m'
         self.ET_IND = 'indeterminado'
+        self.ET_TIM = '\033[0;33mtiempo agotado\033[0m'
+
+
+        # caracteristicas del server
+        self.withelist = False
+        self.modeado = False
+        self.veredicto = self.ET_IND
+        self.crackeado = 0 # inicialmente se toma el server como premium (0)
+        # que self.crackeado sea crackeado = 1 no garantiza que realmente sea no premium pero da una estimacion
 
 
     def obtener_data(self,reintentos : int = 1):
@@ -91,15 +94,9 @@ class McServer():
                             self.crackeado = 1
                             self.withelist = True
 
-                        elif re.search(r'mods|forge',bot.respuesta_str.lower()):
+                        if re.search(r'mods|forge',bot.respuesta_str.lower()):
 
-                            self.veredicto = self.ET_CRACK
-                            self.crackeado = 1
                             self.modeado = True
-
-                        else:
-                            self.veredicto = self.ET_IND
-
                     case 3:
 
                         self.veredicto = self.ET_CRACK
@@ -111,7 +108,8 @@ class McServer():
 
                     case _:
                         self.veredicto = self.ET_IND
-
+        except TimeoutError:
+            self.veredicto = self.ET_TIM
         except:
             ...
                 
