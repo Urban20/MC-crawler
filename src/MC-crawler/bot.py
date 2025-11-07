@@ -13,7 +13,7 @@ import re
 
 class Bot():
     'bot no premium para Minecraft java'
-    def __init__(self,ip: str,puerto : int = 25565,usuario = 'McCrawler',timeout : int = 1):
+    def __init__(self,ip: str,puerto : int = 25565,usuario : str = 'McCrawler',timeout : int = 1):
         self.timeout = timeout
         self.usuario = usuario
         self.modo_login = 2
@@ -44,7 +44,7 @@ class Bot():
             self.__conex.write(paquete)
             self.conectado = True
         except:
-            print(f'{self.usuario} >> no se pudo conectar a {self.ip}:{self.puerto}')
+            print(f'[BOT] {self.usuario} >> no se pudo conectar a {self.ip}:{self.puerto}')
 
     def loguear(self,version : str = '1.21' ):
         if self.conectado:

@@ -28,7 +28,7 @@ LOGO = f'''   *           '     *
                                / | \\    {VIOLETA}MC-Crawler {VERSION}{RESET}                  
                               /  |  \\   buscador de servers de Minecraft java           
                              /   |   \\      *                                 
-                            /    |    \\   {FONDO_V}Escrito por => Urb@n{RESET}
+                            /    |    \\   {FONDO_V}Escrito por Urb@n{RESET}
                         
                     github : https://github.com/Urban20
 '''
