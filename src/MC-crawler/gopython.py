@@ -14,7 +14,7 @@ import configuracion
 
 STDOUT = 'ip_escan.data' # no modificar 
 TIMEOUT = configuracion.TIMEOUT
-
+TIMEOUT_ESCAN = configuracion.ESCAN_TIMEOUT
 # para HILOS:
 #  cuidado con subir demasiado este numero,
 #  puede saturar tu equipo, ancho de banda
@@ -52,7 +52,7 @@ def ejecutar_bin():
     try:
     
         for n0,n1 in BLOQUES16: # parametros para barrido de /16
-            subprocess.run([BINARIO,'-n0',str(n0),'-n1',str(n1),'-hl',str(HILOS)])
+            subprocess.run([BINARIO,'-n0',str(n0),'-n1',str(n1),'-hl',str(HILOS),'-t',str(TIMEOUT_ESCAN)])
        
 
         print('\n[+] finalizado\n')
