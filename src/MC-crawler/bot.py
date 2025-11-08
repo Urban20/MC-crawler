@@ -9,7 +9,7 @@ import re
 # pero tiene un pequeño margen de error
 # TENER EN CUENTA :
 # - el bot no se refleja en el juego pero puede verse en la consola del servidor porque no completa el login
-# - puede no funcionar bien en todas las versiones por diferencias en el protocolo (1.19 y 1.20 confirmado)
+# - el bot no funciona en algunas versiones por cambios en el protocolo que son muy variados (es agotador)
 
 class Bot():
     'bot no premium para Minecraft java'
@@ -53,9 +53,12 @@ class Bot():
                 buff = Buffer()
                 buff.write_varint(self.paquete_inicial)
                 buff.write_utf(self.usuario)
-            
-                if int(re.search(r'1\.(\d+)(?:\.\d+)?',version).group(1)) == 21:
+
+                n_ver = int(re.search(r'1\.(\d+)(?:\.\d+)?',version).group(1))
+                if n_ver >= 21:
                     buff.write(uuid.bytes)
+                elif n_ver in [19,20]:
+                    buff.write_value(StructFormat.BOOL,False)
 
                 self.__conex.write_varint(len(buff))
                 self.__conex.write(buff)
