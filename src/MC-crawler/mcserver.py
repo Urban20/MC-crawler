@@ -78,7 +78,7 @@ class McServer():
         try:
             
             if self.estado == 'online':
-                bot = Bot(ip=self.ip,puerto=int(self.puerto),timeout=self.timeout)
+                bot = Bot(ip=self.ip,puerto=int(self.puerto),timeout=0.7)
                 bot.conexion(num_proto=self.protocolo)
                 bot.loguear(version=self.version)
                 bot.leer_paquete()
