@@ -21,6 +21,7 @@ const (
 var n0 = flag.Int("n0", 0, "")
 var n1 = flag.Int("n1", 0, "")
 var n2 = flag.Int("n2", 0, "") // solo se usa en barrido /24
+var tiempo = flag.Int("t", 30, "")
 
 var hl = flag.Int("hl", 50, "")
 
@@ -79,7 +80,7 @@ func Barrido16(n1 int, n2 int) chan string {
 	}
 }
 
-func Ejecucion24(n1 int, n2 int, n3 int, lim chan struct{}) {
+func Ejecucion24(n1 int, n2 int, n3 int, lim chan struct{}, timeout time.Duration) {
 
 	wg := sync.WaitGroup{}
 
@@ -93,7 +94,7 @@ func Ejecucion24(n1 int, n2 int, n3 int, lim chan struct{}) {
 			defer func() { <-lim }()
 
 			dir := fmt.Sprintf("%s:%d", ip, PUERTO)
-			cx, conerr := net.DialTimeout("tcp", dir, time.Millisecond*300)
+			cx, conerr := net.DialTimeout("tcp", dir, time.Millisecond*timeout)
 			if conerr == nil {
 				defer cx.Close()
 				fmt.Println(ip)
@@ -106,7 +107,7 @@ func Ejecucion24(n1 int, n2 int, n3 int, lim chan struct{}) {
 	wg.Wait()
 }
 
-func Ejecucion16(n0 int, n1 int, lim chan struct{}) {
+func Ejecucion16(n0 int, n1 int, lim chan struct{}, timeout time.Duration) {
 	wg := sync.WaitGroup{}
 
 	for ip := range Barrido16(n0, n1) {
@@ -119,7 +120,7 @@ func Ejecucion16(n0 int, n1 int, lim chan struct{}) {
 
 			dir := fmt.Sprintf("%s:%d", ip, PUERTO)
 
-			cx, conerr := net.DialTimeout("tcp", dir, time.Second*1)
+			cx, conerr := net.DialTimeout("tcp", dir, time.Millisecond*timeout)
 			if conerr == nil {
 				defer cx.Close()
 				fmt.Println(ip)
@@ -139,7 +140,8 @@ func main() {
 	n1 := *n1
 	n2 := *n2 //solo se usa en barrido 24
 	hl := *hl
-	b24 := *b24 // booleano que habilita el barrido /24 , por defecto se usa /16
+	b24 := *b24        // booleano que habilita el barrido /24 , por defecto se usa /16
+	timeout := *tiempo // tiempo en miliseg
 
 	arch, _ := os.OpenFile(STDOUT, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 
@@ -149,11 +151,11 @@ func main() {
 
 	if b24 {
 
-		Ejecucion24(n0, n1, n2, lim)
+		Ejecucion24(n0, n1, n2, lim, time.Duration(timeout))
 
 	} else {
 
-		Ejecucion16(n0, n1, lim)
+		Ejecucion16(n0, n1, lim, time.Duration(timeout))
 	}
 
 }
