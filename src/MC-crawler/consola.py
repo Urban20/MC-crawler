@@ -19,6 +19,9 @@ VIOLETA = '\033[0;95m'
 RESET = '\033[0m '
 FONDO_V = '\033[0;105m'
 AMARILLO = '\033[0;33m'
+CELESTE = '\033[0;96m'
+ROJO = '\033[0;31m'
+VERDE = '\033[0;32m'
 
 LOGO = f'''   *           '     *
                    *                *   '              *          *

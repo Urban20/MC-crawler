@@ -32,10 +32,11 @@ class McServer():
 
 
         # etiquetas
-        self.ET_CRACK = '\033[0;32mposiblemente crackeado\033[0m'
-        self.ET_PREM = '\033[0;31mposiblemente premium\033[0m'
-        self.ET_IND = 'indeterminado'
-        self.ET_TIM = '\033[0;33mtiempo agotado\033[0m'
+        self.ET_CRACK = f'{consola.VERDE}posiblemente crackeado{consola.RESET}'
+        self.ET_PREM = f'{consola.ROJO}posiblemente premium{consola.RESET}'
+        self.ET_IND = f'indeterminado'
+        self.ET_TIM = f'{consola.AMARILLO}tiempo agotado{consola.RESET}'
+        self.ET_INC = f'{consola.CELESTE}protocolo incompatible{consola.RESET}'
 
 
         # caracteristicas del server
@@ -78,7 +79,7 @@ class McServer():
         try:
             
             if self.estado == 'online':
-                bot = Bot(ip=self.ip,puerto=int(self.puerto),timeout=0.7)
+                bot = Bot(ip=self.ip,puerto=int(self.puerto),timeout=0.5)
                 bot.conexion(num_proto=self.protocolo)
                 bot.loguear(version=self.version)
                 bot.leer_paquete()
@@ -94,9 +95,12 @@ class McServer():
                             self.crackeado = 1
                             self.withelist = True
 
-                        if re.search(r'mods|forge',bot.respuesta_str.lower()):
+                        elif re.search(r'mods|forge',bot.respuesta_str.lower()):
 
                             self.modeado = True
+                        else:
+                            self.veredicto = self.ET_INC
+                            
                     case 3:
 
                         self.veredicto = self.ET_CRACK
