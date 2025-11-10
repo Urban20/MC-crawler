@@ -76,42 +76,43 @@ class McServer():
         '''obtiene un verdedicto respecto a si el server es crackeado o no
         
         lo calcula en tiempo real'''
+        if self.estado != 'online':
+            return
         try:
             
-            if self.estado == 'online':
-                bot = Bot(ip=self.ip,puerto=int(self.puerto),timeout=0.5)
-                bot.conexion(num_proto=self.protocolo)
-                bot.loguear(version=self.version)
-                bot.leer_paquete()
+            bot = Bot(ip=self.ip,puerto=int(self.puerto),timeout=0.5)
+            bot.conexion(num_proto=self.protocolo)
+            bot.loguear(version=self.version)
+            bot.leer_paquete()
 
-                match bot.numero_estado:
-        
-                    case 0: 
+            match bot.numero_estado:
+    
+                case 0: 
 
-                        if re.search(r'whitelist|whitelisted|white-listed',
-                                     bot.respuesta_str.lower()):
-        
-                            self.veredicto = self.ET_CRACK
-                            self.crackeado = 1
-                            self.withelist = True
-
-                        elif re.search(r'mods|forge',bot.respuesta_str.lower()):
-
-                            self.modeado = True
-                        else:
-                            self.veredicto = self.ET_INC
-                            
-                    case 3:
-
+                    if re.search(r'whitelist|whitelisted|white-listed',
+                                    bot.respuesta_str.lower()):
+    
                         self.veredicto = self.ET_CRACK
                         self.crackeado = 1
+                        self.withelist = True
 
-                    case 1:
+                    elif re.search(r'mods|forge',bot.respuesta_str.lower()):
 
-                        self.veredicto = self.ET_PREM
+                        self.modeado = True
+                    else:
+                        self.veredicto = self.ET_INC
+                        
+                case 3:
 
-                    case _:
-                        self.veredicto = self.ET_IND
+                    self.veredicto = self.ET_CRACK
+                    self.crackeado = 1
+
+                case 1:
+
+                    self.veredicto = self.ET_PREM
+
+                case _:
+                    self.veredicto = self.ET_IND
         except TimeoutError:
             self.veredicto = self.ET_TIM
         except:
@@ -125,7 +126,7 @@ class McServer():
         if self.estado == 'online':
 
             cuerpo = f'''
-            veredicto basado en jugador/es: {self.veredicto}
+            veredicto: {self.veredicto}
 
             whitelist encontrada: {self.withelist}
 

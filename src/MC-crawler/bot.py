@@ -50,31 +50,37 @@ class Bot():
             print(f'[BOT] {self.usuario} >> no se pudo conectar a {self.ip}:{self.puerto}')
 
     def loguear(self,version : str = '1.21' ):
-        if self.conectado:
-            try:
-                uuid = MCuuid.uuid_Offline(self.usuario,string=False)
-                buff = Buffer()
-                buff.write_varint(self.paquete_inicial)
-                buff.write_utf(self.usuario)
+        
+        if not self.conectado:
+            return
+        
+        try:
+            uuid = MCuuid.uuid_Offline(self.usuario,string=False)
+            buff = Buffer()
+            buff.write_varint(self.paquete_inicial)
+            buff.write_utf(self.usuario)
 
-                n_ver = int(re.search(r'1\.(\d+)(?:\.\d+)?',version).group(1))
-                # se intenta cubrir la mayoria de los protocolos
-                if n_ver == 20 or n_ver >= 21:
-                    buff.write(uuid.bytes)
-                elif n_ver == 19:
-                    buff.write_value(StructFormat.BOOL,False)
+            n_ver = int(re.search(r'1\.(\d+)(?:\.\d+)?',version).group(1))
+            # se intenta cubrir la mayoria de los protocolos
+            if n_ver == 20 or n_ver >= 21:
+                buff.write(uuid.bytes)
+            elif n_ver == 19:
+                buff.write_value(StructFormat.BOOL,False)
 
-                self.__conex.write_varint(len(buff))
-                self.__conex.write(buff)
-            except AttributeError: ...
+            self.__conex.write_varint(len(buff))
+            self.__conex.write(buff)
+        except AttributeError: ...
 
     def leer_paquete(self):
-        if self.conectado:
-            varint = self.__conex.read_varint()
-            n_resp = self.__conex.read(varint)
-            self.respuerta = n_resp
-            self.respuesta_str = n_resp.decode(errors='replace')
-            buffer = Buffer(n_resp).read_varint()
-            self.numero_estado = buffer
-            self.__conex.close()
+
+        if not self.conectado:
+            return
+        
+        varint = self.__conex.read_varint()
+        n_resp = self.__conex.read(varint)
+        self.respuerta = n_resp
+        self.respuesta_str = n_resp.decode(errors='replace')
+        buffer = Buffer(n_resp).read_varint()
+        self.numero_estado = buffer
+        self.__conex.close()
 
