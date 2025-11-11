@@ -8,6 +8,7 @@ from mcserver import McServer
 import servers
 import data
 import configuracion
+import datetime
 
 # 130 61
 # 54.36.0.0/14 178.32.0.0/15 151.80.0.0/16
@@ -72,12 +73,17 @@ def leer_stdout():
 def procesar_lineas():
     for linea in leer_stdout():
         try:
-            bot = McServer(ip=linea.replace('\n',''),timeout=TIMEOUT)
-            if bot.obtener_data(reintentos=2) == 'online':
-                bot.verificar_crackeado()
+            server = McServer(ip=linea.replace('\n',''),
+                timeout=TIMEOUT,
+                # se muestra el tiempo actual a la hora de mostrar el servidor antes de insertar en la db
+                fecha_otorgada=datetime.datetime.today().isoformat(sep=' ',timespec='seconds'
+                ))
+            
+            if server.obtener_data(reintentos=2) == 'online':
+                server.verificar_crackeado()
 
-                servers.registrar_server(server=bot)
-                servers.registrar_crackeado(server=bot)
+                servers.registrar_server(server=server)
+                servers.registrar_crackeado(server=server)
         except Exception as e:
             print(f'\n hubo un problema : {e}\n')
             continue

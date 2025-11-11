@@ -12,7 +12,7 @@ import configuracion
 
 
 class Menu():
-    def __init__(self,color_panel = 'medium_purple3'):
+    def __init__(self):
         self.titulo = 'opciones'
         self.mensaje = '''
         0: Ejecutar barrido
