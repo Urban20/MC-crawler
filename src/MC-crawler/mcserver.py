@@ -32,8 +32,8 @@ class McServer():
 
 
         # etiquetas
-        self.ET_CRACK = f'{consola.VERDE}posiblemente crackeado{consola.RESET}'
-        self.ET_PREM = f'{consola.ROJO}posiblemente premium{consola.RESET}'
+        self.ET_CRACK = f'{consola.VERDE}crackeado/no premium{consola.RESET}'
+        self.ET_PREM = f'{consola.ROJO}premium{consola.RESET}'
         self.ET_IND = f'indeterminado'
         self.ET_TIM = f'{consola.AMARILLO}tiempo agotado{consola.RESET}'
         self.ET_INC = f'{consola.CELESTE}protocolo incompatible{consola.RESET}'
@@ -80,7 +80,7 @@ class McServer():
             return
         try:
             
-            bot = Bot(ip=self.ip,puerto=int(self.puerto),timeout=0.5)
+            bot = Bot(ip=self.ip,puerto=int(self.puerto),timeout=0.7)
             bot.conexion(num_proto=self.protocolo)
             bot.loguear(version=self.version)
             bot.leer_paquete()
