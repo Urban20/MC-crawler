@@ -63,9 +63,18 @@ class Bot():
             n_ver = int(re.search(r'1\.(\d+)(?:\.\d+)?',version).group(1))
             # se intenta cubrir la mayoria de los protocolos
             if n_ver == 20 or n_ver >= 21:
-                buff.write(uuid.bytes)
+
+                buff.write_value(StructFormat.BOOL,False) if re.search(r'1\.20(?:\.1)?$',version) else buff.write(uuid.bytes) # especificamente 1.20 / 1.20.1
+
             elif n_ver == 19:
-                buff.write_value(StructFormat.BOOL,False)
+                rep = 2 if re.search(r'1\.19\.(?:1|2)$',version) else 1 # especificamente 1.19.1 / 1.19.2
+
+                for _ in range(rep):
+                    buff.write_value(StructFormat.BOOL,False)
+                
+                
+
+
 
             self.__conex.write_varint(len(buff))
             self.__conex.write(buff)
