@@ -10,8 +10,6 @@ import data
 import configuracion
 import datetime
 
-# 130 61
-# 54.36.0.0/14 178.32.0.0/15 151.80.0.0/16
 
 STDOUT = 'ip_escan.data' # no modificar 
 TIMEOUT = configuracion.TIMEOUT
@@ -23,7 +21,9 @@ TIMEOUT_ESCAN = configuracion.ESCAN_TIMEOUT
 #  a mayor numero, mayor velocidad de escaneo pero mayor riesgo
 HILOS = configuracion.HILOS
 
-BINARIO = './escan'
+BINARIO = 'escan' # no modificar
+
+ruta = os.path.join(os.path.dirname(__file__),BINARIO)
 
 ORACLE = 'https://docs.oracle.com/en-us/iaas/tools/public_ip_ranges.json'
 AMAZON = 'https://ip-ranges.amazonaws.com/ip-ranges.json'
@@ -53,7 +53,7 @@ def ejecutar_bin():
     try:
     
         for n0,n1 in BLOQUES16: # parametros para barrido de /16
-            subprocess.run([BINARIO,'-n0',str(n0),'-n1',str(n1),'-hl',str(HILOS),'-t',str(TIMEOUT_ESCAN)])
+            subprocess.run([ruta,'-n0',str(n0),'-n1',str(n1),'-hl',str(HILOS),'-t',str(TIMEOUT_ESCAN)])
        
 
         print('\n[+] finalizado\n')
