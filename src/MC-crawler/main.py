@@ -15,6 +15,10 @@ if __name__ == '__main__':
         
         menu = Menu()
         menu.iniciar()
-        conec.close()            
+        conec.close()  
+    except KeyboardInterrupt:
+
+        print('\n\nsaliendo del programa\n')        
+          
     except Exception as e:
         print(f'\nhubo un problema: {e}')
