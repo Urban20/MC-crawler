@@ -9,7 +9,7 @@ import servers
 import data
 import configuracion
 import datetime
-
+import sys
 
 STDOUT = 'ip_escan.data' # no modificar 
 TIMEOUT = configuracion.TIMEOUT
@@ -53,8 +53,10 @@ def ejecutar_bin():
     try:
     
         for n0,n1 in BLOQUES16: # parametros para barrido de /16
-            subprocess.run([ruta,'-n0',str(n0),'-n1',str(n1),'-hl',str(HILOS),'-t',str(TIMEOUT_ESCAN)])
-       
+            sp = subprocess.run([ruta,'-n0',str(n0),'-n1',str(n1),'-hl',str(HILOS),'-t',str(TIMEOUT_ESCAN)])
+            if sp.returncode != 0:
+                print('\nhubo un problema en ejecucion\n')
+                sys.exit(1)
 
         print('\n[+] finalizado\n')
     except Exception as e:
