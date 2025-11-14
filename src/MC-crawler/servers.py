@@ -1,14 +1,12 @@
 '''modulo puente entre la base de datos y el programa
 
-provee funciones relacionadas directamente con la busqueda de servidores y
-conectividad del programa '''
+provee funciones relacionadas directamente con la busqueda de servidores '''
 
 from data import *
 from mcserver import  *
 from sqlite3 import DatabaseError,IntegrityError
 from os import remove
 import db
-from ping3 import ping
 import sys
 import consola
 import configuracion
@@ -42,21 +40,6 @@ def iniciar_busqueda(crackeados : bool = False):
         print('_'*x+'\n')  
 
     return str(input(consola.NEGRITA+'Buscar version >> '+consola.RESET)).strip()
-
-def conectividad():
-    'funcion que verifica si hay conexion a internet haciendo ping al dns de google'
-    try:
-        timeout = 3
-        if ping('8.8.8.8',timeout=timeout) == None:
-            raise Exception
-        return True
-    except PermissionError:
-        print('\n[-] se requieren privilegios elevados\n')
-        return False
-    except Exception: 
-        print('\n[-] sin conexion o conexion debil\n')
-        return False
-
 
 def archivo(server,fecha,arch : str):
     'archivo temporal que retiene los servers filtrados para una mejor lectura'

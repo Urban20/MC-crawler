@@ -6,7 +6,8 @@ from db import buscar_version,purgar,buscar_crackeados
 from rich.panel import Panel
 from rich import print
 import consola
-from servers import conectividad,iniciar_busqueda
+from servers import iniciar_busqueda
+import conectividad
 import configuracion
 
 
@@ -37,29 +38,36 @@ class Menu():
             
             match opcion:
                 case '0':
-                    if conectividad():
-                        ejecutar_barrido()
-                    input(self.msgcontinuar)
+                    if not conectividad.conectividad():
+                        continue
+                    
+                    ejecutar_barrido()
+                    
                 case '1':
-                    if conectividad():
-                        purgar()
-                    input(self.msgcontinuar)
+                    if not conectividad.conectividad():
+                        continue
+                    
+                    purgar()
+                    
                 case '2':
-                    if conectividad():
-                        version = iniciar_busqueda(crackeados=True)
-                        buscar_crackeados(version)
-                    input(self.msgcontinuar)
+                    if not conectividad.conectividad():
+                        continue
+
+                    version = iniciar_busqueda(crackeados=True)
+                    buscar_crackeados(version)
+                    
                 case '3':
                     version = iniciar_busqueda()
                     buscar_version(version=version)
-                    input(self.msgcontinuar)
+                    
                 case '4':
                     self.ejecutando = False
                 case '5':
                     consola.ver_config()
-                    input(self.msgcontinuar)
+                    
                 case _:
             
                     continue
-                    
+
+            input(self.msgcontinuar)
 
