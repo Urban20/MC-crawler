@@ -53,42 +53,39 @@ def ejecutar_bin():
     try:
     
         for n0,n1 in BLOQUES16: # parametros para barrido de /16
-            sp = subprocess.run([ruta,'-n0',str(n0),'-n1',str(n1),'-hl',str(HILOS),'-t',str(TIMEOUT_ESCAN)])
-            if sp.returncode != 0:
-                print('\nhubo un problema en ejecucion\n')
-                sys.exit(1)
+            sp = subprocess.Popen([ruta,'-n0',str(n0),'-n1',str(n1),'-hl',str(HILOS),'-t',str(TIMEOUT_ESCAN)],
+                                  stdout=subprocess.PIPE)
+            
+            procesar_lineas(subproc=sp.stdout)
+
+            sp.wait()
+
 
         print('\n[+] finalizado\n')
     except Exception as e:
         print(f'\nhubo un problema al ejecutar el binario: {e}\n')
 
 
-def leer_stdout():
-    
-    try:
-        with open(STDOUT,'r') as ips:
-            for ip in ips:
-                yield ip
-    except:
-        print('\n no se pudo leer el archivo de salida\n')
-
-def procesar_lineas():
-    for linea in leer_stdout():
+def procesar_lineas(subproc):
+    for linea in subproc:
         try:
-            server = McServer(ip=linea.replace('\n',''),
+            ip = str(linea.decode()).replace('\n','').strip()
+            print(ip)
+            server = McServer(ip=ip,
                 timeout=TIMEOUT,
                 # se muestra el tiempo actual a la hora de mostrar el servidor antes de insertar en la db
                 fecha_otorgada=datetime.datetime.today().isoformat(sep=' ',timespec='seconds'
                 ))
             
-            if server.obtener_data(reintentos=2) == 'online':
+            if server.obtener_data() == 'online':
                 server.verificar_crackeado()
 
-                servers.registrar_server(server=server)
-                servers.registrar_crackeado(server=server)
+            servers.registrar_server(server=server)
+            servers.registrar_crackeado(server=server)
+
         except Exception as e:
             print(f'\n hubo un problema : {e}\n')
-            continue
+            
 
     print(f'\nservidores nuevos encontrados: {servers.servers_encontrados}')        
             
@@ -103,7 +100,5 @@ def ejecutar_barrido():
     print('\n[+] barriendo bloques de ips, esto puede llevar tiempo ...\n ')
     print('NO cierres el programa')
     ejecutar_bin()
-    print('\n[+] barrido finalizado\nhaciendo ping a los servidores ...\n')
-    procesar_lineas()
         
         

@@ -8,7 +8,6 @@ import (
 	"flag"
 	"fmt"
 	"net"
-	"os"
 	"sync"
 	"time"
 )
@@ -142,10 +141,6 @@ func main() {
 	hl := *hl
 	b24 := *b24        // booleano que habilita el barrido /24 , por defecto se usa /16
 	timeout := *tiempo // tiempo en miliseg
-
-	arch, _ := os.OpenFile(STDOUT, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-
-	os.Stdout = arch
 
 	lim := make(chan struct{}, hl)
 
