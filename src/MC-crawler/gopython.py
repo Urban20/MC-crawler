@@ -56,9 +56,7 @@ def ejecutar_bin():
             sp = subprocess.Popen([ruta,'-n0',str(n0),'-n1',str(n1),'-hl',str(HILOS),'-t',str(TIMEOUT_ESCAN)],
                                   stdout=subprocess.PIPE)
             
-            procesar_lineas(subproc=sp.stdout)
-
-            sp.wait()
+            procesar_lineas(subproc=sp)
 
 
         print('\n[+] finalizado\n')
@@ -67,11 +65,10 @@ def ejecutar_bin():
 
 
 def procesar_lineas(subproc):
-    for linea in subproc:
+    for linea in subproc.stdout:
         try:
-            ip = str(linea.decode()).replace('\n','').strip()
-            print(ip)
-            server = McServer(ip=ip,
+            ip = linea.decode().replace('\n','').strip()
+            server = McServer(ip=str(ip),
                 timeout=TIMEOUT,
                 # se muestra el tiempo actual a la hora de mostrar el servidor antes de insertar en la db
                 fecha_otorgada=datetime.datetime.today().isoformat(sep=' ',timespec='seconds'
@@ -85,11 +82,6 @@ def procesar_lineas(subproc):
 
         except Exception as e:
             print(f'\n hubo un problema : {e}\n')
-            
-
-    print(f'\nservidores nuevos encontrados: {servers.servers_encontrados}')        
-            
-
 
 def ejecutar_barrido():
 
@@ -100,5 +92,6 @@ def ejecutar_barrido():
     print('\n[+] barriendo bloques de ips, esto puede llevar tiempo ...\n ')
     print('NO cierres el programa')
     ejecutar_bin()
+    print(f'\nservidores nuevos encontrados: {servers.servers_encontrados}') 
         
         

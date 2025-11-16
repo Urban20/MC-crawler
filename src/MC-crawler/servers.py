@@ -126,9 +126,10 @@ def registrar_server(server : McServer):
     'esta funcion recicla la logica para insertar el server en db de servers historicos (todos) e imprimirlo'
     global servers_encontrados
     try:
-        db.insertar(dato=server.info)
-        server.print()
-        servers_encontrados+=1
+        if server.info != None:
+            db.insertar(dato=server.info)
+            server.print()
+            servers_encontrados+=1
 
     except IntegrityError: # agregar para verificar server y comparar versiones
         db.verificar_actualizacion(server)
