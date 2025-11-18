@@ -14,7 +14,6 @@ import (
 
 const (
 	PUERTO = 25565
-	STDOUT = "ip_escan.data" // donde se desvia el stdout, no modificar
 )
 
 var n0 = flag.Int("n0", 0, "")

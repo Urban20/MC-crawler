@@ -11,7 +11,6 @@ import configuracion
 import datetime
 import sys
 
-STDOUT = 'ip_escan.data' # no modificar 
 TIMEOUT = configuracion.TIMEOUT
 TIMEOUT_ESCAN = configuracion.ESCAN_TIMEOUT
 # para HILOS:
@@ -84,10 +83,6 @@ def procesar_lineas(subproc):
             print(f'\n hubo un problema : {e}\n')
 
 def ejecutar_barrido():
-
-    try:
-        os.remove(STDOUT)
-    except FileNotFoundError: ...
 
     print('\n[+] barriendo bloques de ips, esto puede llevar tiempo ...\n ')
     print('NO cierres el programa')
