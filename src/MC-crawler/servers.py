@@ -91,18 +91,17 @@ def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool
 
                 if version_db == server.version and server.veredicto != server.ET_PREM:
                     server.print()
+                    contador+=1
                     
                 else:
                     db.eliminar_crackeado(server.direccion)
                     continue
             else:
                 server.print()
+                contador+=1
                 
             archivo(server=server,fecha=fecha,arch=arch)
                     
-            
-                                     
-        contador+=1  
 
         # paginado -----------------------------------------
         #  esta seccion detiene el muestreo cada cierto limite y pregunta si deseas continuar
