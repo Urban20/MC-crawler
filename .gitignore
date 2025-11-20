@@ -5,7 +5,7 @@ data/
 *.exe
 *.db
 servers.txt
-*.bat
+iniciar.bat
 filtrados.txt
 MC-crawlerBIN/
 MC-crawlerBIN.rar
