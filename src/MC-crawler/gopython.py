@@ -2,9 +2,9 @@
 barre bloques de ips para detectar puertos abiertos de interes'''
 
 import subprocess
-import consola
+from utilidades import consola
 import os
-from mcserver import McServer
+from clases.mcserver import McServer
 import servers
 from cidr_ import data
 import configuracion

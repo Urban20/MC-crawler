@@ -3,12 +3,12 @@
 provee funciones relacionadas directamente con la busqueda de servidores '''
 
 from cidr_.data import *
-from mcserver import  *
+from clases.mcserver import  *
 from sqlite3 import DatabaseError,IntegrityError
 from os import remove
 import db
 import sys
-import consola
+from utilidades import consola
 import configuracion
 import shutil
 

@@ -1,6 +1,6 @@
-from menu import Menu
+from clases.menu import Menu
 from db import conec
-import consola
+import utilidades.consola
 
 # AUTOR: Urb@n - Matias Urbaneja
 # USO RESPONSABLE: Este programa realiza escaneos de direcciones IP y puede generar tráfico elevado.
@@ -11,7 +11,7 @@ import consola
 
 if __name__ == '__main__': 
     try:
-        consola.limpiar()
+        utilidades.consola.limpiar()
         
         menu = Menu()
         menu.iniciar()

@@ -1,7 +1,7 @@
 from mcproto.buffer import Buffer
 from mcproto.connection import TCPSyncConnection
 from mcproto.protocol.base_io import StructFormat
-import MCuuid
+import clases.MCuuid
 import re
 
 # este bot se conecta a los servidores y determina por medio de la respuesta
@@ -10,7 +10,7 @@ import re
 # TENER EN CUENTA :
 # - el bot no se refleja en el juego pero puede verse en la consola del servidor porque no completa el login
 # - el bot no funciona en algunas versiones por cambios en el protocolo que son muy variados
-# fallos encontrados en algunas versiones puntuales de 1.19.x, 1.20.x
+# fallos encontrados en algunas versiones puntuales
 
 
 
@@ -55,7 +55,7 @@ class Bot():
             return
         
         try:
-            uuid = MCuuid.uuid_Offline(self.usuario,string=False)
+            uuid = clases.MCuuid.uuid_Offline(self.usuario,string=False)
             buff = Buffer()
             buff.write_varint(self.paquete_inicial)
             buff.write_utf(self.usuario)

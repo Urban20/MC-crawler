@@ -6,7 +6,7 @@
 
 import sqlite3 as sq
 import servers
-from mcserver import McServer
+from clases.mcserver import McServer
 
 
 # este modulo maneja dos bases de datos:

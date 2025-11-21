@@ -3,8 +3,8 @@
 import datetime
 from mcstatus import JavaServer
 import re
-import consola
-from bot import Bot
+from utilidades import consola
+from clases.bot import Bot
 
 class McServer():
     'esta clase es la encargada de obtener el estado y la informacion de los servidores'

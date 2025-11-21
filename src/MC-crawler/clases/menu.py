@@ -5,9 +5,9 @@ from gopython import ejecutar_barrido
 from db import buscar_version,purgar,buscar_crackeados
 from rich.panel import Panel
 from rich import print
-import consola
+from utilidades import consola
 from servers import iniciar_busqueda
-import conectividad
+from utilidades import conectividad
 import configuracion
 import cidr_.escan_flex
 
