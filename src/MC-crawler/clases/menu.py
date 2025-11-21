@@ -2,7 +2,7 @@
 
 
 from gopython import ejecutar_barrido
-from db import buscar_version,purgar,buscar_crackeados
+from db import db
 from rich.panel import Panel
 from rich import print
 from utilidades import consola
@@ -49,18 +49,18 @@ class Menu():
                     if not conectividad.conectividad():
                         continue
                     
-                    purgar()
+                    db.purgar()
                     
                 case '2':
                     if not conectividad.conectividad():
                         continue
 
                     version = iniciar_busqueda(crackeados=True)
-                    buscar_crackeados(version)
+                    db.buscar_crackeados(version)
                     
                 case '3':
                     version = iniciar_busqueda()
-                    buscar_version(version=version)
+                    db.buscar_version(version=version)
                     
                 case '4':
                     consola.ver_config()

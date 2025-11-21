@@ -1,5 +1,5 @@
 from clases.menu import Menu
-from db import conec
+from db import db
 import utilidades.consola
 
 # AUTOR: Urb@n - Matias Urbaneja
@@ -15,7 +15,7 @@ if __name__ == '__main__':
         
         menu = Menu()
         menu.iniciar()
-        conec.close()  
+        db.conec.close()  
     except KeyboardInterrupt:
 
         print('\n\nsaliendo del programa\n')        

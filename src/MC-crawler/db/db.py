@@ -7,8 +7,9 @@
 import sqlite3 as sq
 import servers
 from clases.mcserver import McServer
+import os
 
-
+ruta_db = os.path.dirname(__file__)
 # este modulo maneja dos bases de datos:
 # por un lado, la base de datos general donde estan TODOS los servidores
 # por el otro , se guardan servidores no premium (base de datos mas volatil y a corto plazo)
@@ -22,7 +23,7 @@ DB2 = 'crackeados.db'
 TABLA2 = 'server_np'
 
 # tabla principal de serves historicos (todos)
-conec = sq.connect(DB)
+conec = sq.connect(os.path.join(ruta_db,DB))
 cursor = conec.cursor()
 cursor.execute(f'CREATE TABLE IF NOT EXISTS {TABLA}(ip PRIMARY KEY,pais TEXT,version TEXT, fecha TEXT)')
 # pais queda obsoleto en la db
@@ -36,7 +37,7 @@ def contar_indexados():
     return (n_globales,n_crackeados)
 
 # tabla a la db de servers crackeados
-conec2 = sq.connect(DB2)
+conec2 = sq.connect(os.path.join(ruta_db,DB2))
 cursor2 = conec2.cursor()
 cursor2.execute(f'CREATE TABLE IF NOT EXISTS {TABLA2}(ip PRIMARY KEY, VERSION TEXT,FECHA TEXT)')
 

@@ -8,6 +8,6 @@ REM paso 3 : ejecutar este script
 
 call env\Scripts\activate
 
-nuitka --standalone --lto=yes --jobs=5 --plugin-enable=pylint-warnings --output-filename=MC-crawler --include-data-files=escan.exe=escan.exe --include-data-file=servers.db=servers.db --include-data-file=crackeados.db=crackeados.db --include-data-file=configuracion.ini=configuracion.ini --include-package=rich --include-package=pygments main.py
+nuitka --standalone --lto=yes --jobs=5 --plugin-enable=pylint-warnings --output-filename=MC-crawler --include-data-files=escan.exe=escan.exe --include-data-file=db/servers.db=db/servers.db --include-data-file=db/crackeados.db=db/crackeados.db --include-data-file=configuracion/configuracion.ini=configuracion/configuracion.ini --include-package=rich --include-package=pygments main.py
 
 pause

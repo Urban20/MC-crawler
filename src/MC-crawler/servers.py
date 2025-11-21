@@ -6,7 +6,7 @@ from cidr_.data import *
 from clases.mcserver import  *
 from sqlite3 import DatabaseError,IntegrityError
 from os import remove
-import db
+from db import db
 import sys
 from utilidades import consola
 from configuracion import configuracion
