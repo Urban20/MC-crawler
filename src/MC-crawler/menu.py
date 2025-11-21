@@ -9,6 +9,7 @@ import consola
 from servers import iniciar_busqueda
 import conectividad
 import configuracion
+import cidr_.escan_flex
 
 
 
@@ -20,8 +21,9 @@ class Menu():
         1: Purgar servidores
         2: Buscar POSIBLES servers crackeados
         3: Buscar version (premiums y no premiums)
-        4: Salir del programa
-        5: ver configuración
+        4: ver configuración
+        5: escanear rango personalizado
+        6: salir del programa
         '''
         self.ejecutando = True
         self.color = configuracion.COLOR
@@ -61,9 +63,16 @@ class Menu():
                     buscar_version(version=version)
                     
                 case '4':
-                    self.ejecutando = False
-                case '5':
                     consola.ver_config()
+                
+                case '5':
+                    info = Panel('escaneos de 16 o 24 bits\nejemplos:\n\n123.1.0.0/16\n123.123.123.0/24',
+                                 title='uso')
+                    print(info)           
+                    cidr = str(input('\nrango a escanear >> ')).strip()
+                    cidr_.escan_flex.procesar_rango16(cidr)
+                case '6':
+                    self.ejecutando = False
                     
                 case _:
             

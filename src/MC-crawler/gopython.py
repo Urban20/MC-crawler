@@ -6,10 +6,9 @@ import consola
 import os
 from mcserver import McServer
 import servers
-import data
+from cidr_ import data
 import configuracion
 import datetime
-import sys
 
 TIMEOUT = configuracion.TIMEOUT
 TIMEOUT_ESCAN = configuracion.ESCAN_TIMEOUT
@@ -22,16 +21,32 @@ HILOS = configuracion.HILOS
 
 BINARIO = 'escan' # no modificar
 
-ruta = os.path.join(os.path.dirname(__file__),BINARIO)
+ruta = os.path.join(os.path.dirname(__file__),BINARIO) # el binario debe estar en la misma ruta que este modulo
 
 ORACLE = 'https://docs.oracle.com/en-us/iaas/tools/public_ip_ranges.json'
 AMAZON = 'https://ip-ranges.amazonaws.com/ip-ranges.json'
 GOOGLE = 'https://www.gstatic.com/ipranges/cloud.json'
 HETZNER = 'https://stat.ripe.net/data/announced-prefixes/data.json?resource=AS24940'
 
+regex16 = r'(\d+)\.(\d+)\.0\.0/16$'
+regex24 = r'(\d+)\.(\d+)\.(\d+)\.0/24$'
+
+def introducir_parametros(param1 : int ,param2 : int,param3 : int = 0,bits24 : bool = False):
+    'introduce parametros especificos en el binario'
+
+    parametros = [ruta,'-n0',str(param1),'-n1',str(param2),'-n2',str(param3),'-hl',str(HILOS),'-t',str(TIMEOUT_ESCAN)]
+    
+    if bits24:
+        parametros.append('-b24')
+
+    sp = subprocess.Popen(parametros,stdout=subprocess.PIPE)  
+    procesar_lineas(subproc=sp)
+
+
 def ejecutar_bin():
-    'automatiza la ejecucion del bin de go'
-    regex16 = r'(\d+)\.(\d+)\.0\.0/16'
+    '''automatiza la ejecucion del bin de go
+    
+    - obtiene los rangos de ip automaticamente'''
     rango1,estado1 = data.obtener_bloque_web(url=ORACLE)
     rango2,estado2 = data.obtener_bloque_web(url=AMAZON,regex=regex16)
     rango3,estado3 = data.obtener_bloque_web(url=GOOGLE,regex=regex16)
@@ -52,12 +67,8 @@ def ejecutar_bin():
     try:
     
         for n0,n1 in BLOQUES16: # parametros para barrido de /16
-            sp = subprocess.Popen([ruta,'-n0',str(n0),'-n1',str(n1),'-hl',str(HILOS),'-t',str(TIMEOUT_ESCAN)],
-                                  stdout=subprocess.PIPE)
+            introducir_parametros(n0,n1)
             
-            procesar_lineas(subproc=sp)
-
-
         print('\n[+] finalizado\n')
     except Exception as e:
         print(f'\nhubo un problema al ejecutar el binario: {e}\n')

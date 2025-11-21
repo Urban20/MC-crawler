@@ -1,4 +1,5 @@
-'modulo encargado de la obtencion de los rangos ip'
+'modulo encargado de la obtencion de los rangos ip cuando se trata de escaneos automaticos'
+
 import requests
 import re
 import random

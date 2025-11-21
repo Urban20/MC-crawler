@@ -2,7 +2,7 @@
 
 provee funciones relacionadas directamente con la busqueda de servidores '''
 
-from data import *
+from cidr_.data import *
 from mcserver import  *
 from sqlite3 import DatabaseError,IntegrityError
 from os import remove
