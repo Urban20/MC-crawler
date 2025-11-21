@@ -1,10 +1,11 @@
 import configparser
+import os
 
 
 ARCHIVO = 'configuracion.ini' # no modificar
 
 config = configparser.ConfigParser()
-config.read(ARCHIVO)
+config.read(os.path.join(os.path.dirname(__file__),ARCHIVO))
 
 HILOS = int(config['red']['HILOS'])
 TIMEOUT = float(config['red']['TIMEOUT'])

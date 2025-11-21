@@ -7,7 +7,7 @@ from colorama import init
 from rich.table import Table
 from rich.live import Live
 import time
-import configuracion
+from configuracion import configuracion
 
 
 init()

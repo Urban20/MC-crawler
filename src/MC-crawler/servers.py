@@ -9,7 +9,7 @@ from os import remove
 import db
 import sys
 from utilidades import consola
-import configuracion
+from configuracion import configuracion
 import shutil
 
 

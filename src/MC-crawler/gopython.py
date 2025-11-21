@@ -7,7 +7,7 @@ import os
 from clases.mcserver import McServer
 import servers
 from cidr_ import data
-import configuracion
+from configuracion import configuracion
 import datetime
 
 TIMEOUT = configuracion.TIMEOUT

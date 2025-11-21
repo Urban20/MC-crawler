@@ -8,7 +8,7 @@ from rich import print
 from utilidades import consola
 from servers import iniciar_busqueda
 from utilidades import conectividad
-import configuracion
+from configuracion import configuracion
 import cidr_.escan_flex
 
 
