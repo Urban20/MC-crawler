@@ -70,7 +70,7 @@ class Menu():
                                  title='uso')
                     print(info)           
                     cidr = str(input('\nrango a escanear >> ')).strip()
-                    cidr_.escan_flex.procesar_rango16(cidr)
+                    cidr_.escan_flex.procesar_rango(cidr)
                 case '6':
                     self.ejecutando = False
                     

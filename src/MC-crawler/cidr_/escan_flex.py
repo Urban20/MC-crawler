@@ -4,7 +4,7 @@ import re
 
 
 
-def procesar_rango16(cidr : str):
+def procesar_rango(cidr : str):
     '''esta funcion precesa rangos cidr de 16 o 24 bits usando la siguiente notacion:
     
     ejemplo:
