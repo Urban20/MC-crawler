@@ -34,7 +34,7 @@ class McServer():
         # etiquetas
         self.ET_CRACK = f'{consola.VERDE}crackeado/no premium{consola.RESET}'
         self.ET_PREM = f'{consola.ROJO}premium{consola.RESET}'
-        self.ET_IND = f'indeterminado'
+        self.ET_IND = 'indeterminado'
         self.ET_TIM = f'{consola.AMARILLO}tiempo agotado{consola.RESET}'
         self.ET_INC = f'{consola.CELESTE}protocolo incompatible{consola.RESET}'
 
@@ -100,7 +100,7 @@ class McServer():
 
                         self.modeado = True
                     else:
-                        self.veredicto = self.ET_INC
+                        self.veredicto = self.ET_IND
                         
                 case 3:
 
@@ -116,7 +116,7 @@ class McServer():
         except TimeoutError:
             self.veredicto = self.ET_TIM
         except:
-            ...
+            self.veredicto = self.ET_INC
                 
     def print(self):
 
