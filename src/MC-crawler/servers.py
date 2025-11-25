@@ -81,6 +81,22 @@ def imprimir_servers(contador : int ,crackeados : bool,tupla,server : McServer):
     return contador
 
 
+def paginado(contador : int, limite : int, n_pagina :int):
+
+    'funcion auxiliar de mostrar()'
+    
+    if contador < limite:
+        return (contador,n_pagina,False)
+
+    if str(input('[1] siguiente pagina >> ')).strip() == '1':
+        n_pagina+=1
+        consola.pagina(n_pagina)
+        return (0,n_pagina,False)
+            
+    return (contador,n_pagina,True)    
+
+
+
 def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool = False):
     'maneja la logica de muestreo y paginado de los servers cuando se buscan desde las dbs'
 
@@ -99,10 +115,7 @@ def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool
         puerto = tupla[0].split(':')[1]
         fecha = tupla[-1]
 
-
         server = McServer(ip=IP,puerto=puerto,fecha_otorgada=fecha)
-
-        
         data = server.obtener_data()
         server.verificar_crackeado()
 
@@ -126,28 +139,20 @@ def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool
 
             db.eliminar_server(server.direccion) if crackeados else db.eliminar_server(server.direccion,
                                                                                         conex=db.conec,
-                                                                                        tabla=db.TABLA)         
+                                                                                        tabla=db.TABLA)
+         
         else: # si el server no esta offline pero tampoco coincide con el doble filtrado
               # se verifica una posible cambio en la version para la db global
             if not crackeados:
-                db.verificar_actualizacion(server,mostrar_sv=False)
-                
-        # TODO poner actualizacion de version (funcion ya hecha)            
+                db.verificar_actualizacion(server,mostrar_sv=False)                   
 
         # paginado -----------------------------------------
         #  esta seccion detiene el muestreo cada cierto limite y pregunta si deseas continuar
-        if contador >= LIMITE:
-
-            entrada = str(input('[1] siguiente pagina >> ')).strip()
-            if entrada == '1':
-                n_pagina+=1
-                consola.pagina(n_pagina)
-                contador = 0
-                
-            else:
-                
-
-                break
+        contador,n_pagina,detener = paginado(contador=contador,
+                                               limite=LIMITE,
+                                               n_pagina=n_pagina)
+        if detener:
+            return
         # paginado -----------------------------------------
     
 servers_encontrados = 0 # cuenta los servers encontrados
