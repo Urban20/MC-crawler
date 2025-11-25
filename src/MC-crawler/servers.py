@@ -55,6 +55,32 @@ def archivo(server,fecha,arch : str):
         registrado el {fecha}\n'''
         sv.write(info)
 
+
+def imprimir_servers(contador : int ,crackeados : bool,tupla,server : McServer):
+
+    'funcion auxiliar llamada por funcion mostrar()'
+
+    if crackeados:
+        version_db = tupla[1]
+
+        if version_db == server.version and server.veredicto != server.ET_PREM:
+            # la db no premium solo mantiene los servers que ademas de estar onlines
+            # coinciden con la version solicitada por el usuario
+            # si la version cambia, automaticamente se cuenta como un server nuevo 
+            # y se reevalua si entra dentro de la categoria no premium
+            server.print()
+            contador+=1
+            
+        else:
+            db.eliminar_server(server.direccion)
+            
+    else:
+        server.print()
+        contador+=1
+
+    return contador
+
+
 def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool = False):
     'maneja la logica de muestreo y paginado de los servers cuando se buscan desde las dbs'
 
@@ -84,24 +110,29 @@ def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool
         if not crackeados:
             registrar_crackeado(server=server)
                      
-        if porversion and data == 'online' and re.search(version,server.info[2]):
-            # doble filtrado
-            if crackeados:
-                version_db = tupla[1]
+        if data == 'online' and re.search(version,server.info[2]): # doble filtrado
+            
 
-                if version_db == server.version and server.veredicto != server.ET_PREM:
-                    server.print()
-                    contador+=1
-                    
-                else:
-                    db.eliminar_crackeado(server.direccion)
-                    continue
-            else:
-                server.print()
-                contador+=1
+            # mostrar servidor dependiendo de la db que se consulte
+            contador = imprimir_servers(crackeados=crackeados,
+                             tupla=tupla,
+                             server=server,
+                             contador=contador)
                 
             archivo(server=server,fecha=fecha,arch=arch)
-                    
+        elif data == 'offline': 
+            # para servers offlines, dependiendo que db se este consultando
+            # la funcion de eliminacion varia ligeramente
+
+            db.eliminar_server(server.direccion) if crackeados else db.eliminar_server(server.direccion,
+                                                                                        conex=db.conec,
+                                                                                        tabla=db.TABLA)         
+        else: # si el server no esta offline pero tampoco coincide con el doble filtrado
+              # se verifica una posible cambio en la version para la db global
+            if not crackeados:
+                db.verificar_actualizacion(server,mostrar_sv=False)
+                
+        # TODO poner actualizacion de version (funcion ya hecha)            
 
         # paginado -----------------------------------------
         #  esta seccion detiene el muestreo cada cierto limite y pregunta si deseas continuar
@@ -130,8 +161,8 @@ def registrar_server(server : McServer):
             server.print()
             servers_encontrados+=1
 
-    except IntegrityError: # agregar para verificar server y comparar versiones
-        db.verificar_actualizacion(server)
+    except IntegrityError:
+        db.verificar_actualizacion(server) # verifica actualizacion de db global
         
 
     except DatabaseError as e:

@@ -41,35 +41,37 @@ conec2 = sq.connect(os.path.join(ruta_db,DB2))
 cursor2 = conec2.cursor()
 cursor2.execute(f'CREATE TABLE IF NOT EXISTS {TABLA2}(ip PRIMARY KEY, VERSION TEXT,FECHA TEXT)')
 
-def verificar_actualizacion(server : McServer):
-    '''esta funcion verifica actualizaciones cuando
 
-    se produce una excepcion de tipo sqlite.integrityerror en registrar_server()
-
-    en el modulo de servers.py'''
-    actualizar = conec.cursor()
-    server_db = actualizar.execute(f'SELECT version FROM {TABLA} WHERE ip = ?',(server.direccion,))
-    version_db = server_db.fetchone()[0]
-    
-    if server.version != version_db:
-        actualizar_server(sv=server,ip_puerto=server.direccion)
-        print(f'\n{server.direccion} fue actualizado\nversion {version_db} → {server.version}\n')
-        server.print()
-
-
-def actualizar_server(sv : McServer, ip_puerto):
+def actualizar_server(sv : McServer, ip_puerto,tabla = TABLA):
     'funcion simple que abstrae el comando de sqlite para actualizar servidores'
-
-    cursor.execute(f'UPDATE {TABLA} SET version = ?, fecha = ? WHERE ip = ?', 
+    actualizador = conec.cursor()
+    actualizador.execute(f'UPDATE {tabla} SET version = ?, fecha = ? WHERE ip = ?', 
                                 (sv.version, sv.fecha, ip_puerto))
     conec.commit()
 
+def verificar_actualizacion(server : McServer, mostrar_sv : bool = True,tabla = TABLA):
+    'esta funcion verifica actualizaciones'
 
-def eliminar_crackeado(direccion : str):
-    eliminar = conec2.cursor()
-    eliminar.execute(f'DELETE FROM {TABLA2} WHERE ip = ?',(direccion,))
+    actualizar = conec.cursor()
+    server_db = actualizar.execute(f'SELECT version FROM {tabla} WHERE ip = ?',(server.direccion,))
+    version_db = server_db.fetchone()[0]
+    
+    if server.estado == 'online' and server.version != version_db:
+
+        actualizar_server(sv=server,ip_puerto=server.direccion)
+        print(f'\n{server.direccion} fue actualizado\nversion {version_db} → {server.version}\n')
+        if mostrar_sv:
+            server.print()
+
+
+def eliminar_server(direccion : str,conex = conec2,tabla = TABLA2):
+    eliminar = conex.cursor()
+    eliminar.execute(f'DELETE FROM {tabla} WHERE ip = ?',(direccion,))
     conec2.commit()
-    print(f'\n{direccion} eliminado de db no-premium\n')
+    if tabla == TABLA2:
+        print(f'{direccion} eliminado de db no-premium (offline)')
+    else:
+        print(f'{direccion} eliminado de la base de datos global (offline)')
 
 def purgar():
     '''funcion que borra servers que esten offline cuando el usuario da la orden
