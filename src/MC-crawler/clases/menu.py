@@ -77,6 +77,7 @@ class Menu():
                 case _:
             
                     continue
-
-            input(self.msgcontinuar)
+            
+            if self.ejecutando:
+                input(self.msgcontinuar)
 

@@ -8,6 +8,7 @@ import sqlite3 as sq
 import servers
 from clases.mcserver import McServer
 import os
+from utilidades.consola import ROJO,RESET
 
 ruta_db = os.path.dirname(__file__)
 # este modulo maneja dos bases de datos:
@@ -42,23 +43,23 @@ cursor2 = conec2.cursor()
 cursor2.execute(f'CREATE TABLE IF NOT EXISTS {TABLA2}(ip PRIMARY KEY, VERSION TEXT,FECHA TEXT)')
 
 
-def actualizar_server(sv : McServer, ip_puerto,tabla = TABLA):
+def actualizar_server(sv : McServer, ip_puerto,tabla = TABLA,conex = conec):
     'funcion simple que abstrae el comando de sqlite para actualizar servidores'
-    actualizador = conec.cursor()
+    actualizador = conex.cursor()
     actualizador.execute(f'UPDATE {tabla} SET version = ?, fecha = ? WHERE ip = ?', 
                                 (sv.version, sv.fecha, ip_puerto))
-    conec.commit()
+    conex.commit()
 
-def verificar_actualizacion(server : McServer, mostrar_sv : bool = True,tabla = TABLA):
+def verificar_actualizacion(server : McServer, mostrar_sv : bool = True,tabla = TABLA,conex = conec):
     'esta funcion verifica actualizaciones'
 
-    actualizar = conec.cursor()
+    actualizar = conex.cursor()
     server_db = actualizar.execute(f'SELECT version FROM {tabla} WHERE ip = ?',(server.direccion,))
     version_db = server_db.fetchone()[0]
     
     if server.estado == 'online' and server.version != version_db:
 
-        actualizar_server(sv=server,ip_puerto=server.direccion)
+        actualizar_server(sv=server,ip_puerto=server.direccion,conex=conex)
         print(f'\n{server.direccion} fue actualizado\nversion {version_db} → {server.version}\n')
         if mostrar_sv:
             server.print()
@@ -67,11 +68,11 @@ def verificar_actualizacion(server : McServer, mostrar_sv : bool = True,tabla = 
 def eliminar_server(direccion : str,conex = conec2,tabla = TABLA2):
     eliminar = conex.cursor()
     eliminar.execute(f'DELETE FROM {tabla} WHERE ip = ?',(direccion,))
-    conec2.commit()
+    conex.commit()
     if tabla == TABLA2:
-        print(f'{direccion} eliminado de db no-premium (offline)')
+        print(f'{ROJO}{direccion} eliminado de db no-premium (offline/cambio de version/cambio a premium){RESET}')
     else:
-        print(f'{direccion} eliminado de la base de datos global (offline)')
+        print(f'{ROJO}{direccion} eliminado de la base de datos global (offline){RESET}')
 
 def purgar():
     '''funcion que borra servers que esten offline cuando el usuario da la orden
@@ -97,12 +98,13 @@ def purgar():
             sv.obtener_data(reintentos=2)
 
             if sv.estado == 'offline':
-                cursor.execute(f'DELETE FROM {TABLA} WHERE ip = ?',(ip_puerto,))
-                print(f'\033[0;31m[-] server {ipv4} eliminado de la db\033[0m')
+                eliminar_server(conex=conec,
+                                tabla=TABLA,
+                                direccion=ip_puerto)
                 borrados+=1
-                conec.commit()   
                     
             elif sv.version != version_db:
+                # actualizador de la funcion purgar, no confundir con verificar_actualizacion()
                 sv.verificar_crackeado()
                 actualizar_server(sv=sv,ip_puerto=ip_puerto)
                 servers.registrar_crackeado(sv)
