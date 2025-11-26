@@ -176,7 +176,7 @@ def registrar_server(server : McServer):
 
 def registrar_crackeado(server : McServer):
     'guarda server en base de datos de no premium si efectivamente lo es'
-    if server.crackeado == 1:
+    if server.crackeado:
         # insertar en la tabla de los no premium (crackeados)
         try:
             db.insertar(espacios='(?,?,?)',

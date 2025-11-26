@@ -43,8 +43,7 @@ class McServer():
         self.withelist = False
         self.modeado = False
         self.veredicto = self.ET_IND
-        self.crackeado = 0 # inicialmente se toma el server como premium (0)
-        # que self.crackeado sea crackeado = 1 no garantiza que realmente sea no premium pero da una estimacion
+        self.crackeado = False
 
 
     def obtener_data(self,reintentos : int = 1):
@@ -93,7 +92,7 @@ class McServer():
                                     bot.respuesta_str.lower()):
     
                         self.veredicto = self.ET_CRACK
-                        self.crackeado = 1
+                        self.crackeado = True
                         self.withelist = True
 
                     elif re.search(r'mods|forge',bot.respuesta_str.lower()):
@@ -105,7 +104,7 @@ class McServer():
                 case 3:
 
                     self.veredicto = self.ET_CRACK
-                    self.crackeado = 1
+                    self.crackeado = True
 
                 case 1:
 
