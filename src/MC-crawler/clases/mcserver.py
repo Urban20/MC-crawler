@@ -37,14 +37,15 @@ class McServer():
         self.ET_IND = 'indeterminado'
         self.ET_TIM = f'{consola.AMARILLO}tiempo agotado{consola.RESET}'
         self.ET_INC = f'{consola.CELESTE}protocolo incompatible{consola.RESET}'
-
+        self.ET_BAN = f'{consola.VIOLETA}BANEADO{consola.RESET}'
+        self.ET_MOD = f'{consola.ROJO}MODEADO{consola.RESET}'
 
         # caracteristicas del server
         self.withelist = False
         self.modeado = False
         self.veredicto = self.ET_IND
         self.crackeado = False
-
+        
 
     def obtener_data(self,reintentos : int = 1):
         'metodo que actualiza la informacion de un servidor'
@@ -85,19 +86,26 @@ class McServer():
             bot.leer_paquete()
 
             match bot.numero_estado:
-    
+                
                 case 0: 
+                    
+                    coincidencia = lambda reg: re.search(reg,bot.respuesta_str.lower())
 
-                    if re.search(r'whitelist|whitelisted|white-listed',
-                                    bot.respuesta_str.lower()):
+                    if coincidencia(r'whitelist|whitelisted|white-listed'):
     
                         self.veredicto = self.ET_CRACK
                         self.crackeado = True
                         self.withelist = True
 
-                    elif re.search(r'mods|forge',bot.respuesta_str.lower()):
+                    elif coincidencia(r'mods|forge'):
 
+                        self.veredicto = self.ET_MOD
                         self.modeado = True
+
+                    elif coincidencia(r'banned'):
+
+                        self.veredicto = self.ET_BAN
+
                     else:
                         self.veredicto = self.ET_IND
                         
