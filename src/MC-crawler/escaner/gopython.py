@@ -20,8 +20,9 @@ TIMEOUT_ESCAN = configuracion.ESCAN_TIMEOUT
 HILOS = configuracion.HILOS
 
 BINARIO = 'escan' # no modificar
+CARPETA_BIN = 'binario'
 
-ruta = os.path.join(os.path.dirname(__file__),BINARIO) # el binario debe estar en la misma ruta que este modulo
+ruta = os.path.join(os.path.dirname(__file__),CARPETA_BIN,BINARIO) # el binario debe estar en la misma ruta que este modulo
 
 ORACLE = 'https://docs.oracle.com/en-us/iaas/tools/public_ip_ranges.json'
 AMAZON = 'https://ip-ranges.amazonaws.com/ip-ranges.json'

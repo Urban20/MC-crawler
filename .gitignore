@@ -3,6 +3,8 @@ __pycache__/
 *.data
 data/
 *.exe
+escan.exe
+escan
 *.db
 servers.txt
 iniciar.bat

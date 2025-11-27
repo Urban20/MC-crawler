@@ -1,0 +1,9 @@
+la carpeta binario es la carpeta donde se debe introducir el binario "escan.exe"
+este binario es el responsable de los escaneos de puertos masivos para el descubrimiento de servidores
+
+pasos para la compilacion de "escan.exe" / "escan" (dependiendo de la plataforma)
+
+1) instalar Golang
+2) ingresar a la carpeta escaner/golang
+3) ejecutar el siguiente comando : go build .
+4) arrastrar el binario generado a escaner/binario

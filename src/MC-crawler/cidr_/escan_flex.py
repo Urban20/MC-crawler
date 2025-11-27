@@ -1,5 +1,5 @@
 '''escaneos personalizados: maneja la logica de parametros introducidos por el usuario'''
-from gopython import introducir_parametros,regex16,regex24
+from escaner.gopython import introducir_parametros,regex16,regex24
 import re
 
 
