@@ -72,10 +72,9 @@ func Barrido16(n1 int, n2 int) chan string {
 
 		}
 	}()
-	select {
-	case <-ip:
-		return ip
-	}
+
+	return ip
+
 }
 
 func Ejecucion24(n1 int, n2 int, n3 int, lim chan struct{}, timeout time.Duration) {
