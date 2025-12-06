@@ -7,10 +7,11 @@ DIR_PY = os.path.dirname(__file__)
 DIR = os.path.join(DIR_PY,ARCHIVO)
 DOCUMENTACION = r'''
 # hilos: hilos en paralelo para el escaner de ipv4s, NO MODIFICAR SIN SABER LO QUE SE ESTA HACIENDO
-# timeout : tiempo de espera entre servidores
+# timeout_servers : tiempo de espera entre servidores
 # filtrados : archivo donde se guardan los servers filtrados al buscar (.txt)
 # COLOR : color que utilizara la consola, revisar https://rich.readthedocs.io/en/stable/appendix/colors.html
 # TIEMPO_DE_ESCANER : tiempo de espera en milisegundos del escaner de puertos (binario)
+# timeout_bot : tiempo de espera del bot que da el verdicto de los servidores (en segundos)
 '''
 
 config = configparser.ConfigParser()
@@ -21,8 +22,11 @@ def generar_ini():
         return
 
     config['red'] = {'hilos': 1500,
-                    'timeout':0.6,
+                    'timeout_servers':0.6,
                     'tiempo_de_escaner': 700}
+    config['bot'] = {
+        'timeout_bot': 1
+    }
     
     config['archivos'] = {'filtrados': 'filtrados.txt'}
 
@@ -38,7 +42,8 @@ generar_ini()
 # lectura del ini 
 config.read(DIR)
 HILOS = int(config['red']['HILOS'])
-TIMEOUT = float(config['red']['TIMEOUT'])
+TIMEOUT = float(config['red']['timeout_servers'])
 FILTRADOS = config['archivos']['FILTRADOS']
 COLOR = config['personalizacion']['COLOR']
 ESCAN_TIMEOUT = int(config['red']['TIEMPO_DE_ESCANER'])
+TIMEOUT_BOT = float(config['bot']['timeout_bot'])

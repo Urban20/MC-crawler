@@ -42,16 +42,20 @@ def ver_config():
 
     - REDES:
 
-     hilos: {configuracion.HILOS}
-     tiempo de espera entre server: {configuracion.TIMEOUT} seg
+        hilos: {configuracion.HILOS}
+        tiempo de espera entre server: {configuracion.TIMEOUT} seg
 
+    - BOT:
+
+        timeout del bot : {configuracion.TIMEOUT_BOT} seg
+    
     - ARCHIVOS:
 
-     archivo de guardado .txt: {configuracion.FILTRADOS}
+        archivo de guardado .txt: {configuracion.FILTRADOS}
 
     - DISEÑO:
 
-     tema: {configuracion.COLOR}
+        tema: {configuracion.COLOR}
     '''
 
     rich.print(Panel(config,title='configuracion'))

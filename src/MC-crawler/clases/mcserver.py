@@ -5,6 +5,7 @@ from mcstatus import JavaServer
 import re
 from utilidades import consola
 from clases.bot import Bot
+from configuracion.configuracion import TIMEOUT_BOT
 
 class McServer():
     'esta clase es la encargada de obtener el estado y la informacion de los servidores'
@@ -80,7 +81,7 @@ class McServer():
             return
         try:
             
-            bot = Bot(ip=self.ip,puerto=int(self.puerto),timeout=0.7)
+            bot = Bot(ip=self.ip,puerto=int(self.puerto),timeout=TIMEOUT_BOT)
             bot.conexion(num_proto=self.protocolo)
             bot.loguear(version=self.version)
             bot.leer_paquete()
