@@ -14,7 +14,7 @@ init()
 consola = Console()
 
 NEGRITA = '\033[1m'
-VERSION = 'V6.1' # version del programa
+VERSION = 'V6.2' # version del programa
 VIOLETA = '\033[0;95m'
 RESET = '\033[0m '
 FONDO_V = '\033[0;105m'
@@ -54,7 +54,7 @@ def ver_config():
         archivo de guardado .txt: {configuracion.FILTRADOS}
     
     - PURGADO:
-    
+
         timeout de purgado: {configuracion.TIMEOUT_PURGADO}
         reintentos: {configuracion.REINTENTOS}    
 
