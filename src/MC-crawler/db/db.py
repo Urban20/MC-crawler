@@ -9,6 +9,7 @@ import servers
 from clases.mcserver import McServer
 import os
 from utilidades.consola import ROJO,RESET
+import configuracion.configuracion
 
 ruta_db = os.path.dirname(__file__)
 # este modulo maneja dos bases de datos:
@@ -94,8 +95,11 @@ def purgar():
             version_db = datos[1]
             ip_puerto = datos[0]
             fecha_db = datos[2]
-            sv = McServer(ip=ipv4,puerto=puerto)
-            sv.obtener_data(reintentos=2)
+            sv = McServer(ip=ipv4,
+                          puerto=puerto,
+                          timeout=configuracion.configuracion.TIMEOUT_PURGADO)
+            
+            sv.obtener_data(reintentos=configuracion.configuracion.REINTENTOS)
 
             if sv.estado == 'offline':
                 eliminar_server(conex=conec,

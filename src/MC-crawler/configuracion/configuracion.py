@@ -12,6 +12,8 @@ DOCUMENTACION = r'''
 # COLOR : color que utilizara la consola, revisar https://rich.readthedocs.io/en/stable/appendix/colors.html
 # TIEMPO_DE_ESCANER : tiempo de espera en milisegundos del escaner de puertos (binario)
 # timeout_bot : tiempo de espera del bot que da el verdicto de los servidores (en segundos)
+# timeout_purgado: tiempo de tolerancia del programa para verificar el estado de un server al purgar la db
+# reintentos: cantidad de veces que verifica el estado del servidor antes de eliminarlo al purgar la db
 '''
 
 config = configparser.ConfigParser()
@@ -26,6 +28,11 @@ def generar_ini():
                     'tiempo_de_escaner': 700}
     config['bot'] = {
         'timeout_bot': 1
+    }
+
+    config['purgado'] = {
+        'timeout_purgado': 1,
+        'reintentos' : 2
     }
     
     config['archivos'] = {'filtrados': 'filtrados.txt'}
@@ -47,3 +54,5 @@ FILTRADOS = config['archivos']['FILTRADOS']
 COLOR = config['personalizacion']['COLOR']
 ESCAN_TIMEOUT = int(config['red']['TIEMPO_DE_ESCANER'])
 TIMEOUT_BOT = float(config['bot']['timeout_bot'])
+TIMEOUT_PURGADO = float(config['purgado']['timeout_purgado'])
+REINTENTOS = int(config['purgado']['reintentos'])

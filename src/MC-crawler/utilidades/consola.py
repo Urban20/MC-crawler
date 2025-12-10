@@ -52,6 +52,11 @@ def ver_config():
     - ARCHIVOS:
 
         archivo de guardado .txt: {configuracion.FILTRADOS}
+    
+    - PURGADO:
+    
+        timeout de purgado: {configuracion.TIMEOUT_PURGADO}
+        reintentos: {configuracion.REINTENTOS}    
 
     - DISEÑO:
 
