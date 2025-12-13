@@ -10,6 +10,7 @@ from clases.mcserver import McServer
 import os
 from utilidades.consola import ROJO,RESET
 import configuracion.configuracion
+from clases.interruptor import Interruptor
 
 ruta_db = os.path.dirname(__file__)
 # este modulo maneja dos bases de datos:
@@ -79,7 +80,7 @@ def purgar():
     '''funcion que borra servers que esten offline cuando el usuario da la orden
     
     purga la base de datos principal (todos los servers)'''
-      
+   
     try:
         
         borrados = 0
@@ -88,7 +89,14 @@ def purgar():
         print('\n[...] iniciando purga de servidores\nNO cierres el programa\n')
         selector = conec.cursor() # nuevo cursor que selecciona e itera
         selector.execute(f"SELECT ip, version, fecha FROM {TABLA} WHERE fecha <= date('now','-30 days')")
+
+        inter = Interruptor(evento='purgado')
+        inter.iniciar()
+
         for datos in selector:
+
+            if inter.cancelado:
+                break
             
             ipv4 = datos[0].split(':')[0]
             puerto = datos[0].split(':')[1]
