@@ -3,3 +3,4 @@ Requests==2.32.4
 colorama==0.4.6
 rich==14.1.0
 mcproto==0.6.0
+Nuitka==2.8.4
