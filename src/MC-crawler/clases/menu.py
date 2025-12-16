@@ -1,7 +1,7 @@
 'modulo encargado del menu del programa'
 
 
-from escaner.gopython import ejecutar_barrido
+from escaner.gopython import ejecutar_barrido,interrupcion
 from db import db
 from rich.panel import Panel
 from rich import print
@@ -79,5 +79,6 @@ class Menu():
                     continue
             
             if self.ejecutando:
+                interrupcion.cancelado = False
                 input(self.msgcontinuar)
 

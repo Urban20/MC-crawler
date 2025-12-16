@@ -9,6 +9,7 @@ import servers
 from cidr_ import data
 from configuracion import configuracion
 import datetime
+import clases.interruptor
 
 TIMEOUT = configuracion.TIMEOUT
 TIMEOUT_ESCAN = configuracion.ESCAN_TIMEOUT
@@ -31,6 +32,8 @@ HETZNER = 'https://stat.ripe.net/data/announced-prefixes/data.json?resource=AS24
 
 regex16 = r'(\d+)\.(\d+)\.0\.0/16$'
 regex24 = r'(\d+)\.(\d+)\.(\d+)\.0/24$'
+interrupcion = clases.interruptor.Interruptor(evento='barrido') # objeto creado para barridos y barridos personalizados
+
 
 def introducir_parametros(param1 : int ,param2 : int,param3 : int = 0,bits24 : bool = False):
     'introduce parametros especificos en el binario'
@@ -66,8 +69,15 @@ def ejecutar_bin():
         print('\n[+] utilizando solo bloques predefinidos\n')
         BLOQUES16 = data.OTROS
     try:
-    
+
+        interrupcion.iniciar()
+
         for n0,n1 in BLOQUES16: # parametros para barrido de /16
+
+            if interrupcion.cancelado: # primera interrupcion de barrido
+                                       # solo afecta a escaneos de barrido (no personalizados)
+                break
+
             introducir_parametros(n0,n1)
             
         print('\n[+] finalizado\n')
@@ -78,6 +88,11 @@ def ejecutar_bin():
 def procesar_lineas(subproc):
     for linea in subproc.stdout:
         try:
+
+            if interrupcion.cancelado: # segunda interrupcion de barrido
+                                       # utilizado en escaneos de barrido y escaneos personalizados
+                break
+
             ip = linea.decode().replace('\n','').strip()
             server = McServer(ip=str(ip),
                 timeout=TIMEOUT,

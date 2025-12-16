@@ -1,5 +1,5 @@
 '''escaneos personalizados: maneja la logica de parametros introducidos por el usuario'''
-from escaner.gopython import introducir_parametros,regex16,regex24
+from escaner.gopython import introducir_parametros,regex16,regex24,interrupcion
 import re
 
 
@@ -18,11 +18,13 @@ def procesar_rango(cidr : str):
 
     if cidr16:
         print('\niniciando escaneo de 16 bits\n')
+        interrupcion.iniciar()
         param1 = int(cidr16.group(1))
         param2 = int(cidr16.group(2))
         introducir_parametros(param1=param1,param2=param2)
     elif cidr24:
         print('\niniciando escaneo de 24 bits\n')
+        interrupcion.iniciar()
         param1 = int(cidr24.group(1))
         param2 = int(cidr24.group(2))
         param3 = int(cidr24.group(3))
