@@ -66,7 +66,7 @@ class Menu():
                     consola.ver_config()
                 
                 case '5':
-                    info = Panel('escaneos de 16 o 24 bits\nejemplos:\n\n123.1.0.0/16\n123.123.123.0/24',
+                    info = Panel('escaneos de 16 o 24 bits\nejemplos:\n\n190.60.0.0/16\n190.60.20.0/24',
                                  title='uso')
                     print(info)           
                     cidr = str(input('\nrango a escanear >> ')).strip()
