@@ -6,6 +6,7 @@ import re
 from utilidades import consola
 from clases.bot import Bot
 from configuracion.configuracion import TIMEOUT_BOT
+import clases.MCuuid
 
 class McServer():
     'esta clase es la encargada de obtener el estado y la informacion de los servidores'
@@ -79,6 +80,11 @@ class McServer():
         lo calcula en tiempo real'''
         if self.estado != 'online':
             return
+        
+        if self.p_data and clases.MCuuid.uuidV4(self.p_data[0][1]):
+            self.veredicto = self.ET_PREM
+            return
+
         try:
             
             bot = Bot(ip=self.ip,puerto=int(self.puerto),timeout=TIMEOUT_BOT)

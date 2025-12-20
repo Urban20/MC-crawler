@@ -1,5 +1,13 @@
 import hashlib
 import uuid
+import re
+
+def uuidV4(uuid : str):
+   'retorna True si el uuid es de version 4'
+
+   return re.match(r'\w+-\w+-4\w+-\w+-\w+',uuid) != None
+    
+
 
 def uuid_Offline(usuario : str, string :bool = True):
     'obtiene el uuid offline de un jugador por el algoritmo que utiliza minecraft'
