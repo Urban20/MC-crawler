@@ -82,7 +82,19 @@ class McServer():
             return
         
         if self.p_data and clases.MCuuid.uuidV4(self.p_data[0][1]):
+            
+            # da una estimacion no tan precisa como a nivel de protocolo pero es mas rapida y
+            # mejora la velocidad del programa para servidores puntuales
+            
             self.veredicto = self.ET_PREM
+            return
+        
+        if self.p_data and clases.MCuuid.jugador_crackeado(usuario=self.p_data[0][0],
+                                                           uuid=self.p_data[0][1]):
+            # da una estimacion no tan precisa como a nivel de protocolo pero es mas rapida y
+            # mejora la velocidad del programa para servidores puntuales
+            
+            self.veredicto = self.ET_CRACK
             return
 
         try:
