@@ -8,6 +8,16 @@ def uuidV4(uuid : str):
    return re.match(r'\w+-\w+-4\w+-\w+-\w+',uuid) != None
     
 
+def jugador_crackeado(usuario :str, uuid : str):
+    '''
+    comprueba si el usuario coincide con el uuid proporcionado cuando es no premium/crackeado
+    - usuario : usuario a comprobar
+    - uuid : uuid a verificar con el usuario
+    
+    '''
+
+    return uuid == uuid_Offline(usuario)
+
 
 def uuid_Offline(usuario : str, string :bool = True):
     'obtiene el uuid offline de un jugador por el algoritmo que utiliza minecraft'
