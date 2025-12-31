@@ -54,12 +54,15 @@ class Menu():
                 case '2':
                     if not conectividad.conectividad():
                         continue
-
                     version = iniciar_busqueda(crackeados=True)
+                    if version == '0':
+                        continue
                     db.buscar_crackeados(version)
                     
                 case '3':
                     version = iniciar_busqueda()
+                    if version == '0':
+                        continue
                     db.buscar_version(version=version)
                     
                 case '4':
