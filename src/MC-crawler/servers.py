@@ -11,6 +11,7 @@ import sys
 from utilidades import consola
 from configuracion import configuracion
 import shutil
+from clases.contador import contador
 
 
 arch = configuracion.FILTRADOS # archivos donde se guardan los servers filtrados temporales
@@ -157,16 +158,14 @@ def mostrar(lista : list,version=None,porversion : bool = True,crackeados : bool
             return
         # paginado -----------------------------------------
     
-servers_encontrados = 0 # cuenta los servers encontrados
-# se muestra en consola en procesar_lineas() en gopython.py
 def registrar_server(server : McServer):
     'esta funcion recicla la logica para insertar el server en db de servers historicos (todos) e imprimirlo'
-    global servers_encontrados
+    
     try:
         if server.info != None:
             db.insertar(dato=server.info)
             server.print()
-            servers_encontrados+=1
+            contador.incrementar_encontrados()
 
     except IntegrityError:
         db.verificar_actualizacion(server) # verifica actualizacion de db global

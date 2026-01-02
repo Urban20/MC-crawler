@@ -11,6 +11,7 @@ import os
 from utilidades.consola import ROJO,RESET
 import configuracion.configuracion
 from clases.interruptor import Interruptor
+from clases.contador import contador
 
 ruta_db = os.path.dirname(__file__)
 # este modulo maneja dos bases de datos:
@@ -63,6 +64,7 @@ def verificar_actualizacion(server : McServer, mostrar_sv : bool = True,tabla = 
 
         actualizar_server(sv=server,ip_puerto=server.direccion,conex=conex)
         print(f'\n{server.direccion} fue actualizado\nversion {version_db} → {server.version}\n')
+        contador.incrementar_actualizados()
         if mostrar_sv:
             server.print()
 

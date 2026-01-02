@@ -10,6 +10,7 @@ from cidr_ import data
 from configuracion import configuracion
 import datetime
 import clases.interruptor
+from clases.contador import contador
 
 TIMEOUT = configuracion.TIMEOUT
 TIMEOUT_ESCAN = configuracion.ESCAN_TIMEOUT
@@ -114,6 +115,7 @@ def ejecutar_barrido():
     print('\n[+] barriendo bloques de ips, esto puede llevar tiempo ...\n ')
     print('NO cierres el programa')
     ejecutar_bin()
-    print(f'\nservidores nuevos encontrados: {servers.servers_encontrados}') 
+    print(f'\nservidores nuevos encontrados: {contador.encontrados}\nservidores actualizados: {contador.actualizado}')
+    contador.resetear() 
         
         
