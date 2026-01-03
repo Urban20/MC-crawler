@@ -1,6 +1,7 @@
 from clases.menu import Menu
 from db import db
 import utilidades.consola
+from escaner.binario.bin_script import descargar_exe
 
 # AUTOR: Urb@n - Matias Urbaneja
 # USO RESPONSABLE: Este programa realiza escaneos de direcciones IP y puede generar tráfico elevado.
@@ -12,7 +13,7 @@ import utilidades.consola
 if __name__ == '__main__': 
     try:
         utilidades.consola.limpiar()
-        
+        descargar_exe()
         menu = Menu()
         menu.iniciar()
         db.conec.close()  
