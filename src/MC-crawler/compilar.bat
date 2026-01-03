@@ -2,7 +2,7 @@
 
 REM script que utilizo para compilar a .exe en Windows
 
-REM paso 1: crear un entorno virtual (python -m venv env)
+REM paso 1: crear un entorno virtual (ejecutar dependencias.bat)
 REM paso 2: verificar que Nuitka este instalado
 REM paso 3 : ejecutar este script
 
