@@ -2,12 +2,13 @@ from rich.console import Console
 from rich.markdown import Markdown
 from rich.panel import Panel
 import rich
-import sys
 from colorama import init
 from rich.table import Table
 from rich.live import Live
 import time
 from configuracion import configuracion
+import subprocess
+import os
 
 
 init()
@@ -79,8 +80,12 @@ def crear_tabla(estados : list):
 
 
 def limpiar(logo = True):
-    sys.stdout.write('\033c')
-    sys.stdout.flush()
+
+
+    for com in ('cls','clear'):
+        if subprocess.run(com,shell=True,stderr=open(os.devnull,'w')).returncode == 0:
+            break     
+        
     if logo:
         print(LOGO)
         print(ADVERTENCIA)
