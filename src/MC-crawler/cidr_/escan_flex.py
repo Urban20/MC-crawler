@@ -21,14 +21,19 @@ def procesar_rango(cidr : str):
         interrupcion.iniciar()
         param1 = int(cidr16.group(1))
         param2 = int(cidr16.group(2))
-        introducir_parametros(param1=param1,param2=param2)
+        introducir_parametros(param1=param1,
+                              param2=param2)
     elif cidr24:
         print('\niniciando escaneo de 24 bits\n')
         interrupcion.iniciar()
         param1 = int(cidr24.group(1))
         param2 = int(cidr24.group(2))
         param3 = int(cidr24.group(3))
-        introducir_parametros(param1=param1,param2=param2,param3=param3)
+        
+        introducir_parametros(param1=param1,
+                              param2=param2,
+                              param3=param3,
+                              bits24=True)
 
     else:
         print('\nla notacion es invalida\n')
