@@ -72,5 +72,5 @@ El programa guarda la información en dos archivos:
 - Los escaneos generan tráfico de red - úsalo responsablemente
 - No abuses de los escaneos para no saturar tu conexión
 
-**Autor**: Urb@n (Matias Urbaneja)  
+**Autor**: Urb@n
 **GitHub**: https://github.com/Urban20
