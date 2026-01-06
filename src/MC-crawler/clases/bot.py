@@ -16,7 +16,7 @@ import re
 
 class Bot():
     'bot no premium para Minecraft java'
-    def __init__(self,ip: str,puerto : int = 25565,usuario : str = 'MCcrawler',timeout : int = 1):
+    def __init__(self,ip: str,puerto : int = 25565,usuario : str = 'ObserverBOT',timeout : int = 1):
         self.timeout = timeout
         self.usuario = usuario
         self.modo_login = 2
