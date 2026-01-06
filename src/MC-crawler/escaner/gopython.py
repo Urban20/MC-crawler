@@ -25,6 +25,7 @@ BINARIO = 'escan' # no modificar
 CARPETA_BIN = 'binario'
 
 ruta = os.path.join(os.path.dirname(__file__),CARPETA_BIN,BINARIO) # el binario debe estar en la misma ruta que este modulo
+# ruta: es la ruta que se usa para ejecutar el binario
 
 ORACLE = 'https://docs.oracle.com/en-us/iaas/tools/public_ip_ranges.json'
 AMAZON = 'https://ip-ranges.amazonaws.com/ip-ranges.json'
