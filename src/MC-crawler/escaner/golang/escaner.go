@@ -13,13 +13,15 @@ import (
 )
 
 const (
-	PUERTO = 25565
+	PUERTO  = 25565
+	VERSION = "V3.1" //version del escaner, debe coincidir con el resto del programa
 )
 
 var n0 = flag.Int("n0", 0, "")
 var n1 = flag.Int("n1", 0, "")
 var n2 = flag.Int("n2", 0, "") // solo se usa en barrido /24
 var tiempo = flag.Int("t", 30, "")
+var vr = flag.Bool("v", false, "")
 
 var hl = flag.Int("hl", 50, "")
 
@@ -139,6 +141,12 @@ func main() {
 	hl := *hl
 	b24 := *b24        // booleano que habilita el barrido /24 , por defecto se usa /16
 	timeout := *tiempo // tiempo en miliseg
+	version := *vr
+
+	if version {
+		fmt.Println(VERSION)
+		return
+	}
 
 	lim := make(chan struct{}, hl)
 
