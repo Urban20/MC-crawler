@@ -15,15 +15,15 @@ import cidr_.escan_flex
 
 class Menu():
     def __init__(self):
-        self.titulo = 'opciones'
+        self.titulo = 'OPCIONES'
         self.mensaje = '''
-        0: Ejecutar barrido
-        1: Purgar servidores
-        2: Buscar POSIBLES servers crackeados
-        3: Buscar version (premiums y no premiums)
-        4: ver configuración
-        5: escanear rango personalizado
-        6: salir del programa
+        0 → Ejecutar barrido
+        1 → Purgar servidores
+        2 → Buscar POSIBLES servers crackeados
+        3 → Buscar version (premiums y no premiums)
+        4 → ver configuración
+        5 → escanear rango personalizado
+        6 → salir del programa
         '''
         self.ejecutando = True
         self.color = configuracion.COLOR
@@ -31,12 +31,14 @@ class Menu():
 
     def iniciar(self):
 
-        panel = Panel(self.mensaje,title=self.titulo,style=self.color)
+        panel = Panel(self.mensaje,
+                      title=self.titulo,
+                      border_style=self.color)
         
         while self.ejecutando:
             consola.limpiar()
             print(panel)
-            opcion = str(input('[#] seleccionar opcion >> ')).strip()
+            opcion = str(input('[#] seleccionar opcion numero >> ')).strip()
             
             match opcion:
                 case '0':

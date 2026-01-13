@@ -2,7 +2,6 @@ from rich.console import Console
 from rich.markdown import Markdown
 from rich.panel import Panel
 import rich
-from colorama import init
 from rich.table import Table
 from rich.live import Live
 import time
@@ -13,7 +12,6 @@ import sys
 import shutil
 
 
-init()
 consola = Console()
 
 NEGRITA = '\033[1m'
@@ -34,10 +32,12 @@ escrito por: Urb@n
 '''
 
 def imprimir_logo():
+    delay = 0.05
     x,_ = shutil.get_terminal_size()
     for linea in LOGO.splitlines():
         sys.stdout.write(linea.center(x)+'\n')
         sys.stdout.flush()
+        time.sleep(delay)
 
 def ver_config():
     config = f'''

@@ -5,6 +5,7 @@ from escaner.binario.bin_script import descargar_exe,VERSION_BIN
 import escaner.binario.verificador
 import time
 import sys
+from colorama import init
 
 
 # AUTOR: Urb@n - Matias Urbaneja
@@ -16,7 +17,8 @@ import sys
 
 if __name__ == '__main__': 
     try:
-        delay = 4
+        delay = 1
+        init()
         utilidades.consola.limpiar()
         descargar_exe()
 

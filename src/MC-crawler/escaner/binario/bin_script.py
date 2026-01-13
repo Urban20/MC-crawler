@@ -19,7 +19,7 @@ def descargar_exe():
         sys.exit(1)
         
 
-    delay = 3
+    delay = 1
     if platform.system() != 'Windows':
         return
 

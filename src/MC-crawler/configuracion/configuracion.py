@@ -37,7 +37,7 @@ def generar_ini():
     
     config['archivos'] = {'filtrados': 'filtrados.txt'}
 
-    config['personalizacion'] = {'color': 'medium_purple3'}
+    config['personalizacion'] = {'color': 'blue_violet'}
 
     with open(DIR,'w') as conf:
         conf.write(DOCUMENTACION)
