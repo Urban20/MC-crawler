@@ -9,6 +9,8 @@ import time
 from configuracion import configuracion
 import subprocess
 import os
+import sys
+import shutil
 
 
 init()
@@ -18,25 +20,24 @@ NEGRITA = '\033[1m'
 VERSION = 'V6.3' # version del programa
 VIOLETA = '\033[0;95m'
 RESET = '\033[0m '
-FONDO_V = '\033[0;105m'
 AMARILLO = '\033[0;33m'
 CELESTE = '\033[0;96m'
 ROJO = '\033[0;31m'
 VERDE = '\033[0;32m'
 
-LOGO = f'''   *           '     *
-                   *                *   '              *          *
-           '              _______----_______                                 *   
-                    °'==(______( o_(_____( ;)                    '
-                                /|\\                *           
-                               / | \\    {VIOLETA}MC-Crawler {VERSION}{RESET}: buscador de servers de Minecraft java                  
-                              /  |  \\             
-                             /   |   \\      *                                 
-                            /    |    \\ {FONDO_V}Escrito por Urb@n{RESET}
-                        
-                    github : https://github.com/Urban20
+LOGO = f'''
+\033[1;35m██▄  ▄██  ▄▄▄▄     ▄█████ ▄▄▄▄   ▄▄▄  ▄▄   ▄▄ ▄▄    ▄▄▄▄▄ ▄▄▄▄  
+\033[0;35m██ ▀▀ ██ ██▀▀▀ ▄▄▄ ██     ██▄█▄ ██▀██ ██ ▄ ██ ██    ██▄▄  ██▄█▄ 
+\033[2;35m██    ██ ▀████     ▀█████ ██ ██ ██▀██  ▀█▀█▀  ██▄▄▄ ██▄▄▄ ██ ██ \n{RESET}{VERSION}\n
+escrito por: Urb@n 
+                                                                                                                                                                                      
 '''
-ADVERTENCIA = f'{AMARILLO}\n[!] advertencia: El antivirus puede bloquear el correcto funcionamiento del programa y/o dar falsos positivos\n{RESET}'
+
+def imprimir_logo():
+    x,_ = shutil.get_terminal_size()
+    for linea in LOGO.splitlines():
+        sys.stdout.write(linea.center(x)+'\n')
+        sys.stdout.flush()
 
 def ver_config():
     config = f'''
@@ -87,8 +88,7 @@ def limpiar(logo = True):
             break     
         
     if logo:
-        print(LOGO)
-        print(ADVERTENCIA)
+        imprimir_logo()        
 
 
 def info_server(cuerpo : str,titulo : str =''):

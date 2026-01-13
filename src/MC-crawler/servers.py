@@ -22,23 +22,10 @@ def iniciar_busqueda(crackeados : bool = False):
     x,_ = shutil.get_terminal_size()
 
     n_globales,n_crackeados = db.contar_indexados()
-
-    logo=r'''
-▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌
-▐ __  __                 ____                    _           ▌
-▐|  \/  | ___           / ___|_ __ __ ___      _| | ___ _ __ ▌
-▐| |\/| |/ __|  _____  | |   | '__/ _` \ \ /\ / / |/ _ \ '__|▌
-▐| |  | | (__  |_____| | |___| | | (_| |\ V  V /| |  __/ |   ▌
-▐|_|  |_|\___|          \____|_|  \__,_| \_/\_/ |_|\___|_|   ▌
-▐▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▌
-     '''
-    for linea in logo.strip().splitlines():
-        print(linea.center(x))  
-    print(consola.NEGRITA+'Busqueda NO premium'.center(x)+consola.RESET if crackeados else consola.NEGRITA+'Busqueda global'.center(x)+consola.RESET)
-
+    consola.imprimir_logo()
     print(f'servidores no premium indexados: {n_crackeados}'.center(x) if crackeados else f'servidores totales indexados: {n_globales}'.center(x))
     for _ in range(2):
-        print('_'*x+'\n')  
+        print('▬'*x+'\n')  
 
     return str(input(consola.NEGRITA+'Buscar version >> '+consola.RESET)).strip()
 
