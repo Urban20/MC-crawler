@@ -11,6 +11,7 @@ from configuracion import configuracion
 import datetime
 import clases.interruptor
 from clases.contador import contador
+import time
 
 TIMEOUT = configuracion.TIMEOUT
 TIMEOUT_ESCAN = configuracion.ESCAN_TIMEOUT
@@ -59,6 +60,8 @@ def ejecutar_bin():
     rango4,estado4 = data.obtener_bloque_web(url=HETZNER,regex=regex16,limite=5)
 
     consola.crear_tabla([estado1,estado2,estado3,estado4])
+    time.sleep(3)
+    consola.limpiar()
 
     bloques = rango1 + rango2 + rango3 + rango4# bloques de rango web
 
