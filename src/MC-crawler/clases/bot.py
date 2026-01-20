@@ -28,8 +28,12 @@ class Bot():
         self.respuesta_str = ''
         self.numero_estado = 0
         self.conectado = False
+    
+    def __enviar_paquete(self,buffer : Buffer):
+        self.__conex.write_varint(len(buffer))
+        self.__conex.write(buffer)
   
-    def conexion(self,num_proto : int = 47):
+    def conexion(self,num_proto : int = 47): # handshake
         try:
             self.__conex = TCPSyncConnection.make_client((self.ip,self.puerto),self.timeout)
             hand = Buffer()
@@ -43,8 +47,8 @@ class Bot():
             paquete.write_varint(self.paquete_inicial)
             paquete.write(hand)
 
-            self.__conex.write_varint(len(paquete))
-            self.__conex.write(paquete)
+            self.__enviar_paquete(paquete)
+            
             self.conectado = True
         except:
             print(f'[BOT] {self.usuario} >> no se pudo conectar a {self.ip}:{self.puerto}')
@@ -72,12 +76,8 @@ class Bot():
                 for _ in range(rep):
                     buff.write_value(StructFormat.BOOL,False)
                 
-                
-
-
-
-            self.__conex.write_varint(len(buff))
-            self.__conex.write(buff)
+            self.__enviar_paquete(buff)
+            
         except AttributeError: ...
 
     def leer_paquete(self):

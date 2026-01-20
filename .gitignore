@@ -17,3 +17,8 @@ tests.py
 *.dist
 TODO
 *.ini
+*.pyc
+*.bat
+!iniciar.bat
+!compilar.bat
+!dependencias.bat
