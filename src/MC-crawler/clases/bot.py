@@ -13,6 +13,43 @@ import re
 # fallos encontrados en algunas versiones puntuales
 
 
+def versionado_viejo(version : str): # EXPERIMENTAL
+    reg = re.search(r'\d+\.\d+(?:\.\d)?',version)
+    
+    if not reg:
+        return 
+    
+    return reg.group().split('.')[0] == '1'
+
+def versionado_nuevo(version : str): # EXPERIMENTAL
+    return versionado_viejo(version) == False # != None y != True
+
+def protocolo_moderno(buffer : Buffer, version :str,uuid):
+    '''
+    aplica a versiones de la 1.20 +
+    
+    '''
+    if re.search(r'1\.20(?:\.1)?$',version):
+        # especificamente 1.20 / 1.20.1 -> EXCEPCION
+        buffer.write_value(StructFormat.BOOL,False) 
+        
+        return
+
+    
+    # quitando la EXCEPCION : 1.20.2 +
+    buffer.write(uuid.bytes)
+
+
+def protocolo_antiguo(buffer : Buffer,version : str, nver : int):
+
+    '''aplica a versiones 1.19 o anteriores'''
+
+    if nver == 19: # se cubren excepciones
+        rep = 2 if re.search(r'1\.19\.(?:1|2)$',version) else 1 # 1.19.1 / 1.19.2 -> EXCEPCION
+
+        for _ in range(rep):
+            buffer.write_value(StructFormat.BOOL,False)
+    
 
 class Bot():
     'bot no premium para Minecraft java'
@@ -64,17 +101,26 @@ class Bot():
             buff.write_varint(self.paquete_inicial)
             buff.write_utf(self.usuario)
 
-            n_ver = int(re.search(r'1\.(\d+)(?:\.\d+)?',version).group(1))
-            # se intenta cubrir la mayoria de los protocolos
-            if n_ver == 20 or n_ver >= 21:
+            if versionado_nuevo(version): # 26.1 y posteriores
 
-                buff.write_value(StructFormat.BOOL,False) if re.search(r'1\.20(?:\.1)?$',version) else buff.write(uuid.bytes) # especificamente 1.20 / 1.20.1
+                protocolo_moderno(buffer=buff,
+                                  version=version,
+                                  uuid=uuid)
+                
+            elif versionado_viejo(version): # formato 1.x.x o 1.x , ej 1.20, 1.19 , etc
 
-            elif n_ver == 19:
-                rep = 2 if re.search(r'1\.19\.(?:1|2)$',version) else 1 # especificamente 1.19.1 / 1.19.2
+                n_ver = int(re.search(r'1\.(\d+)(?:\.\d+)?',version).group(1))
 
-                for _ in range(rep):
-                    buff.write_value(StructFormat.BOOL,False)
+                if n_ver in (20,21): # excepcion: 1.20.x - 1.21.x -> protocolo moderno
+                    protocolo_moderno(buffer=buff,
+                                  version=version,
+                                  uuid=uuid)
+                    
+                else: # 1.19 y anteriores -> protocolo antiguo
+                    protocolo_antiguo(buffer=buff,
+                                    version=version,
+                                    nver=n_ver)
+                    
                 
             self.__enviar_paquete(buff)
             
