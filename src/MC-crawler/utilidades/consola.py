@@ -1,6 +1,5 @@
 from rich.console import Console
 from rich.markdown import Markdown
-from rich.panel import Panel
 import rich
 from rich.table import Table
 from rich.live import Live
@@ -40,32 +39,18 @@ def imprimir_logo():
         time.sleep(delay)
 
 def ver_config():
-    config = f'''
-
-    - REDES:
-
-        hilos: {configuracion.HILOS}
-        tiempo de espera entre server: {configuracion.TIMEOUT} seg
-
-    - BOT:
-
-        timeout del bot : {configuracion.TIMEOUT_BOT} seg
+    limpiar(logo=False)
+    t = ''
+    t+='\n'
+    seccion = configuracion.config
+    for k in seccion.sections():
+        t += f'{VERDE}{k}{RESET}\n'
+        for v in seccion[k]:
+            t += f'{v} : {CELESTE}{seccion[k][v]}{RESET}\n'
+        t+= '\n'     
+            
+    print(t)
     
-    - ARCHIVOS:
-
-        archivo de guardado .txt: {configuracion.FILTRADOS}
-    
-    - PURGADO:
-
-        timeout de purgado: {configuracion.TIMEOUT_PURGADO}
-        reintentos: {configuracion.REINTENTOS}    
-
-    - DISEÑO:
-
-        tema: {configuracion.COLOR}
-    '''
-
-    rich.print(Panel(config,title='configuracion'))
 
     
 
