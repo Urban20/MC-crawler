@@ -6,7 +6,7 @@
 
 ##
 
-MC Crawler apunta a ser un programa de linea de comandos cuyo objetivo es la llevar un registro de servidores de Minecraft Java.
+MC Crawler apunta a ser un programa de linea de comandos cuyo objetivo es llevar un registro de servidores de Minecraft Java.
 
 Su funcionamiento general es el siguiente:
 - obtiene rangos de ips ocupados por hostings
@@ -46,8 +46,9 @@ pip install -r requirements.txt
    `4. arrastrar el binario generado a la siguiente carpeta: MC-crawler/escaner/binario`
    
    
+4. Una vez creado el entorno virtual e instalado las dependencias 
 
-4. Ejecuta:
+Ejecutar:
 ```bash
 python main.py
 ```

@@ -39,7 +39,9 @@ pip install -r requirements.txt
    `4. move the generated binary to following folder: MC-crawler/escaner/binario`
 
 
-4. Run:
+4. Once the virtual environment has been created and the dependencies installed
+
+Run:
 ```bash
 python main.py
 ```
