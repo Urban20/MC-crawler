@@ -1,5 +1,11 @@
 # MC Crawler
 
+### Idiomas:
+
+[ENGLISH](https://github.com/Urban20/MC-crawler/tree/main/docs/readme_en.md) 
+
+##
+
 MC Crawler apunta a ser un programa de linea de comandos cuyo objetivo es la llevar un registro de servidores de Minecraft Java.
 
 Su funcionamiento general es el siguiente:
@@ -37,7 +43,7 @@ pip install -r requirements.txt
    go build .
    
    ```
-   `4. arrastrar el bonario generado a la carpeta principal (MC-crawler/)`
+   `4. arrastrar el binario generado a la siguiente carpeta: MC-crawler/escaner/binario`
    
    
 
