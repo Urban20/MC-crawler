@@ -1,17 +1,15 @@
 # MC Crawler
 
-Un programa para encontrar servidores de Minecraft. Escanea direcciones IP y recopila información sobre servidores activos guardandolos en una base de datos.
+MC Crawler apunta a ser un programa de linea de comandos cuyo objetivo es la llevar un registro de servidores de Minecraft Java.
 
-## Vista previa
-<p align="center">
-  <img src="https://i.postimg.cc/6p41sY6d/demo.png" alt="McCrawler Demo" width="800" style="border-radius: 8px">
-</p>
+Su funcionamiento general es el siguiente:
+- obtiene rangos de ips ocupados por hostings
+- selecciona algunos rangos al azar y ejecuta un escaneo de puertos con un rango de /16 cada uno
+- envia una serie de paquetes especificos utilizados para comunicarse con este tipo de servidores
+- envia un bot el cual simula un jugador y se conecta de forma automatica al servidor objetivo sin completar el login. En base a la respuesta se puede inferir con bastante exactitud si el servidor es premium o no premium, si tiene mods, withelist e incluso si el bot fue baneado.
 
-## Qué hace
+NOTA: el programa puede actualizar la base de datos de forma automatica. 
 
-- Escanea bloques de IPs buscando servidores de Minecraft
-- Detecta si los servidores son premium o permiten jugadores no premium
-- Guarda la información en una base de datos local
 
 ## Cómo instalarlo
 
@@ -26,9 +24,9 @@ cd MC-crawler/src/MC-crawler
 pip install -r requirements.txt
 ```
 
-3. Consigue el archivo `escan` (escáner de IPs):
-   - Windows: Descarga `escan.exe` [click](https://github.com/Urban20/MC-crawler/releases)
-   - Linux: Compílalo vos mismo con Go:
+3. Conseguir el archivo `escan` (escáner de IPs) (parte critica del programa, sin esto el programa no funciona como debe hacerlo):
+   - Windows: Descarga `escan.exe` [click](https://github.com/Urban20/MC-crawler/releases) 
+   - Linux: Compílalo vos mismo con Go (necesitas el binario especifico de tu distribucion):
 
    `1. instalar Golang`
 
@@ -49,13 +47,14 @@ python main.py
 ```
 ó
 
-instalalo compilado para Windows (version .exe): [click](https://github.com/Urban20/MC-crawler/releases)
+instalalo compilado para Windows (version .exe):
+el cual viene listo para usar [click aca](https://github.com/Urban20/MC-crawler/releases)
 
 ## Cómo se usa
 
 Opciones: 
 
-- **Barrido**: Busca nuevos servidores
+- **Barrido**: Busca nuevos servidores (ejecuta la obtencion de rangos ips y el escaneo)
 - **Purgar**: Elimina servidores que ya no están online
 - **Buscar**: Encuentra servidores no premium
 - **Buscar versión**: Filtra por versión de Minecraft
@@ -68,9 +67,18 @@ El programa guarda la información en dos archivos:
 
 ## Notas importantes
 
-- El antivirus puede bloquear el escáner (es falso positivo)
-- Los escaneos generan tráfico de red - úsalo responsablemente
+- Los escaneos generan tráfico de red - usar responsablemente
 - No abuses de los escaneos para no saturar tu conexión
+- El proyecto es extensible y admite modificaciones por parte de terceros, permitiendo su adaptación a nuevos casos de uso o funcionalidades **mas no me hago responsable de las modificaciones o mal uso que se le dé a la herramienta.**
+
+## Cosas a implementar en un futuro
+
+- mejora de rendimiento y concurrencia por parte de los modulos escritos en python
+- soporte de lenguajes
+- adicion de escaneos de rango de /8 (8 bits)
+
+
 
 **Autor**: Urb@n
+
 **GitHub**: https://github.com/Urban20
