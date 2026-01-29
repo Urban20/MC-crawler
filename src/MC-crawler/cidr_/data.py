@@ -31,6 +31,6 @@ def obtener_bloque_web(url : str,regex : str = r'(\d+)\.(\d+)\.0\.0',limite : in
         else: 
             raise ConnectionError
 
-    except (requests.ConnectionError,requests.ConnectTimeout) as e:
+    except (requests.ConnectionError,requests.ConnectTimeout):
         
         return ([],'fallo')   

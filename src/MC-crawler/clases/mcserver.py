@@ -31,6 +31,7 @@ class McServer():
         self.timeout = timeout
         self.info = None
         self.protocolo = 47
+        self.ping = None # valor por default
 
 
         # etiquetas
@@ -64,7 +65,8 @@ class McServer():
                 self.uuid = re.findall(r"id='(\S+)'",str(estado.players.sample)) # lista de uuids
                 self.p_data = list(zip(self.p_onlines,self.uuid)) # tupla (jugador, uuid)
                 self.info = (self.direccion,self.pais,self.version,self.fecha)
-                self.protocolo = estado.version.protocol  
+                self.protocolo = estado.version.protocol
+                self.ping = estado.latency 
 
                 return self.estado            
             except TimeoutError:
@@ -153,6 +155,8 @@ class McServer():
 
             cuerpo = f'''
             veredicto: {self.veredicto}
+
+            ping: {str(self.ping)[:7]} ms
 
             whitelist encontrada: {self.withelist}
 
