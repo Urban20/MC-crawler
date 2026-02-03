@@ -145,6 +145,13 @@ class McServer():
             self.veredicto = self.ET_TIM
         except:
             self.veredicto = self.ET_INC
+
+    def __pasear_info(self,**kwargs):
+        t = ''
+        for clave,valor in kwargs.items():
+            t+= (' '*12) + f'{clave}: {valor}\n\n'
+        return t
+
                 
     def print(self):
 
@@ -153,30 +160,18 @@ class McServer():
     
         if self.estado == 'online':
 
-            cuerpo = f'''
-            veredicto: {self.veredicto}
-
-            ping: {str(self.ping)[:7]} ms
-
-            whitelist encontrada: {self.withelist}
-
-            mods encontrados: {self.modeado}
-
-            registrado el dia: {self.fecha_otogada} 
-
-            estado: {self.estado}
-
-            motd: {self.motd}
-
-            nro de jugadores: {self.jugadores_online}/{self.max_jugadores}
-
-            version: {self.version}
-
-            jugadores online: {self.p_data}
-            
-            '''
+            cuerpo = self.__pasear_info(
+            veredicto=self.veredicto,
+            ping=self.ping,
+            whitelist=self.withelist,
+            mods=self.modeado,
+            fecha=self.fecha_otogada,
+            nro_jugadores=f'{self.jugadores_online}/{self.max_jugadores}',
+            version=self.version,
+            jugadores_activos=self.p_data)
 
             consola.info_server(cuerpo=cuerpo, titulo=titulo)
+
         else:
             
             print(f'{self.direccion} - estado : {self.estado}')

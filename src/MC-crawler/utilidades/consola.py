@@ -14,7 +14,7 @@ import shutil
 consola = Console()
 
 NEGRITA = '\033[1m'
-VERSION = 'V6.3' # version del programa
+VERSION = 'V6.4' # version del programa
 VIOLETA = '\033[0;95m'
 RESET = '\033[0m '
 AMARILLO = '\033[0;33m'
