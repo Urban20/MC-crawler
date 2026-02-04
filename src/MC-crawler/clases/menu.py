@@ -16,28 +16,40 @@ import cidr_.escan_flex
 class Menu():
     def __init__(self):
         self.titulo = 'OPCIONES'
-        self.mensaje = '''
-        0 → Ejecutar barrido
-        1 → Purgar servidores
-        2 → Buscar POSIBLES servers crackeados
-        3 → Buscar version (premiums y no premiums)
-        4 → ver configuración
-        5 → escanear rango personalizado
-        6 → salir del programa
-        '''
         self.ejecutando = True
         self.color = configuracion.COLOR
-        self.msgcontinuar = 'ENTER para continuar' 
+        self.msgcontinuar = 'ENTER para continuar'
+
+
+    def __agregar_opcion(self,*args : str):
+        t = '\n'
+        i = 0
+        for desc in args:
+            t+= f'{str(i)} → {desc.capitalize()}\n'
+            i+=1
+        return t
+    
+    def __panel(self):
+        msg = self.__agregar_opcion(
+                           'ejecutar barrido',
+                           'purgar servidores',
+                           'buscar POSIBLES servers crackeados',
+                           'buscar version (premiums y no premiums)',
+                           'ver configuración',
+                           'escanear rango personalizado',
+                           'salir del programa')
+
+        return Panel(msg,
+                      title=self.titulo,
+                      border_style=self.color)
+
 
     def iniciar(self):
 
-        panel = Panel(self.mensaje,
-                      title=self.titulo,
-                      border_style=self.color)
-        
+           
         while self.ejecutando:
             consola.limpiar()
-            print(panel)
+            print(self.__panel())
             opcion = str(input('[#] seleccionar opcion numero >> ')).strip()
             
             match opcion:
