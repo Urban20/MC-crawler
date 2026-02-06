@@ -31,7 +31,7 @@ class Menu():
     
     def __panel(self):
         msg = self.__agregar_opcion(
-                           'ejecutar barrido',
+                           'iniciar escaneo de sevidores',
                            'purgar servidores',
                            'buscar POSIBLES servers crackeados',
                            'buscar version (premiums y no premiums)',
