@@ -50,6 +50,10 @@ class Menu():
         while self.ejecutando:
             consola.limpiar()
             print(self.__panel())
+
+            fecha = db.ultimo_escaneo()
+            print(f'Ultimo escaneo registrado: {fecha}\n')
+
             opcion = str(input('[#] seleccionar opcion numero >> ')).strip()
             
             match opcion:

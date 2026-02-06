@@ -21,16 +21,27 @@ ruta_db = os.path.dirname(__file__)
 # base de datos principal (todos los servers):
 DB = 'servers.db'
 TABLA = 'servers'
-
+db_principal = os.path.join(ruta_db,DB)
 # base de datos secundaria (solo los posibles crackeados):
 DB2 = 'crackeados.db'
 TABLA2 = 'server_np'
+db_secundaria = os.path.join(ruta_db,DB2)
 
 # tabla principal de serves historicos (todos)
-conec = sq.connect(os.path.join(ruta_db,DB))
+conec = sq.connect(db_principal)
 cursor = conec.cursor()
 cursor.execute(f'CREATE TABLE IF NOT EXISTS {TABLA}(ip PRIMARY KEY,pais TEXT,version TEXT, fecha TEXT)')
 # pais queda obsoleto en la db
+
+def ultimo_escaneo():
+
+    try:
+        sel = conec.cursor()
+        fecha = sel.execute(f'SELECT fecha from {TABLA} ORDER BY fecha DESC').fetchone()
+        return fecha[0]
+    except TypeError:
+        return f'desconocido'
+
 
 def contar_indexados():
     contados1 = conec.cursor()
@@ -41,7 +52,7 @@ def contar_indexados():
     return (n_globales,n_crackeados)
 
 # tabla a la db de servers crackeados
-conec2 = sq.connect(os.path.join(ruta_db,DB2))
+conec2 = sq.connect(db_secundaria)
 cursor2 = conec2.cursor()
 cursor2.execute(f'CREATE TABLE IF NOT EXISTS {TABLA2}(ip PRIMARY KEY, VERSION TEXT,FECHA TEXT)')
 
