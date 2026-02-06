@@ -39,13 +39,14 @@ def imprimir_logo():
 
 def ver_config():
     limpiar(logo=False)
-    t = ''
-    t+='\n'
+    t='\n'
+    margen = ' '*2
     seccion = configuracion.config
+    print(VIOLETA + '\n' + margen + '[ configuraciones ]'.upper() + RESET + '\n\n')
     for k in seccion.sections():
-        t += f'{VERDE}{k}{RESET}\n'
+        t += margen + f'{VERDE}{k.capitalize()}{RESET}\n'
         for v in seccion[k]:
-            t += f'{v} : {CELESTE}{seccion[k][v]}{RESET}\n'
+            t += margen + f'{v} : {CELESTE}{seccion[k][v]}{RESET}\n'
         t+= '\n'     
             
     print(t)
