@@ -27,7 +27,7 @@ def iniciar_busqueda(crackeados : bool = False):
     for _ in range(2):
         print('▬'*x+'\n')  
 
-    return str(input(consola.NEGRITA+'Buscar version >> '+consola.RESET)).strip()
+    return consola.input2(consola.NEGRITA+'Buscar version >> '+consola.RESET).strip()
 
 def archivo(server,fecha,arch : str):
     'archivo temporal que retiene los servers filtrados para una mejor lectura'

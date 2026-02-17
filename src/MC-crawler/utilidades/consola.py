@@ -29,6 +29,27 @@ escrito por: Urb@n
                                                                                                                                                                                       
 '''
 
+def print2(texto : str,delay = 0.01,salto : bool = True):
+    for c in texto:
+        sys.stdout.write(c)
+        sys.stdout.flush()
+        time.sleep(delay)
+    if salto:
+        sys.stdout.write('\n')
+        sys.stdout.flush()
+
+
+def input2(texto : str,delay : float = 0.01):
+
+    print2(texto,
+           salto=False,
+           delay=delay)
+    
+    salida = sys.stdin.readline()
+    sys.stdin.flush()
+
+    return str(salida)
+
 def imprimir_logo():
     delay = 0.05
     x,_ = shutil.get_terminal_size()
@@ -49,7 +70,7 @@ def ver_config():
             t += margen + f'{v} : {CELESTE}{seccion[k][v]}{RESET}\n'
         t+= '\n'     
             
-    print(t)
+    print2(t)
     
 
     

@@ -54,7 +54,7 @@ class Menu():
             fecha = db.ultimo_escaneo()
             print(f'Ultimo escaneo registrado: {fecha}\n')
 
-            opcion = str(input('[#] seleccionar opcion numero >> ')).strip()
+            opcion = consola.input2('[#] seleccionar opcion numero >> ',delay=0.05).strip()
             
             match opcion:
                 case '0':
