@@ -78,7 +78,7 @@ def paginado(contador : int, limite : int, n_pagina :int):
 
     
 
-    if str(input('siguiente pagina (s/n) >> ')).lower().strip() == 's':
+    if consola.input2('siguiente pagina (s/n) >> ').lower().strip() == 's':
         n_pagina+=1
         consola.pagina(n_pagina)
         return (0,n_pagina,False)
