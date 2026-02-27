@@ -32,6 +32,7 @@ ORACLE = 'https://docs.oracle.com/en-us/iaas/tools/public_ip_ranges.json'
 AMAZON = 'https://ip-ranges.amazonaws.com/ip-ranges.json'
 GOOGLE = 'https://www.gstatic.com/ipranges/cloud.json'
 HETZNER = 'https://stat.ripe.net/data/announced-prefixes/data.json?resource=AS24940'
+OVH = 'https://stat.ripe.net/data/announced-prefixes/data.json?resource=AS16276'
 
 regex16 = r'(\d+)\.(\d+)\.0\.0/16$'
 regex24 = r'(\d+)\.(\d+)\.(\d+)\.0/24$'
@@ -58,17 +59,23 @@ def ejecutar_bin():
     rango2,estado2 = data.obtener_bloque_web(url=AMAZON,regex=regex16)
     rango3,estado3 = data.obtener_bloque_web(url=GOOGLE,regex=regex16)
     rango4,estado4 = data.obtener_bloque_web(url=HETZNER,regex=regex16,limite=5)
+    rango5,estado5 = data.obtener_bloque_web(url=OVH,regex=regex16,limite=5)
 
-    consola.crear_tabla([estado1,estado2,estado3,estado4])
+    consola.crear_tabla(oracle=estado1,
+                        amazon=estado2,
+                        google=estado3,
+                        hetzner=estado4,
+                        ovh=estado5)
+    
     time.sleep(3)
     consola.limpiar()
 
-    bloques = rango1 + rango2 + rango3 + rango4# bloques de rango web
+    bloques = rango1 + rango2 + rango3 + rango4 + rango5 # bloques de rango web
 
     if bloques:
-        print('\n[+] utilizando bloques web y predefinidos\n')
+        print('\n[+] utilizando solo bloques web\n')
 
-        BLOQUES16 = bloques + data.OTROS_random
+        BLOQUES16 = bloques 
 
     else:
         print('\n[+] utilizando solo bloques predefinidos\n')

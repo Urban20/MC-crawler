@@ -76,14 +76,14 @@ def ver_config():
 
     
 
-def crear_tabla(estados : list):
+def crear_tabla(**kwargs):
     tabla = Table(expand=True,)
     tabla.add_column('servicio',justify='center')
     tabla.add_column('estado',justify='center')
 
     with Live(tabla):
-        for servicio,estado in zip(['Oracle','Amazonaws','Google','Hetzner'],estados):
-            tabla.add_row(servicio,estado)
+        for servicio,estado in kwargs.items():
+            tabla.add_row(servicio.capitalize(),str(estado).upper())
             time.sleep(0.5)
 
 
