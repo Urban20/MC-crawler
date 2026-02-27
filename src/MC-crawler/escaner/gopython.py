@@ -34,8 +34,8 @@ GOOGLE = 'https://www.gstatic.com/ipranges/cloud.json'
 HETZNER = 'https://stat.ripe.net/data/announced-prefixes/data.json?resource=AS24940'
 OVH = 'https://stat.ripe.net/data/announced-prefixes/data.json?resource=AS16276'
 
-regex16 = r'(\d+)\.(\d+)\.0\.0/16$'
-regex24 = r'(\d+)\.(\d+)\.(\d+)\.0/24$'
+regex16 = r'(\d+)\.(\d+)\.0\.0/16'
+regex24 = r'(\d+)\.(\d+)\.(\d+)\.0/24'
 interrupcion = clases.interruptor.Interruptor(evento='barrido') # objeto creado para barridos y barridos personalizados
 
 
