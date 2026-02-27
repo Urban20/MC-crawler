@@ -19,6 +19,7 @@ class Menu():
         self.ejecutando = True
         self.color = configuracion.COLOR
         self.msgcontinuar = 'ENTER para continuar'
+        self.delay_input = 0.05
 
 
     def __agregar_opcion(self,*args : str):
@@ -54,7 +55,7 @@ class Menu():
             fecha = db.ultimo_escaneo()
             print(f'Ultimo escaneo registrado: {fecha}\n')
 
-            opcion = consola.input2('[#] seleccionar opcion numero >> ',delay=0.05).strip()
+            opcion = consola.input2('[#] seleccionar opcion numero >> ',delay=self.delay_input).strip()
             
             match opcion:
                 case '0':
@@ -90,7 +91,7 @@ class Menu():
                     info = Panel('escaneos de 16 o 24 bits\nejemplos:\n\n190.60.0.0/16\n190.60.20.0/24',
                                  title='uso')
                     print(info)           
-                    cidr = str(input('\nrango a escanear >> ')).strip()
+                    cidr = str(consola.input2('\nrango a escanear >> ')).strip()
                     cidr_.escan_flex.procesar_rango(cidr)
                 case '6':
                     self.ejecutando = False
@@ -101,5 +102,5 @@ class Menu():
             
             if self.ejecutando:
                 interrupcion.cancelado = False
-                input(self.msgcontinuar)
+                input(consola.margen + self.msgcontinuar)
 

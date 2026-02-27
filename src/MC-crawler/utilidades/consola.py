@@ -11,6 +11,7 @@ import shutil
 
 
 consola = Console()
+margen = ' ' * 2
 
 NEGRITA = '\033[1m'
 VERSION = 'V6.4' # version del programa
@@ -61,7 +62,7 @@ def imprimir_logo():
 def ver_config():
     limpiar(logo=False)
     t='\n'
-    margen = ' '*2
+    
     seccion = configuracion.config
     print(VIOLETA + '\n' + margen + '[ configuraciones ]'.upper() + RESET + '\n\n')
     for k in seccion.sections():
