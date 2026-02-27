@@ -12,7 +12,6 @@ class Interruptor():
         
     def __manejador(self,num, f):
 
-        print(f'\nel evento {self.evento} fue cancelado\n')
         self.cancelado = True
 
     def iniciar(self):
