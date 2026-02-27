@@ -4,6 +4,16 @@ import requests
 import re
 import random
 
+
+ORACLE = 'https://docs.oracle.com/en-us/iaas/tools/public_ip_ranges.json'
+AMAZON = 'https://ip-ranges.amazonaws.com/ip-ranges.json'
+GOOGLE = 'https://www.gstatic.com/ipranges/cloud.json'
+HETZNER = 'https://stat.ripe.net/data/announced-prefixes/data.json?resource=AS24940'
+OVH = 'https://stat.ripe.net/data/announced-prefixes/data.json?resource=AS16276'
+
+regex16 = r'(\d+)\.(\d+)\.0\.0/16'
+regex24 = r'(\d+)\.(\d+)\.(\d+)\.0/24'
+
 # otros bloques ip fijos
 OTROS = [(130,61),(54,36),(14,178),(151,80),(50,20),(149,88),
       (54,38),(116,202),(116,203),(136,243),(66,179),(66,248),
@@ -33,3 +43,13 @@ def obtener_bloque_web(url : str,regex : str = r'(\d+)\.(\d+)\.0\.0',limite : in
     except (requests.ConnectionError,requests.ConnectTimeout):
         
         return ([],'fallo')   
+
+
+if __name__ == '__main__':
+    i = 0
+    t = ''
+    for url in (GOOGLE,AMAZON,ORACLE,HETZNER,OVH):
+        bloque = obtener_bloque_web(url)
+        t+= f'\nbloque {i}: {bloque}\n'
+        i +=1
+    print(t)

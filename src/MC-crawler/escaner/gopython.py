@@ -28,14 +28,6 @@ CARPETA_BIN = 'binario'
 ruta = os.path.join(os.path.dirname(__file__),CARPETA_BIN,BINARIO) # el binario debe estar en la misma ruta que este modulo
 # ruta: es la ruta que se usa para ejecutar el binario
 
-ORACLE = 'https://docs.oracle.com/en-us/iaas/tools/public_ip_ranges.json'
-AMAZON = 'https://ip-ranges.amazonaws.com/ip-ranges.json'
-GOOGLE = 'https://www.gstatic.com/ipranges/cloud.json'
-HETZNER = 'https://stat.ripe.net/data/announced-prefixes/data.json?resource=AS24940'
-OVH = 'https://stat.ripe.net/data/announced-prefixes/data.json?resource=AS16276'
-
-regex16 = r'(\d+)\.(\d+)\.0\.0/16'
-regex24 = r'(\d+)\.(\d+)\.(\d+)\.0/24'
 interrupcion = clases.interruptor.Interruptor(evento='barrido') # objeto creado para barridos y barridos personalizados
 
 
@@ -55,11 +47,11 @@ def ejecutar_bin():
     '''automatiza la ejecucion del bin de go
     
     - obtiene los rangos de ip automaticamente'''
-    rango1,estado1 = data.obtener_bloque_web(url=ORACLE)
-    rango2,estado2 = data.obtener_bloque_web(url=AMAZON,regex=regex16)
-    rango3,estado3 = data.obtener_bloque_web(url=GOOGLE,regex=regex16)
-    rango4,estado4 = data.obtener_bloque_web(url=HETZNER,regex=regex16,limite=5)
-    rango5,estado5 = data.obtener_bloque_web(url=OVH,regex=regex16,limite=5)
+    rango1,estado1 = data.obtener_bloque_web(url=data.ORACLE)
+    rango2,estado2 = data.obtener_bloque_web(url=data.AMAZON,regex=data.regex16)
+    rango3,estado3 = data.obtener_bloque_web(url=data.GOOGLE,regex=data.regex16)
+    rango4,estado4 = data.obtener_bloque_web(url=data.HETZNER,regex=data.regex16,limite=5)
+    rango5,estado5 = data.obtener_bloque_web(url=data.OVH,regex=data.regex16,limite=5)
 
     consola.crear_tabla(oracle=estado1,
                         amazon=estado2,
@@ -81,7 +73,7 @@ def ejecutar_bin():
         print('\n[+] utilizando solo bloques predefinidos\n')
         BLOQUES16 = data.OTROS
     try:
-
+        
         interrupcion.iniciar()
 
         for n0,n1 in BLOQUES16: # parametros para barrido de /16
