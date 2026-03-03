@@ -14,8 +14,11 @@ def procesar_rango(cidr : str):
 
     190.60.20.0/24''' 
 
-    cidr16 = re.match(cidr_.data.regex16,cidr)
-    cidr24 = re.match(cidr_.data.regex24,cidr)
+    reg16 = cidr_.data.regex16 + '$'
+    reg24 = cidr_.data.regex24 + '$'
+
+    cidr16 = re.match(reg16,cidr)
+    cidr24 = re.match(reg24,cidr)
 
     if cidr16:
         print('\niniciando escaneo de 16 bits\n')
