@@ -32,7 +32,7 @@ class Menu():
     
     def __panel(self):
         msg = self.__agregar_opcion(
-                           'iniciar escaneo de sevidores',
+                           'iniciar escaneo de servidores',
                            'purgar servidores',
                            'buscar POSIBLES servers crackeados',
                            'buscar version (premiums y no premiums)',

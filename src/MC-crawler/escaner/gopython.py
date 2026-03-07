@@ -39,8 +39,15 @@ def introducir_parametros(param1 : int ,param2 : int,param3 : int = 0,bits24 : b
     if bits24:
         parametros.append('-b24')
 
-    sp = subprocess.Popen(parametros,stdout=subprocess.PIPE)  
-    procesar_lineas(subproc=sp)
+    sp = subprocess.Popen(parametros,stdout=subprocess.PIPE)
+
+    for linea in sp.stdout:
+
+        if interrupcion.cancelado: # segunda interrupcion de barrido
+                                   # utilizado en escaneos de barrido y escaneos personalizados
+            break
+
+        procesar_lineas(linea)
 
 
 def ejecutar_bin():
@@ -89,29 +96,24 @@ def ejecutar_bin():
         print(f'\nhubo un problema al ejecutar el binario: {e}\n')
 
 
-def procesar_lineas(subproc):
-    for linea in subproc.stdout:
-        try:
+def procesar_lineas(linea : bytes):
+    
+    try:
+        ip = linea.decode().replace('\n','').strip()
+        server = McServer(ip=str(ip),
+            timeout=TIMEOUT,
+            # se muestra el tiempo actual a la hora de mostrar el servidor antes de insertar en la db
+            fecha_otorgada=datetime.datetime.today().isoformat(sep=' ',timespec='seconds'
+            ))
+        
+        if server.obtener_data() == 'online':
+            server.verificar_crackeado()
 
-            if interrupcion.cancelado: # segunda interrupcion de barrido
-                                       # utilizado en escaneos de barrido y escaneos personalizados
-                break
+        servers.registrar_server(server=server)
+        servers.registrar_crackeado(server=server)
 
-            ip = linea.decode().replace('\n','').strip()
-            server = McServer(ip=str(ip),
-                timeout=TIMEOUT,
-                # se muestra el tiempo actual a la hora de mostrar el servidor antes de insertar en la db
-                fecha_otorgada=datetime.datetime.today().isoformat(sep=' ',timespec='seconds'
-                ))
-            
-            if server.obtener_data() == 'online':
-                server.verificar_crackeado()
-
-            servers.registrar_server(server=server)
-            servers.registrar_crackeado(server=server)
-
-        except Exception as e:
-            print(f'\n hubo un problema : {e}\n')
+    except Exception as e:
+        print(f'\n hubo un problema : {e}\n')
 
 def ejecutar_barrido():
 
