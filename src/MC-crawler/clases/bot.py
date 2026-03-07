@@ -12,9 +12,13 @@ import re
 # - el bot no funciona en algunas versiones por cambios en el protocolo que son muy variados
 # fallos encontrados en algunas versiones puntuales
 
+v20 = re.compile(r'1\.20(?:\.1)?$') # especificamente 1.20 / 1.20.1 -> EXCEPCION
+v19 = re.compile(r'1\.19\.(?:1|2)$') # 1.19.1 / 1.19.2 -> EXCEPCION
+versiones = re.compile(r'\d+\.\d+(?:\.\d)?')
+ver_vieja = re.compile(r'1\.(\d+)(?:\.\d+)?')
 
 def versionado_viejo(version : str): # EXPERIMENTAL
-    reg = re.search(r'\d+\.\d+(?:\.\d)?',version)
+    reg = versiones.search(version)
     
     if not reg:
         return 
@@ -29,8 +33,8 @@ def protocolo_moderno(buffer : Buffer, version :str,uuid):
     aplica a versiones de la 1.20 +
     
     '''
-    if re.search(r'1\.20(?:\.1)?$',version):
-        # especificamente 1.20 / 1.20.1 -> EXCEPCION
+    if v20.search(version):
+        
         buffer.write_value(StructFormat.BOOL,False) 
         
         return
@@ -45,7 +49,7 @@ def protocolo_antiguo(buffer : Buffer,version : str, nver : int):
     '''aplica a versiones 1.19 o anteriores'''
 
     if nver == 19: # se cubren excepciones
-        rep = 2 if re.search(r'1\.19\.(?:1|2)$',version) else 1 # 1.19.1 / 1.19.2 -> EXCEPCION
+        rep = 2 if v19.search(version) else 1 # 1.19.1 / 1.19.2 -> EXCEPCION
 
         for _ in range(rep):
             buffer.write_value(StructFormat.BOOL,False)
@@ -109,7 +113,7 @@ class Bot():
                 
             elif versionado_viejo(version): # formato 1.x.x o 1.x , ej 1.20, 1.19 , etc
 
-                n_ver = int(re.search(r'1\.(\d+)(?:\.\d+)?',version).group(1))
+                n_ver = int(ver_vieja.search(version).group(1))
 
                 if n_ver in (20,21): # excepcion: 1.20.x - 1.21.x -> protocolo moderno
                     protocolo_moderno(buffer=buff,

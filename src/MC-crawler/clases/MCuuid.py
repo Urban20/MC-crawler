@@ -2,10 +2,13 @@ import hashlib
 import uuid
 import re
 
+
+uuid4 = re.compile(r'\w+-\w+-4\w+-\w+-\w+')
+
 def uuidV4(uuid : str):
    'retorna True si el uuid es de version 4'
 
-   return re.match(r'\w+-\w+-4\w+-\w+-\w+',uuid) != None
+   return uuid4.match(uuid) != None
     
 
 def jugador_crackeado(usuario :str, uuid : str):
