@@ -149,7 +149,7 @@ class McServer():
     def __pasear_info(self,**kwargs):
         t = ''
         for clave,valor in kwargs.items():
-            t+= (' '*12) + f'{clave}: {valor}\n\n'
+            t+= (' '*12) + f'{clave.replace('_',' ').capitalize()}: {valor}\n\n'
         return t
 
                 
@@ -166,7 +166,7 @@ class McServer():
             whitelist=self.withelist,
             mods=self.modeado,
             fecha=self.fecha_otogada,
-            nro_jugadores=f'{self.jugadores_online}/{self.max_jugadores}',
+            nro_de_jugadores=f'{self.jugadores_online}/{self.max_jugadores}',
             version=self.version,
             jugadores_activos=self.p_data)
 
