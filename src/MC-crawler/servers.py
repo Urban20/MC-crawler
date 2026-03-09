@@ -18,11 +18,11 @@ arch = configuracion.FILTRADOS # archivos donde se guardan los servers filtrados
 
 def iniciar_busqueda(crackeados : bool = False):
     'imprime la busqueda de servidores de forma artistica'
-    consola.limpiar(logo=False)
+    consola.limpiar()
+    consola.imprimir_logo()
     x,_ = shutil.get_terminal_size()
 
     n_globales,n_crackeados = db.contar_indexados()
-    consola.imprimir_logo()
     print(f'servidores no premium indexados: {n_crackeados}'.center(x) if crackeados else f'servidores totales indexados: {n_globales}'.center(x))
     for _ in range(2):
         print('▬'*x+'\n')  

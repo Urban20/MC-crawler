@@ -12,6 +12,7 @@ import shutil
 
 consola = Console()
 margen = ' ' * 2
+cmd = None
 
 NEGRITA = '\033[1m'
 VERSION = 'V6.4' # version del programa
@@ -60,7 +61,7 @@ def imprimir_logo():
         time.sleep(delay)
 
 def ver_config():
-    limpiar(logo=False)
+    limpiar()
     t='\n'
     
     seccion = configuracion.config
@@ -87,15 +88,20 @@ def crear_tabla(**kwargs):
             time.sleep(0.5)
 
 
-def limpiar(logo = True):
+def limpiar():
+    global cmd
 
+    ejecutar = lambda com: subprocess.run(com,shell=True,stderr=open(os.devnull,'w'))
 
-    for com in ('cls','clear'):
-        if subprocess.run(com,shell=True,stderr=open(os.devnull,'w')).returncode == 0:
+    if cmd != None:
+        ejecutar(cmd)
+        return
+  
+    for com in ('clear','cls'):
+        if ejecutar(com).returncode == 0:
+            cmd = com
             break     
         
-    if logo:
-        imprimir_logo()        
 
 
 def info_server(cuerpo : str,titulo : str =''):

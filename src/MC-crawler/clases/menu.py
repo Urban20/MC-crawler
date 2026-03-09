@@ -50,6 +50,7 @@ class Menu():
            
         while self.ejecutando:
             consola.limpiar()
+            consola.imprimir_logo()
             print(self.__panel())
 
             fecha = db.ultimo_escaneo()
