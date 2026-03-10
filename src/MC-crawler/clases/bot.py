@@ -4,13 +4,16 @@ from mcproto.protocol.base_io import StructFormat
 import clases.MCuuid
 import re
 
-# este bot se conecta a los servidores y determina por medio de la respuesta
-# si se trata de un servidor no premium o premium, ademas se puede inferir si tiene mods o whitelist
-# pero tiene un pequeño margen de error
-# TENER EN CUENTA :
-# - el bot no se refleja en el juego pero puede verse en la consola del servidor porque no completa el login
-# - el bot no funciona en algunas versiones por cambios en el protocolo que son muy variados
-# fallos encontrados en algunas versiones puntuales
+'''
+ este bot se conecta a los servidores y determina por medio de la respuesta
+ si se trata de un servidor no premium o premium, ademas se puede inferir si tiene mods o whitelist
+ pero tiene un pequeño margen de error
+ TENER EN CUENTA :
+ - el bot no se refleja en el juego pero puede verse en la consola del servidor porque no completa el login
+ - el bot no funciona en algunas versiones por cambios en el protocolo que son muy variados
+ fallos encontrados en algunas versiones puntuales
+
+'''
 
 v20 = re.compile(r'1\.20(?:\.1)?$') # especificamente 1.20 / 1.20.1 -> EXCEPCION
 v19 = re.compile(r'1\.19\.(?:1|2)$') # 1.19.1 / 1.19.2 -> EXCEPCION
