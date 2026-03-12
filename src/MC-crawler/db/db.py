@@ -14,9 +14,12 @@ from clases.interruptor import Interruptor
 from clases.contador import contador
 
 ruta_db = os.path.dirname(__file__)
-# este modulo maneja dos bases de datos:
-# por un lado, la base de datos general donde estan TODOS los servidores
-# por el otro , se guardan servidores no premium (base de datos mas volatil y a corto plazo)
+'''
+ este modulo maneja dos bases de datos:
+ por un lado, la base de datos general donde estan TODOS los servidores
+ por el otro , se guardan servidores no premium (base de datos mas volatil y a corto plazo)
+ 
+'''
 
 # base de datos principal (todos los servers):
 DB = 'servers.db'

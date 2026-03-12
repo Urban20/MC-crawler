@@ -23,13 +23,13 @@ ver_vieja = re.compile(r'1\.(\d+)(?:\.\d+)?')
 def versionado_viejo(version : str): # EXPERIMENTAL
     reg = versiones.search(version)
     
-    if not reg:
+    if not reg or len(version.split('.')) not in (2,3):
         return 
     
     return reg.group().split('.')[0] == '1'
 
 def versionado_nuevo(version : str): # EXPERIMENTAL
-    return versionado_viejo(version) == False # != None y != True
+    return versionado_viejo(version) is False # != None y != True
 
 def protocolo_moderno(buffer : Buffer, version :str,uuid):
     '''
