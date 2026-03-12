@@ -89,10 +89,55 @@ def eliminar_server(direccion : str,conex = conec2,tabla = TABLA2):
     else:
         print(f'{ROJO}{direccion} eliminado de la base de datos global (offline){RESET}')
 
-def purgar():
-    '''funcion que borra servers que esten offline cuando el usuario da la orden
+
+def evaluar_servers(sv : McServer,ip_puerto,version_db,fecha_db,borrados : int,actualizados : int):
+    '''
+    funcion auxiliar de purgar(), evalua las condiciones de los servidores:
+    si estan offlines o si las versiones en tiempo real coinciden con las versiones de la
+    base de datos
+    '''
+
+
+    if sv.estado == 'offline':
+        eliminar_server(conex=conec,
+                        tabla=TABLA,
+                        direccion=ip_puerto)
+        borrados+=1
+            
+    elif sv.version != version_db:
+        # actualizador de la funcion purgar, no confundir con verificar_actualizacion()
+        sv.verificar_crackeado()
+        actualizar_server(sv=sv,ip_puerto=ip_puerto)
+        servers.registrar_crackeado(sv)
+        print(f'[↑] ACTUALIZADO: {ip_puerto} | version ({version_db} → {sv.version}) | {fecha_db} → {sv.fecha}')
+        actualizados+=1
     
-    purga la base de datos principal (todos los servers)'''
+    return borrados,actualizados
+
+def db_a_server(datos):
+
+    '''
+    funcion auxiliar de purgar(), trae informacion de la base de datos y cea un objeto de tipo server
+    
+    '''
+
+    ipv4 = datos[0].split(':')[0]
+    puerto = datos[0].split(':')[1]
+    version_db = datos[1]
+    ip_puerto = datos[0]
+    fecha_db = datos[2]
+    sv = McServer(ip=ipv4,
+                    puerto=puerto,
+                    timeout=configuracion.configuracion.TIMEOUT_PURGADO)
+
+    return sv,version_db,ip_puerto,fecha_db
+
+def purgar():
+    '''
+    funcion que borra servers que esten offline cuando el usuario da la orden
+    purga la base de datos principal (todos los servers)
+
+    '''
    
     try:
         
@@ -111,36 +156,22 @@ def purgar():
             if inter.cancelado:
                 break
             
-            ipv4 = datos[0].split(':')[0]
-            puerto = datos[0].split(':')[1]
-            version_db = datos[1]
-            ip_puerto = datos[0]
-            fecha_db = datos[2]
-            sv = McServer(ip=ipv4,
-                          puerto=puerto,
-                          timeout=configuracion.configuracion.TIMEOUT_PURGADO)
+            sv,version_db,ip_puerto,fecha_db = db_a_server(datos)
             
             sv.obtener_data(reintentos=configuracion.configuracion.REINTENTOS)
 
-            if sv.estado == 'offline':
-                eliminar_server(conex=conec,
-                                tabla=TABLA,
-                                direccion=ip_puerto)
-                borrados+=1
-                    
-            elif sv.version != version_db:
-                # actualizador de la funcion purgar, no confundir con verificar_actualizacion()
-                sv.verificar_crackeado()
-                actualizar_server(sv=sv,ip_puerto=ip_puerto)
-                servers.registrar_crackeado(sv)
-                print(f'[↑] ACTUALIZADO: {ip_puerto} | version ({version_db} → {sv.version}) | {fecha_db} → {sv.fecha}')
-                actualizados+=1
-            
-                
-            
+            borrados, actualizados = evaluar_servers(sv=sv,
+                                    ip_puerto=ip_puerto,
+                                    version_db=version_db,
+                                    fecha_db=fecha_db,
+                                    borrados=borrados,
+                                    actualizados=actualizados)
+                     
         print(f'\npurga finalizada\nservers eliminados (offlines): {borrados} | servers actualizados: {actualizados}\n')
-    except Exception as e:
-        print(f'\n[-] hubo un problema al intentar purgar la db\n{e}')
+    
+    except Exception as e: print(f'\n[-] hubo un problema al intentar purgar la db\n{e}')
+        
+        
  
 def insertar(dato : tuple,espacios :str = '(?,?,?,?)',tabla :str = TABLA,cursor = cursor,conex = conec):
     
