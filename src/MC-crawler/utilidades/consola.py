@@ -93,7 +93,7 @@ def limpiar():
 
     ejecutar = lambda com: subprocess.run(com,shell=True,stderr=open(os.devnull,'w'))
 
-    if cmd != None:
+    if cmd is not None:
         ejecutar(cmd)
         return
   

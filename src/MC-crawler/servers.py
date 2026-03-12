@@ -149,7 +149,7 @@ def registrar_server(server : McServer):
     'esta funcion recicla la logica para insertar el server en db de servers historicos (todos) e imprimirlo'
     
     try:
-        if server.info != None:
+        if server.info is not None:
             db.insertar(dato=server.info)
             server.print()
             contador.incrementar_encontrados()
