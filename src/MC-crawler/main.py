@@ -1,7 +1,7 @@
 from clases.menu import Menu
 from db import db
 import utilidades.consola
-from escaner.binario.bin_script import descargar_exe,VERSION_BIN
+from escaner.binario.bin_script import descargar_exe,VERSION_BIN,check_binario_linux
 import escaner.binario.verificador
 import time
 import sys
@@ -42,6 +42,7 @@ if __name__ == '__main__':
         delay = 1
         init()
         utilidades.consola.limpiar()
+        check_binario_linux()
         descargar_exe()
 
         if not escaner.binario.verificador.comprobar_escaner(VERSION_BIN):

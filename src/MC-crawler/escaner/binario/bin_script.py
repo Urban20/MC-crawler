@@ -1,7 +1,7 @@
 'un script encargado de instalar el escaner para Windows de forma automatizada sin intervencion del usuario'
 import platform
 import os
-from escaner.gopython import BINARIO
+from escaner.gopython import BINARIO,ruta
 import requests
 import time
 from utilidades.conectividad import conectividad
@@ -11,6 +11,23 @@ ejecutable = f'{BINARIO}.exe' # similar al bin de gopython pero este explicita s
 VERSION_BIN = 'V3.1' # version del escaner a instalar
 ruta_bin = os.path.join(os.path.dirname(__file__),ejecutable) # similar a la ruta de gopython.py con la diferencia de que este involucra su extension .exe
 url_exe = f'https://github.com/Urban20/MC-crawler/releases/download/{VERSION_BIN}/{ejecutable}'
+doc_compilar = 'leer.txt'
+documentacion = os.path.join(os.path.dirname(__file__),doc_compilar)
+
+def check_binario_linux():
+
+    if platform.system() != 'Linux':
+        return
+    
+    if not os.path.exists(ruta):
+        
+        with open(documentacion,'r') as doc:
+            print(doc.read())
+
+        input('enter para salir')
+
+        sys.exit(1)
+    
 
 def descargar_exe():
     'intenta descargar el escaner automaticamente'

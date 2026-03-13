@@ -1,7 +1,14 @@
-la carpeta binario es la carpeta donde se debe introducir el binario "escan.exe"
+
+[LEER]
+
+
+Si estas leyendo esto es porque falta el escaner de servidores el cual no se incluye en Linux por cuestiones de compatibilidad:
+Este binario es sumamente necesario y se debe compilar manualmente
+
+la carpeta binario/ es la carpeta donde se debe introducir el binario
 este binario es el responsable de los escaneos de puertos masivos para el descubrimiento de servidores
 
-pasos para la compilacion de "escan.exe" / "escan" (dependiendo de la plataforma)
+pasos para la compilacion:
 
 1) instalar Golang
 2) ingresar a la carpeta escaner/golang
