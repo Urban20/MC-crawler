@@ -20,7 +20,19 @@ v19 = re.compile(r'1\.19\.(?:1|2)$') # 1.19.1 / 1.19.2 -> EXCEPCION
 versiones = re.compile(r'\d+\.\d+(?:\.\d)?')
 ver_vieja = re.compile(r'1\.(\d+)(?:\.\d+)?')
 
-def versionado_viejo(version : str): # EXPERIMENTAL
+def versionado_viejo(version : str):
+    '''
+    posibles retornos:
+
+    1) True -> si coincide con versionado viejo
+
+    2) None -> si la notacion es invalida
+
+    3) False -> si la notacion es correcta pero no pertenece a versionados viejos
+    
+    '''
+
+
     reg = versiones.search(version)
     
     if not reg or len(version.split('.')) not in (2,3):
@@ -28,7 +40,15 @@ def versionado_viejo(version : str): # EXPERIMENTAL
     
     return reg.group().split('.')[0] == '1'
 
-def versionado_nuevo(version : str): # EXPERIMENTAL
+def versionado_nuevo(version : str):
+
+    '''
+    1) True -> corresponde a versiones nuevas
+
+    2) False -> no corresponde
+    
+    '''
+
     return versionado_viejo(version) is False # != None y != True
 
 def protocolo_moderno(buffer : Buffer, version :str,uuid):

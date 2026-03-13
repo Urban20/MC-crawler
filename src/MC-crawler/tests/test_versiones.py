@@ -16,13 +16,19 @@ class TestVersiones:
         for test in aciertos:
             assert versionado_viejo(test) is True
         
-        assert versionado_viejo('26.1') is False
+        fallas = ('26.1','26.0.0','26.1.1')
+
+        for test in fallas:
+            assert versionado_viejo(test) is False
+        
 
         Nones = (
             'test',
             '1.',
             '1.20.20.5',
-            'test.test'
+            'test.test',
+            '26',
+            '26.0.0.0'
         )
 
         for test in Nones:
@@ -72,7 +78,7 @@ class TestVersiones:
             '1.19.10',
             '1.19.1.8',
             '1.19.',
-            '1.19.20'
+            '1.19.20',
             '1.19',
             '1.19.3',
             '1.19.0'
@@ -100,7 +106,7 @@ class TestVersiones:
             '1.20.10',
             '1.20.',
             '1.20.11',
-            '1.200'
+            '1.200',
             '1.20.1.1'
         )
 
