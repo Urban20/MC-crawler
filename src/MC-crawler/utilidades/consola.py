@@ -30,6 +30,15 @@ LOGO = f'''
 escrito por: Urb@n 
                                                                                                                                                                                       
 '''
+# etiquetas que se muestran en la consola como veredicto de los servidores
+ET_CRACK = f'{VERDE}crackeado/no premium{RESET}'
+ET_PREM = f'{ROJO}premium{RESET}'
+ET_IND = 'indeterminado'
+ET_TIM = f'{AMARILLO}tiempo agotado{RESET}'
+ET_INC = f'{CELESTE}protocolo incompatible{RESET}'
+ET_BAN = f'{VIOLETA}BANEADO{RESET}'
+ET_MOD = f'{ROJO}MODEADO{RESET}'
+
 
 def print2(texto : str,delay = 0.01,salto : bool = True):
     for c in texto:

@@ -3,6 +3,8 @@ from mcproto.connection import TCPSyncConnection
 from mcproto.protocol.base_io import StructFormat
 import clases.MCuuid
 import re
+from utilidades import consola
+from configuracion.configuracion import TIMEOUT_BOT
 
 '''
  este bot se conecta a los servidores y determina por medio de la respuesta
@@ -121,6 +123,10 @@ class Bot():
         self.respuesta_str = ''
         self.numero_estado = 0
         self.conectado = False
+
+        self.pid_desconexion = 0
+        self.pid_encript = 1
+        self.pid_login = 3
     
     def __enviar_paquete(self,buffer : Buffer):
         self.__conex.write_varint(len(buffer))
@@ -195,3 +201,77 @@ class Bot():
         self.numero_estado = buffer
         self.__conex.close()
 
+def desplegar_bot(server):
+
+    try:
+            
+        bot = Bot(ip=server.ip,puerto=int(server.puerto),timeout=TIMEOUT_BOT)
+        bot.conexion(num_proto=server.protocolo)
+        bot.loguear(version=server.version)
+        bot.leer_paquete()
+
+    except TimeoutError:
+        server.veredicto = consola.ET_TIM
+        return
+    except:
+        server.veredicto = consola.ET_INC
+        return
+    
+    obtener_veredicto(bot,server)
+
+
+def obtener_veredicto(bot : Bot, server):
+
+    '''
+    funcion auxiliar de desplegar_bot( )
+
+    esta funcion decide como se clasifica el veredicto para c/servidor
+    
+    '''
+
+    match bot.numero_estado:
+            
+        case bot.pid_desconexion: 
+            coincidencia = lambda reg: re.search(reg,bot.respuesta_str.lower())
+            paquete_disconnect(server,coincidencia)
+                
+        case bot.pid_login:
+
+            server.veredicto = consola.ET_CRACK
+            server.crackeado = True
+
+        case bot.pid_encript:
+
+            server.veredicto = consola.ET_PREM
+
+        case _:
+            server.veredicto = consola.ET_IND
+
+
+def paquete_disconnect(server, coincidencia):
+
+    '''
+    funcion auxiliar de obtener_veredicto( )
+
+    maneja la logica en caso de pid = 0 (disconnect)
+    
+    '''
+    
+
+    if coincidencia(r'whitelist|whitelisted|white-listed'):
+
+        server.veredicto = consola.ET_CRACK
+        server.crackeado = True
+        server.withelist = True
+
+    elif coincidencia(r'mods|forge'):
+
+        server.veredicto = consola.ET_MOD
+        server.modeado = True
+
+    elif coincidencia(r'banned'):
+
+        server.veredicto = consola.ET_BAN
+
+    else:
+        server.veredicto = consola.ET_IND

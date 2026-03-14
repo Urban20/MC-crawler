@@ -4,8 +4,7 @@ import datetime
 from mcstatus import JavaServer
 import re
 from utilidades import consola
-from clases.bot import Bot
-from configuracion.configuracion import TIMEOUT_BOT
+import clases.bot
 import clases.MCuuid
 
 class McServer():
@@ -33,20 +32,10 @@ class McServer():
         self.protocolo = 47
         self.ping = None # valor por default
 
-
-        # etiquetas
-        self.ET_CRACK = f'{consola.VERDE}crackeado/no premium{consola.RESET}'
-        self.ET_PREM = f'{consola.ROJO}premium{consola.RESET}'
-        self.ET_IND = 'indeterminado'
-        self.ET_TIM = f'{consola.AMARILLO}tiempo agotado{consola.RESET}'
-        self.ET_INC = f'{consola.CELESTE}protocolo incompatible{consola.RESET}'
-        self.ET_BAN = f'{consola.VIOLETA}BANEADO{consola.RESET}'
-        self.ET_MOD = f'{consola.ROJO}MODEADO{consola.RESET}'
-
         # caracteristicas del server
         self.withelist = False
         self.modeado = False
-        self.veredicto = self.ET_IND
+        self.veredicto = consola.ET_IND
         self.crackeado = False
         
 
@@ -88,7 +77,7 @@ class McServer():
             # da una estimacion no tan precisa como a nivel de protocolo pero es mas rapida y
             # mejora la velocidad del programa para servidores puntuales
             
-            self.veredicto = self.ET_PREM
+            self.veredicto = consola.ET_PREM
             return
         
         if self.p_data and clases.MCuuid.jugador_crackeado(usuario=self.p_data[0][0],
@@ -96,60 +85,15 @@ class McServer():
             # da una estimacion no tan precisa como a nivel de protocolo pero es mas rapida y
             # mejora la velocidad del programa para servidores puntuales
             
-            self.veredicto = self.ET_CRACK
+            self.veredicto = consola.ET_CRACK
             return
 
-        try:
-            
-            bot = Bot(ip=self.ip,puerto=int(self.puerto),timeout=TIMEOUT_BOT)
-            bot.conexion(num_proto=self.protocolo)
-            bot.loguear(version=self.version)
-            bot.leer_paquete()
-
-            match bot.numero_estado:
-                
-                case 0: 
-                    
-                    coincidencia = lambda reg: re.search(reg,bot.respuesta_str.lower())
-
-                    if coincidencia(r'whitelist|whitelisted|white-listed'):
-    
-                        self.veredicto = self.ET_CRACK
-                        self.crackeado = True
-                        self.withelist = True
-
-                    elif coincidencia(r'mods|forge'):
-
-                        self.veredicto = self.ET_MOD
-                        self.modeado = True
-
-                    elif coincidencia(r'banned'):
-
-                        self.veredicto = self.ET_BAN
-
-                    else:
-                        self.veredicto = self.ET_IND
-                        
-                case 3:
-
-                    self.veredicto = self.ET_CRACK
-                    self.crackeado = True
-
-                case 1:
-
-                    self.veredicto = self.ET_PREM
-
-                case _:
-                    self.veredicto = self.ET_IND
-        except TimeoutError:
-            self.veredicto = self.ET_TIM
-        except:
-            self.veredicto = self.ET_INC
+        clases.bot.desplegar_bot(self)
 
     def __pasear_info(self,**kwargs):
         t = ''
         for clave,valor in kwargs.items():
-            t+= (' '*12) + f'{clave.replace('_',' ').capitalize()}: {valor}\n\n'
+            t+= (' '*12) + f'{str(clave).replace('_',' ').capitalize()}: {str(valor)}\n\n'
         return t
 
                 
