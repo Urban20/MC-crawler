@@ -20,6 +20,35 @@ v19 = re.compile(r'1\.19\.(?:1|2)$') # 1.19.1 / 1.19.2 -> EXCEPCION
 versiones = re.compile(r'\d+\.\d+(?:\.\d)?')
 ver_vieja = re.compile(r'1\.(\d+)(?:\.\d+)?')
 
+
+
+def n_ver(version : str):
+    '''
+
+    NUMERO DE VERSION:
+
+    extrae la numerologia del medio para las versiones
+    
+    solo tiene sentido en el versionado antiguo (26.0 + no tiene sentido real)
+
+    ejemplo: 
+
+    - 1.20.1 -> retorna 20
+    
+    - 1.8.x-1.21.x -> retorna el primer numero del bloque de versiones : 8 
+
+    - version invalida -> retorna None
+    
+    
+    '''
+    r = ver_vieja.search(version)
+
+    if r is None:
+        return
+    
+    return int(r.group(1))
+    
+
 def versionado_viejo(version : str):
     '''
     posibles retornos:
@@ -122,36 +151,36 @@ class Bot():
         if not self.conectado:
             return
         
-        try:
-            uuid = clases.MCuuid.uuid_Offline(self.usuario,string=False)
-            buff = Buffer()
-            buff.write_varint(self.paquete_inicial)
-            buff.write_utf(self.usuario)
+        
+        uuid = clases.MCuuid.uuid_Offline(self.usuario,string=False)
+        buff = Buffer()
+        buff.write_varint(self.paquete_inicial)
+        buff.write_utf(self.usuario)
 
-            if versionado_nuevo(version): # 26.1 y posteriores
+        if versionado_nuevo(version): # 26.1 y posteriores
 
-                protocolo_moderno(buffer=buff,
-                                  version=version,
-                                  uuid=uuid)
-                
-            elif versionado_viejo(version): # formato 1.x.x o 1.x , ej 1.20, 1.19 , etc
-
-                n_ver = int(ver_vieja.search(version).group(1))
-
-                if n_ver in (20,21): # excepcion: 1.20.x - 1.21.x -> protocolo moderno
-                    protocolo_moderno(buffer=buff,
-                                  version=version,
-                                  uuid=uuid)
-                    
-                else: # 1.19 y anteriores -> protocolo antiguo
-                    protocolo_antiguo(buffer=buff,
-                                    version=version,
-                                    nver=n_ver)
-                    
-                
-            self.__enviar_paquete(buff)
+            protocolo_moderno(buffer=buff,
+                                version=version,
+                                uuid=uuid)
             
-        except AttributeError: ...
+        elif versionado_viejo(version): # formato 1.x.x o 1.x , ej 1.20, 1.19 , etc
+
+            num = n_ver(version)
+
+            if num in (20,21): # excepcion: 1.20.x - 1.21.x -> protocolo moderno
+                protocolo_moderno(buffer=buff,
+                                version=version,
+                                uuid=uuid)
+                
+            else: # 1.19 y anteriores -> protocolo antiguo
+                protocolo_antiguo(buffer=buff,
+                                version=version,
+                                nver=num)
+                
+            
+        self.__enviar_paquete(buff)
+            
+        
 
     def leer_paquete(self):
 
