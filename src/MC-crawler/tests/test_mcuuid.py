@@ -1,4 +1,4 @@
-from clases.MCuuid import uuid_Offline
+from clases.MCuuid import uuid_Offline,uuidV4
 from uuid import UUID
 
 class TestMcuuidOffline:
@@ -18,3 +18,24 @@ class TestMcuuidOffline:
 
         assert type(uuid_Offline('test')) is str
         assert type(uuid_Offline('test',string=False)) is UUID
+
+def test_UuidV4():
+
+    aciertos = ('e54ec9de-013e-4281-bd91-c48def8feb99',
+                'f0e665a4-75eb-488d-9f6d-b3c9d04acc9c')
+
+    for test in aciertos:
+        assert uuidV4(test) is True
+   
+
+    fallas = (
+        'e54ec9de-013e-3281-bd91-c48def8feb99',
+        '00000000-0000-4000-0000-000000000000',
+        'TEST e54ec9de-013e-4281-bd91-c48def8feb99 TEST',
+        'TEST e54ec9de-013e-4281-bd91-c48def8feb99 TEST',
+        'test',
+    )
+
+    for test in fallas:
+        assert uuidV4(test) is False
+   
