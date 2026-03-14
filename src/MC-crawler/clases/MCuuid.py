@@ -1,14 +1,17 @@
 import hashlib
-import uuid
-import re
+import uuid as UUID
 
 
-uuid4 = re.compile(r'\w+-\w+-4\w+-\w+-\w+')
 
 def uuidV4(uuid : str):
    'retorna True si el uuid es de version 4'
 
-   return uuid4.match(uuid) is not None
+   try:
+       
+       return UUID.UUID(uuid).version == 4
+   
+
+   except ValueError:  return False
     
 
 def jugador_crackeado(usuario :str, uuid : str):
@@ -30,7 +33,7 @@ def uuid_Offline(usuario : str, string :bool = True):
     hash = hashlib.md5()
     hash.update(payload.encode())
     hash_md5 = hash.hexdigest()
-    uuid_ = uuid.UUID(hex=hash_md5,version=version_uuid)
+    uuid_ = UUID.UUID(hex=hash_md5,version=version_uuid)
     
     if string:
         return str(uuid_)
