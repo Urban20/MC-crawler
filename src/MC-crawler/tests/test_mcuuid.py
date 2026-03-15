@@ -32,7 +32,6 @@ def test_UuidV4():
         'e54ec9de-013e-3281-bd91-c48def8feb99',
         '00000000-0000-4000-0000-000000000000',
         'TEST e54ec9de-013e-4281-bd91-c48def8feb99 TEST',
-        'TEST e54ec9de-013e-4281-bd91-c48def8feb99 TEST',
         'test',
     )
 
