@@ -232,8 +232,8 @@ def obtener_veredicto(bot : Bot, server):
     match bot.numero_estado:
             
         case bot.pid_desconexion: 
-            coincidencia = lambda reg: re.search(reg,bot.respuesta_str.lower())
-            paquete_disconnect(server,coincidencia)
+            
+            paquete_disconnect(server,bot)
                 
         case bot.pid_login:
 
@@ -248,7 +248,7 @@ def obtener_veredicto(bot : Bot, server):
             server.veredicto = consola.ET_IND
 
 
-def paquete_disconnect(server, coincidencia):
+def paquete_disconnect(server,bot):
 
     '''
     funcion auxiliar de obtener_veredicto( )
@@ -256,7 +256,7 @@ def paquete_disconnect(server, coincidencia):
     maneja la logica en caso de pid = 0 (disconnect)
     
     '''
-    
+    coincidencia = lambda reg: re.search(reg,bot.respuesta_str.lower())
 
     if coincidencia(r'whitelist|whitelisted|white-listed'):
 
