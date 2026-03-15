@@ -12,7 +12,6 @@ import shutil
 
 consola = Console()
 margen = ' ' * 2
-cmd = None
 
 NEGRITA = '\033[1m'
 VERSION = 'V6.4' # version del programa
@@ -22,6 +21,7 @@ AMARILLO = '\033[0;33m'
 CELESTE = '\033[0;96m'
 ROJO = '\033[0;31m'
 VERDE = '\033[0;32m'
+cmd = 'cls' if os.name == 'nt' else 'clear'
 
 LOGO = f'''
 \033[1;35m██▄  ▄██  ▄▄▄▄     ▄█████ ▄▄▄▄   ▄▄▄  ▄▄   ▄▄ ▄▄    ▄▄▄▄▄ ▄▄▄▄  
@@ -84,8 +84,6 @@ def ver_config():
     print2(t)
     
 
-    
-
 def crear_tabla(**kwargs):
     tabla = Table(expand=True,)
     tabla.add_column('servicio',justify='center')
@@ -97,24 +95,12 @@ def crear_tabla(**kwargs):
             time.sleep(0.5)
 
 
-def limpiar():
-    global cmd
 
-    ejecutar = lambda com: subprocess.run(com,shell=True,stderr=open(os.devnull,'w'))
-
-    if cmd is not None:
-        ejecutar(cmd)
-        return
-  
-    for com in ('clear','cls'):
-        if ejecutar(com).returncode == 0:
-            cmd = com
-            break     
-        
-
+# probablemente lo modifique varias veces hasta encontrar la forma mas eficiente
+limpiar = lambda : subprocess.run(cmd,shell=True,stderr=open(os.devnull,'w'))
+      
 
 def info_server(cuerpo : str,titulo : str =''):
-    consola = Console()
     msg = f'''\n
 # {titulo}
 
