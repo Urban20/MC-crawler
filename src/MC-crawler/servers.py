@@ -51,7 +51,7 @@ def imprimir_servers(contador : int ,crackeados : bool,tupla,server : McServer):
     if crackeados:
         version_db = tupla[1]
 
-        if version_db == server.version and server.veredicto != server.ET_PREM:
+        if version_db == server.version and server.veredicto != consola.ET_PREM:
             # la db no premium solo mantiene los servers que ademas de estar onlines
             # coinciden con la version solicitada por el usuario
             # si la version cambia, automaticamente se cuenta como un server nuevo 
