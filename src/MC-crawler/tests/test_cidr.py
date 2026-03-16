@@ -82,8 +82,10 @@ class TestCidrs:
         assert erroneo[1] is None
 
 def test_es_octeto():
-    assert es_octeto(0) is True
-    assert es_octeto(1) is True
-    assert es_octeto(255) is True
-    assert es_octeto(-2) is False
-    assert es_octeto(256) is False
+
+    for x in (0,1,255):
+        assert es_octeto(x) is True
+    
+    for x in (-2,256):
+        assert es_octeto(x) is False
+    
