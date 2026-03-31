@@ -1,16 +1,19 @@
 import requests
 import json
 import db.db
-from utilidades.conectividad import conectividad
 
 
 JSON_VERSION = 'https://launchermeta.mojang.com/mc/game/version_manifest.json'
+cache_versiones = []
 
 
 def version_json():
 
     
     try:
+        if cache_versiones:
+            return []
+
         req = requests.get(JSON_VERSION)
 
         if req.status_code != 200:
@@ -27,19 +30,20 @@ def version_json():
 
 def listar_versiones(versiones : list):
 
-    if not versiones:
-        return
+    if not versiones and cache_versiones:
+        print('\n(+) revisando informacion cacheada\n')
+        return cache_versiones
 
-    releases = []
+    
 
     for version in versiones:
 
         if version['type'] != 'release':
             continue
 
-        releases.append(version['id'])
+        cache_versiones.append(version['id'])
 
-    return releases    
+    return cache_versiones    
 
 def obtener_releases():
    
