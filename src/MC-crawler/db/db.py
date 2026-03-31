@@ -205,6 +205,16 @@ def buscar_crackeados(version : str):
     servers.mostrar(lista=cursor2,crackeados=True,version=version)
     
     
+def contar_version(version : str):
+    '''
+    lleva un conteo de de servidores en la db que tengan la version
+    asignada
 
+    '''
+    try:
+        contador = conec.cursor()
+        cantidad = contador.execute(f'SELECT COUNT(*) FROM {TABLA} WHERE version LIKE ?', (f'%{version}',)).fetchone()[0]
+        return int(cantidad)
 
-
+    except TypeError:
+        return 0

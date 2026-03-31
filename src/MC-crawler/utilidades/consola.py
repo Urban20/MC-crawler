@@ -94,6 +94,19 @@ def crear_tabla(**kwargs):
             tabla.add_row(servicio.capitalize(),str(estado).upper())
             time.sleep(0.5)
 
+def tabla_versiones(versiones : list): 
+
+    # versiones = [ (version, numero) ]
+
+    tabla = Table(expand=True)
+    tabla.add_column('version',justify='center')
+    tabla.add_column('servers indexados',justify='center',style='magenta')
+    for version, cantidad in versiones:
+
+        tabla.add_row(version,str(cantidad))
+
+    consola.print(tabla)
+
 
 
 # probablemente lo modifique varias veces hasta encontrar la forma mas eficiente
