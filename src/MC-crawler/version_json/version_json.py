@@ -60,7 +60,7 @@ def contar_servidores():
         print('\nno se pudo obtener informacion del conteo de servidores\n')
         return
 
-    print('numeros de servidores clasificados por version:\n')
+    print('\nnumeros de servidores clasificados por version:\n')
 
     for release in releases:
 

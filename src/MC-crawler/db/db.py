@@ -189,7 +189,7 @@ def buscar_version(version : str):
     
     print(f'\n[...] se muestra busqueda segun "{version}"\n')
 
-    cursor.execute(f'SELECT ip,fecha FROM {TABLA} WHERE version LIKE ? ORDER BY fecha DESC',(f'%{version}%',))
+    cursor.execute(f'SELECT ip,fecha FROM {TABLA} WHERE version LIKE ? ORDER BY fecha DESC',(f'%{version}',))
     
     servers.mostrar(lista=cursor,version=version)
    
@@ -200,7 +200,7 @@ def buscar_crackeados(version : str):
     
     print(f'\n[...] se muestra busqueda de posibles servers no premium')
     
-    cursor2.execute(f'SELECT ip,VERSION,FECHA FROM {TABLA2} WHERE version LIKE ? ORDER BY FECHA DESC',(f'%{version}%',))
+    cursor2.execute(f'SELECT ip,VERSION,FECHA FROM {TABLA2} WHERE version LIKE ? ORDER BY FECHA DESC',(f'%{version}',))
 
     servers.mostrar(lista=cursor2,crackeados=True,version=version)
     

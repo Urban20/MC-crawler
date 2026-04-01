@@ -14,7 +14,7 @@ consola = Console()
 margen = ' ' * 2
 
 NEGRITA = '\033[1m'
-VERSION = 'V6.4' # version del programa
+VERSION = 'V7.0' # version del programa
 VIOLETA = '\033[0;95m'
 RESET = '\033[0m '
 AMARILLO = '\033[0;33m'

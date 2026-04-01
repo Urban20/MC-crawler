@@ -4,7 +4,7 @@
 from escaner.gopython import ejecutar_barrido,interrupcion
 from db import db
 from rich.panel import Panel
-from rich import print
+from rich import print as pr
 from utilidades import consola
 from servers import iniciar_busqueda
 from utilidades import conectividad
@@ -53,10 +53,11 @@ class Menu():
         while self.ejecutando:
             consola.limpiar()
             consola.imprimir_logo()
-            print(self.__panel())
+            print(f'\n{consola.AMARILLO}(!) Este programa necesita conexion para funcionar correctamente{consola.RESET}\n')
+            pr(self.__panel())
 
             fecha = db.ultimo_escaneo()
-            print(f'Ultimo escaneo registrado: {fecha}\n')
+            pr(f'Ultimo escaneo registrado: {fecha}\n')
 
             opcion = consola.input2('[#] seleccionar opcion numero >> ',delay=self.delay_input).strip()
             
