@@ -4,11 +4,11 @@
 
 [ENGLISH](https://github.com/Urban20/MC-crawler/tree/main/docs/readme_en.md) 
 
-## Como compilar
+## Como compilar usando Nuitka
 
 [COMO COMPILAR](https://github.com/Urban20/MC-crawler/tree/main/docs/COMPILACION_ES.md)
 
-## How to compile
+## How to compile using Nuitka
 
 [HOW TO COMPILE](https://github.com/Urban20/MC-crawler/tree/main/docs/COMPILATION_EN.md)
 
