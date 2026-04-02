@@ -18,7 +18,7 @@ def version_json():
         req = requests.get(JSON_VERSION)
 
         if req.status_code != 200:
-            return
+            return []
         
         dec = json.JSONDecoder()
         info = dec.decode(req.text)
