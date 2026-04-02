@@ -19,6 +19,7 @@ TODO
 *.ini
 *.pyc
 *.bat
+!testing.bat
 !iniciar.bat
 !compilar.bat
 !dependencias.bat
