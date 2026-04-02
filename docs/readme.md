@@ -4,6 +4,14 @@
 
 [ENGLISH](https://github.com/Urban20/MC-crawler/tree/main/docs/readme_en.md) 
 
+## Como compilar
+
+[COMO COMPILAR](https://github.com/Urban20/MC-crawler/tree/main/docs/COMPILACION_ES.md)
+
+## How to compile
+
+[HOW TO COMPILE](https://github.com/Urban20/MC-crawler/tree/main/docs/COMPILATION_EN.md)
+
 ##
 
 MC Crawler apunta a ser un programa de linea de comandos cuyo objetivo es llevar un registro de servidores de Minecraft Java.
