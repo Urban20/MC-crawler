@@ -29,6 +29,7 @@ class TestVersiones:
             'test.test',
             '26',
             '26.0.0.0'
+            '26.1.1'
         )
 
         for test in Nones:

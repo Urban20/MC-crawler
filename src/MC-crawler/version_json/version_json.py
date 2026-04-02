@@ -1,6 +1,7 @@
 import requests
 import json
 import db.db
+from clases.bot import versionado_viejo,n_ver
 
 
 JSON_VERSION = 'https://launchermeta.mojang.com/mc/game/version_manifest.json'
@@ -38,10 +39,12 @@ def listar_versiones(versiones : list):
 
     for version in versiones:
 
-        if version['type'] != 'release':
+        version_str = version['id']
+
+        if version['type'] != 'release' or (versionado_viejo(version_str) is True and n_ver(version_str) < 6):
             continue
 
-        cache_versiones.append(version['id'])
+        cache_versiones.append(version_str)
 
     return cache_versiones    
 
