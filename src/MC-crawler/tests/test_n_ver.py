@@ -18,6 +18,9 @@ def test_nver():
     fallas = ( # casos basicos y bastante triviales
         'test',
         '1.test',
+        '26.1',
+        '26.1.1',
+        '27.1'
     )
 
     for test in fallas:

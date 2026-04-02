@@ -45,7 +45,7 @@ def n_ver(version : str):
     '''
     r = ver_vieja.search(version)
 
-    if r is None:
+    if r is None or versionado_nuevo(version):
         return
     
     return int(r.group(1))
