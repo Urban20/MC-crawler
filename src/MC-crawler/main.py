@@ -36,25 +36,30 @@ SOFTWARE.
 '''
 
 
+def main():
+    delay = 1
+    init()
+    utilidades.consola.limpiar()
+    check_binario_linux()
+    descargar_exe()
+
+    if not escaner.binario.verificador.comprobar_escaner(VERSION_BIN):
+        print(f'\nel escaner actual es incompatible con el programa:\nse necesita la version {VERSION_BIN}')
+        time.sleep(delay)
+        sys.exit(1)
+
+    print(f'\n✓ escaner compatible: {VERSION_BIN}\n')    
+    time.sleep(delay)
+    menu = Menu()
+    menu.iniciar()
+    db.conec.close()
+
+
 
 if __name__ == '__main__': 
-    try:
-        delay = 1
-        init()
-        utilidades.consola.limpiar()
-        check_binario_linux()
-        descargar_exe()
-
-        if not escaner.binario.verificador.comprobar_escaner(VERSION_BIN):
-            print(f'\nel escaner actual es incompatible con el programa:\nse necesita la version {VERSION_BIN}')
-            time.sleep(delay)
-            sys.exit(1)
-
-        print(f'\n✓ escaner compatible: {VERSION_BIN}\n')    
-        time.sleep(delay)
-        menu = Menu()
-        menu.iniciar()
-        db.conec.close()  
+    try:  
+        main()
+          
     except KeyboardInterrupt:
 
         print('\n\nsaliendo del programa\n')        
