@@ -2,6 +2,7 @@ import requests
 import json
 import db.db
 from clases.bot import versionado_viejo,n_ver
+from utilidades.consola import AMARILLO,RESET
 
 
 JSON_VERSION = 'https://launchermeta.mojang.com/mc/game/version_manifest.json'
@@ -62,6 +63,8 @@ def contar_servidores():
     if releases is None:
         print('\nno se pudo obtener informacion del conteo de servidores\n')
         return
+
+    print(f'\n{AMARILLO}(!) NOTA: el conteo de servidores no es exacto, pueden existir ciertas inconsistencias y sirve como estimado{RESET}\n')
 
     print('\nnumeros de servidores clasificados por version:\n')
 
