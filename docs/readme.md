@@ -44,7 +44,7 @@ pip install -r requirements.txt
 
    `1. instalar Golang`
 
-   `2. acceder a la carpeta de escaneos/`
+   `2. acceder a la carpeta de escaner/golang/`
 
    `3. ejecutar el comando`: 
    ```

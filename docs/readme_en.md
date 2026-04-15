@@ -30,7 +30,7 @@ pip install -r requirements.txt
 
    `1. install Golang`
 
-   `2. go to the scans/ folder`
+   `2. go to the escaner/golang/ folder`
 
    `3. run the command`:
    ```
