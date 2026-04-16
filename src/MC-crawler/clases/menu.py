@@ -94,7 +94,7 @@ class Menu():
                 case '5':
                     info = Panel('escaneos de 16 o 24 bits\nejemplos:\n\n190.60.0.0/16\n190.60.20.0/24',
                                  title='uso')
-                    print(info)           
+           
                     cidr = str(consola.input2('\nrango a escanear >> ')).strip()
                     cidr_.escan_flex.procesar_rango(cidr)
 
