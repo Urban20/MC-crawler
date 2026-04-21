@@ -60,8 +60,10 @@ def contar_servidores():
 
     version_conteo = []
 
-    if releases is None:
-        print('\nno se pudo obtener informacion del conteo de servidores\n')
+    if not releases:
+        print(f'\n{AMARILLO}(!) no se pudo obtener informacion del conteo de servidores\n')
+        print(f'(*) se requiere acceso a la red: la herramienta descarga el listado de versiones en tiempo real{RESET}')
+        input()
         return
 
     print(f'\n{AMARILLO}(!) NOTA: el conteo de servidores no es exacto, pueden existir ciertas inconsistencias y sirve como estimado{RESET}\n')
