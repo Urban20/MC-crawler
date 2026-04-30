@@ -39,6 +39,7 @@ SOFTWARE.
 def main():
     delay = 1
     init()
+    print(f'\033]2;MC-Crawler {utilidades.consola.VERSION}\007')
     utilidades.consola.limpiar()
     check_binario_linux()
     descargar_exe()
