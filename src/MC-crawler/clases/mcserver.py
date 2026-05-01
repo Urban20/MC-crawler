@@ -56,10 +56,10 @@ class McServer():
             try:
                 server = JavaServer.lookup(address=self.direccion,timeout=self.timeout)
                 estado = server.status()
-                self.version = estado.version.name
+                self.version = estado.version.name.replace('\n',r'\n')
                 self.max_jugadores = estado.players.max
                 self.jugadores_online = estado.players.online
-                self.motd = estado.motd.to_plain().replace('\n',' ').replace('\r', ' ').strip()
+                self.motd = estado.motd.to_plain().replace('\n',r'\n').replace('\r', r'\r').strip()
                 self.estado = 'online'
                 self.__obtener_usuarios(estado)
                 self.info = (self.direccion,self.pais,self.version,self.fecha)
@@ -121,6 +121,7 @@ class McServer():
             fecha=self.fecha_otogada,
             nro_de_jugadores=f'{self.jugadores_online}/{self.max_jugadores}',
             version=self.version,
+            motd=self.motd,
             jugadores_activos=self.p_data)
 
             consola.info_server(cuerpo=cuerpo, titulo=titulo)
