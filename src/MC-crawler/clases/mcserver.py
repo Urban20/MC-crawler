@@ -2,7 +2,7 @@
 
 import datetime
 from mcstatus import JavaServer
-import re
+from mcstatus.responses import JavaStatusResponse
 from utilidades import consola
 import clases.bot
 import clases.MCuuid
@@ -26,7 +26,8 @@ class McServer():
         self.lista_jugadores = ''
         self.max_jugadores = None
         self.version = None
-        self.p_onlines = None
+        self._p_onlines_raw = []
+        self.p_data = []
         self.timeout = timeout
         self.info = None
         self.protocolo = 47
@@ -37,6 +38,16 @@ class McServer():
         self.modeado = False
         self.veredicto = consola.ET_IND
         self.crackeado = False
+
+
+    def __obtener_usuarios(self,estado : JavaStatusResponse):
+
+        if estado.players.sample is not None:
+            self._p_onlines_raw = estado.players.sample # tiene toda la info sin procesar
+
+        for usuario in self._p_onlines_raw:
+            
+            self.p_data.append((usuario.name,usuario.id))
         
 
     def obtener_data(self,reintentos : int = 1):
@@ -50,9 +61,7 @@ class McServer():
                 self.jugadores_online = estado.players.online
                 self.motd = estado.motd.to_plain().replace('\n',' ').replace('\r', ' ').strip()
                 self.estado = 'online'
-                self.p_onlines = re.findall(r"name='(\S+)'",str(estado.players.sample)) # lista de jugadores online 
-                self.uuid = re.findall(r"id='(\S+)'",str(estado.players.sample)) # lista de uuids
-                self.p_data = list(zip(self.p_onlines,self.uuid)) # tupla (jugador, uuid)
+                self.__obtener_usuarios(estado)
                 self.info = (self.direccion,self.pais,self.version,self.fecha)
                 self.protocolo = estado.version.protocol
                 self.ping = estado.latency 
