@@ -12,7 +12,25 @@ VERSION_BIN = 'V3.1' # version del escaner a instalar
 ruta_bin = os.path.join(os.path.dirname(__file__),ejecutable) # similar a la ruta de gopython.py con la diferencia de que este involucra su extension .exe
 url_exe = f'https://github.com/Urban20/MC-crawler/releases/download/{VERSION_BIN}/{ejecutable}'
 doc_compilar = 'leer.txt'
-documentacion = os.path.join(os.path.dirname(__file__),doc_compilar)
+
+documentacion = '''
+[LEER]
+
+
+Si estas leyendo esto es porque falta el escaner de servidores el cual no se incluye en Linux por cuestiones de compatibilidad:
+Este binario es sumamente necesario y se debe compilar manualmente
+
+La carpeta binario/ es la carpeta donde se debe introducir dicho archivo solicitado
+Este binario es el responsable de los escaneos de puertos masivos para el descubrimiento de servidores.
+
+Pasos para la compilacion:
+
+1) instalar Golang
+2) ingresar a la carpeta escaner/golang
+3) ejecutar el siguiente comando : go build .
+4) arrastrar el binario generado a escaner/binario
+
+'''
 
 def check_binario_linux():
 
@@ -21,9 +39,7 @@ def check_binario_linux():
     
     if not os.path.exists(ruta):
         
-        with open(documentacion,'r') as doc:
-            print(doc.read())
-
+        print(documentacion)
         input('enter para salir')
 
         sys.exit(1)
