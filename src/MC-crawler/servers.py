@@ -24,8 +24,10 @@ def iniciar_busqueda(crackeados : bool = False):
 
     n_globales,n_crackeados = db.contar_indexados()
     print(f'servidores no premium indexados: {n_crackeados}'.center(x) if crackeados else f'servidores totales indexados: {n_globales}'.center(x))
+    print(consola.gris_oscuro)
     for _ in range(2):
-        print('▬'*x+'\n')  
+        print('▬'*x+'\n')
+    print(consola.RESET)  
 
     return consola.input2(consola.NEGRITA+'Buscar version >> '+consola.RESET).strip()
 
