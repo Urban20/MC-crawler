@@ -24,9 +24,18 @@ ROJO = '\033[0;31m'
 VERDE = '\033[0;32m'
 cmd = 'cls' if os.name == 'nt' else 'clear'
 
-rgb = lambda r,g,b: f'\033[38;2;{r};{g};{b}m'
+def rgb(r,g,b, fondo : bool = False):
+
+    d = 38
+
+    if fondo:
+        d = 48
+
+    return f'\033[{d};2;{r};{g};{b}m'
+
 GRIS_LOGO = rgb(171, 171, 171)
 GRIS_OSCURO = rgb(51, 51, 51)
+COLOR_PANEL_MENU = rgb(63, 61, 97,fondo=True)
 
 LOGO = f'''
 \033[1;35m{' '*10}██▄  ▄██  ▄▄▄▄     ▄█████ ▄▄▄▄   ▄▄▄  ▄▄   ▄▄ ▄▄    ▄▄▄▄▄ ▄▄▄▄  
@@ -130,3 +139,35 @@ def info_server(cuerpo : str,titulo : str =''):
 def pagina(n_pagina : int):
     etiqueta = f'# Pagina {n_pagina}'
     consola.print(Markdown(etiqueta,style='white'),style=configuracion.COLOR)
+
+
+
+def maximo(l : list[str]):
+
+    '''
+    devuelve el numero maximo de caracteres de una lista de strings
+    '''
+
+    n = 0
+
+    for elemento in l:
+
+        if n < len(elemento):
+            n = len(elemento)
+
+    return n
+
+def tabla_opciones(opciones : list):
+
+    x,_ = shutil.get_terminal_size()
+    m = maximo(opciones)
+    margen = 10
+    margen_ansi = ' ' * len(COLOR_PANEL_MENU)
+
+    borde1 = f'{margen_ansi}{COLOR_PANEL_MENU}┌{'─' * (m + margen)}┐{RESET}'.center(x)
+    borde2 = f'{margen_ansi}{COLOR_PANEL_MENU}└{'─' * (m + margen)}┘{RESET}'.center(x)
+    print(borde1)
+    for op in opciones:
+        print(f'{margen_ansi}{COLOR_PANEL_MENU}│ {op}{' '* ((m + margen - 1) - len(op))}│{RESET}'.center(x))
+    
+    print(borde2)

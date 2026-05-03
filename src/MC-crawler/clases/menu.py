@@ -42,10 +42,7 @@ class Menu():
                            'ver recuento de servidores indexados por version',
                            'salir del programa')
 
-        return Panel(msg,
-                      title=self.titulo,
-                      border_style=self.color)
-
+        consola.tabla_opciones(msg.splitlines())
 
     def iniciar(self):
 
