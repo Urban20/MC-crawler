@@ -116,7 +116,7 @@ class McServer():
             cuerpo = self.__pasear_info(
             veredicto=self.veredicto,
             ping=self.ping,
-            whitelist=self.withelist,
+            whitelist_detectada=self.withelist,
             mods=self.modeado,
             fecha=self.fecha_otogada,
             nro_de_jugadores=f'{self.jugadores_online}/{self.max_jugadores}',

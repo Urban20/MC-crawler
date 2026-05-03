@@ -2,6 +2,7 @@ from rich.console import Console
 from rich.markdown import Markdown
 from rich.table import Table
 from rich.live import Live
+from rich.text import Text
 import time
 from configuracion import configuracion
 import subprocess
@@ -24,14 +25,14 @@ VERDE = '\033[0;32m'
 cmd = 'cls' if os.name == 'nt' else 'clear'
 
 rgb = lambda r,g,b: f'\033[38;2;{r};{g};{b}m'
-gris_logo = rgb(171, 171, 171)
-gris_oscuro = rgb(51, 51, 51)
+GRIS_LOGO = rgb(171, 171, 171)
+GRIS_OSCURO = rgb(51, 51, 51)
 
 LOGO = f'''
 \033[1;35m{' '*10}██▄  ▄██  ▄▄▄▄     ▄█████ ▄▄▄▄   ▄▄▄  ▄▄   ▄▄ ▄▄    ▄▄▄▄▄ ▄▄▄▄  
 \033[0;35m{' '*10}██ ▀▀ ██ ██▀▀▀ ▄▄▄ ██     ██▄█▄ ██▀██ ██ ▄ ██ ██    ██▄▄  ██▄█▄ 
 \033[2;35m{' '*10}██    ██ ▀████     ▀█████ ██ ██ ██▀██  ▀█▀█▀  ██▄▄▄ ██▄▄▄ ██ ██ \n
-{gris_logo}
+{GRIS_LOGO}
 {VERSION}
 escrito por: Urb@n 
 {RESET}                                                                                                                                                                                     
@@ -120,12 +121,7 @@ limpiar = lambda : subprocess.run(cmd,shell=True,stderr=open(os.devnull,'w'))
       
 
 def info_server(cuerpo : str,titulo : str =''):
-    msg = f'''\n
-# {titulo}
-
-{cuerpo}
-
-'''
+    msg = f'# {titulo}\r\n{cuerpo}'
     md = Markdown(msg)
     consola.print(md)
 
