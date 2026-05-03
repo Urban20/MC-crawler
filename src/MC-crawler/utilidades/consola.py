@@ -35,7 +35,7 @@ def rgb(r,g,b, fondo : bool = False):
 
 GRIS_LOGO = rgb(227, 227, 227)
 GRIS_OSCURO = rgb(51, 51, 51)
-COLOR_PANEL_MENU = rgb(48, 48, 77,fondo=True)
+COLOR_PANEL_MENU = rgb(42, 30, 69,fondo=True)
 
 LOGO = f'''
 \033[1;35m{' '*10}██▄  ▄██  ▄▄▄▄     ▄█████ ▄▄▄▄   ▄▄▄  ▄▄   ▄▄ ▄▄    ▄▄▄▄▄ ▄▄▄▄  
@@ -135,14 +135,7 @@ def info_server(cuerpo : str,titulo : str =''):
     consola.print(md)
 
 
-
-def pagina(n_pagina : int):
-    etiqueta = f'# Pagina {n_pagina}'
-    consola.print(Markdown(etiqueta,style='white'),style='royal_blue1')
-
-
-
-def maximo(l : list[str]):
+def maximo(l : list[str]): # TODO: hacer tests unitarios
 
     '''
     devuelve el numero maximo de caracteres de una lista de strings
@@ -165,21 +158,25 @@ def print_centro(txt : str):
     print(txt.center(x))
 
 
-def tabla_opciones(opciones : list):
+def box(opciones : list, color : str = COLOR_PANEL_MENU):
 
 
     m = maximo(opciones)
     margen = 10
-    margen_ansi = ' ' * len(COLOR_PANEL_MENU)
+    margen_ansi = ' ' * len(color)
 
-    borde1 = f'{margen_ansi}{COLOR_PANEL_MENU}┌{'─' * (m + margen)}┐{RESET}'
-    borde2 = f'{margen_ansi}{COLOR_PANEL_MENU}└{'─' * (m + margen)}┘{RESET}'
+    borde1 = f'{margen_ansi}{color}┌{'─' * (m + margen)}┐{RESET}'
+    borde2 = f'{margen_ansi}{color}└{'─' * (m + margen)}┘{RESET}'
     print('\n')
     print_centro(borde1)
 
     for op in opciones:
 
-        print_centro(f'{margen_ansi}{COLOR_PANEL_MENU}│ {op}{' '* ((m + margen - 1) - len(op))}│{RESET}')
+        print_centro(f'{margen_ansi}{color}│ {op}{' '* ((m + margen - 1) - len(op))}│{RESET}')
     
     print_centro(borde2)
     print('\n')
+    
+def pagina(n_pagina : int):
+    
+    box(f'Pagina {n_pagina}'.splitlines())
