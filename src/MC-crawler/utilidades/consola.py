@@ -138,7 +138,7 @@ def info_server(cuerpo : str,titulo : str =''):
 
 def pagina(n_pagina : int):
     etiqueta = f'# Pagina {n_pagina}'
-    consola.print(Markdown(etiqueta,style='white'),style=configuracion.COLOR)
+    consola.print(Markdown(etiqueta,style='white'),style='royal_blue1')
 
 
 

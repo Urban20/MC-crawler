@@ -18,7 +18,6 @@ class Menu():
     def __init__(self):
         self.titulo = 'OPCIONES'
         self.ejecutando = True
-        self.color = configuracion.COLOR
         self.msgcontinuar = 'ENTER para continuar'
         self.delay_input = 0.05
         self.margen = ' ' * 2
