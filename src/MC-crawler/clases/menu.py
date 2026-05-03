@@ -21,6 +21,7 @@ class Menu():
         self.color = configuracion.COLOR
         self.msgcontinuar = 'ENTER para continuar'
         self.delay_input = 0.05
+        self.margen = ' ' * 2
 
 
     def __agregar_opcion(self,*args : str):
@@ -50,13 +51,13 @@ class Menu():
         while self.ejecutando:
             consola.limpiar()
             consola.imprimir_logo()
-            print(f'\n{consola.AMARILLO}(!) Este programa necesita conexion para funcionar correctamente{consola.RESET}\n')
-            pr(self.__panel())
+            consola.print_centro(f'{' '* len(consola.AMARILLO)}{consola.AMARILLO}(!) Este programa necesita conexion para funcionar correctamente{consola.RESET}')
+            self.__panel()
 
             fecha = db.ultimo_escaneo()
-            pr(f'Ultimo escaneo registrado: {fecha}\n')
-
-            opcion = consola.input2('[#] seleccionar opcion numero >> ',delay=self.delay_input).strip()
+            pr(f'{self.margen}Ultimo escaneo registrado: {fecha}')
+            print('\n')
+            opcion = consola.input2(f'{self.margen}[#] seleccionar opcion numero >> ',delay=self.delay_input).strip()
             
             match opcion:
                 case '0':

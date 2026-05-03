@@ -33,9 +33,9 @@ def rgb(r,g,b, fondo : bool = False):
 
     return f'\033[{d};2;{r};{g};{b}m'
 
-GRIS_LOGO = rgb(171, 171, 171)
+GRIS_LOGO = rgb(227, 227, 227)
 GRIS_OSCURO = rgb(51, 51, 51)
-COLOR_PANEL_MENU = rgb(63, 61, 97,fondo=True)
+COLOR_PANEL_MENU = rgb(48, 48, 77,fondo=True)
 
 LOGO = f'''
 \033[1;35m{' '*10}██▄  ▄██  ▄▄▄▄     ▄█████ ▄▄▄▄   ▄▄▄  ▄▄   ▄▄ ▄▄    ▄▄▄▄▄ ▄▄▄▄  
@@ -157,17 +157,29 @@ def maximo(l : list[str]):
 
     return n
 
-def tabla_opciones(opciones : list):
+
+def print_centro(txt : str):
 
     x,_ = shutil.get_terminal_size()
+
+    print(txt.center(x))
+
+
+def tabla_opciones(opciones : list):
+
+
     m = maximo(opciones)
     margen = 10
     margen_ansi = ' ' * len(COLOR_PANEL_MENU)
 
-    borde1 = f'{margen_ansi}{COLOR_PANEL_MENU}┌{'─' * (m + margen)}┐{RESET}'.center(x)
-    borde2 = f'{margen_ansi}{COLOR_PANEL_MENU}└{'─' * (m + margen)}┘{RESET}'.center(x)
-    print(borde1)
+    borde1 = f'{margen_ansi}{COLOR_PANEL_MENU}┌{'─' * (m + margen)}┐{RESET}'
+    borde2 = f'{margen_ansi}{COLOR_PANEL_MENU}└{'─' * (m + margen)}┘{RESET}'
+    print('\n')
+    print_centro(borde1)
+
     for op in opciones:
-        print(f'{margen_ansi}{COLOR_PANEL_MENU}│ {op}{' '* ((m + margen - 1) - len(op))}│{RESET}'.center(x))
+
+        print_centro(f'{margen_ansi}{COLOR_PANEL_MENU}│ {op}{' '* ((m + margen - 1) - len(op))}│{RESET}')
     
-    print(borde2)
+    print_centro(borde2)
+    print('\n')
