@@ -130,7 +130,7 @@ limpiar = lambda : subprocess.run(cmd,shell=True,stderr=open(os.devnull,'w'))
       
 
 def info_server(cuerpo : str,titulo : str =''):
-    msg = f'# {titulo}\r\n{cuerpo}'
+    msg = f'# {titulo}\n{cuerpo}'
     md = Markdown(msg)
     consola.print(md)
 
@@ -158,11 +158,10 @@ def print_centro(txt : str):
     print(txt.center(x))
 
 
-def box(opciones : list, color : str = COLOR_PANEL_MENU):
+def box(opciones : list, color : str = COLOR_PANEL_MENU,margen : int = 10):
 
 
     m = maximo(opciones)
-    margen = 10
     margen_ansi = ' ' * len(color)
 
     borde1 = f'{margen_ansi}{color}┌{'─' * (m + margen)}┐{RESET}'
@@ -179,4 +178,4 @@ def box(opciones : list, color : str = COLOR_PANEL_MENU):
     
 def pagina(n_pagina : int):
     
-    box(f'Pagina {n_pagina}'.splitlines())
+    box(f'Pagina {n_pagina}'.splitlines(),margen=2)
