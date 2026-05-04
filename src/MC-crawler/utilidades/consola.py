@@ -2,7 +2,6 @@ from rich.console import Console
 from rich.markdown import Markdown
 from rich.table import Table
 from rich.live import Live
-from rich.text import Text
 import time
 from configuracion import configuracion
 import subprocess

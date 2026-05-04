@@ -8,9 +8,7 @@ from rich import print as pr
 from utilidades import consola
 from servers import iniciar_busqueda
 from utilidades import conectividad
-from configuracion import configuracion
 import cidr_.escan_flex
-import version_json.version_json
 
 
 
@@ -39,7 +37,6 @@ class Menu():
                            'buscar version (premiums y no premiums)',
                            'ver configuración',
                            'escanear rango personalizado',
-                           'ver recuento de servidores indexados por version',
                            'salir del programa')
 
         consola.box(msg.splitlines())
@@ -98,15 +95,6 @@ class Menu():
                     cidr_.escan_flex.procesar_rango(cidr)
 
                 case '6':
-                    lista = version_json.version_json.contar_servidores()
-
-                    if lista is None:
-                        continue
-
-                    consola.tabla_versiones(lista)
-
-
-                case '7':
                     self.ejecutando = False
                     
                 case _:
