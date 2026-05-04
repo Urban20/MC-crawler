@@ -58,22 +58,22 @@ class Menu():
             print('\n')
             opcion = consola.input2(f'{self.margen}[#] seleccionar opcion numero >> ',delay=self.delay_input).strip()
             
+
+            if not conectividad.conectividad():
+                continue
+                    
             match opcion:
                 case '0':
-                    if not conectividad.conectividad():
-                        continue
                     
                     ejecutar_barrido()
                     
                 case '1':
-                    if not conectividad.conectividad():
-                        continue
+                    
                     
                     db.purgar()
                     
                 case '2':
-                    if not conectividad.conectividad():
-                        continue
+                    
                     version = iniciar_busqueda(crackeados=True)
                     if version == '0':
                         continue

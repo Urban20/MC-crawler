@@ -19,6 +19,7 @@ def version_json():
         req = requests.get(JSON_VERSION)
 
         if req.status_code != 200:
+            print(f'{AMARILLO}(!) no se pudo acceder al endpoint de versiones{RESET}')
             return []
         
         dec = json.JSONDecoder()
