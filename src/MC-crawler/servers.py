@@ -27,8 +27,8 @@ def iniciar_busqueda(crackeados : bool = False):
     print(consola.GRIS_OSCURO)
     for _ in range(2):
         print('▬'*x+'\n')
-    print(consola.RESET)  
-
+    print(consola.RESET)
+    consola.print_centro('tipear "0" para volver')
     return consola.input2(consola.NEGRITA+'Buscar version >> '+consola.RESET).strip()
 
 def archivo(server,fecha,arch : str):
