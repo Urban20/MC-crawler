@@ -86,17 +86,15 @@ def imprimir_logo():
 
 def ver_config():
     limpiar()
-    t='\n'
-    
+
+    t=''
     seccion = configuracion.config
-    print(VIOLETA + '\n' + margen + '[ configuraciones ]'.upper() + RESET + '\n\n')
+
     for k in seccion.sections():
-        t += margen + f'{VERDE}{k.capitalize()}{RESET}\n'
         for v in seccion[k]:
-            t += margen + f'{v} : {CELESTE}{seccion[k][v]}{RESET}\n'
-        t+= '\n'     
-            
-    print2(t)
+            t += margen + f'{v.replace('_',' ').capitalize()} : {seccion[k][v]}\n'
+                    
+    box(t.splitlines(),margen=4)
     
 
 def crear_tabla(**kwargs):
