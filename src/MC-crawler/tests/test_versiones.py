@@ -16,7 +16,7 @@ class TestVersiones:
         for test in aciertos:
             assert versionado_viejo(test) is True
         
-        fallas = ('26.1','26.0.0','26.1.1')
+        fallas = ('26.1','26.0.0','26.1.1','27.1')
 
         for test in fallas:
             assert versionado_viejo(test) is False
@@ -28,8 +28,8 @@ class TestVersiones:
             '1.20.20.5',
             'test.test',
             '26',
-            '26.0.0.0'
-            '26.1.1'
+            '26.0.0.0',
+            '1.7-1.21.8'
         )
 
         for test in Nones:
