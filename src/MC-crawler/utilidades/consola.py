@@ -85,7 +85,7 @@ def input2(texto : str,delay : float = 0.01):
 
 def imprimir_logo():
     delay = 0.05
-    x,_ = shutil.get_terminal_size()
+    
     for linea in LOGO.splitlines():
         print_centro(linea)
         time.sleep(delay)
