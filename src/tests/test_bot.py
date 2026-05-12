@@ -13,7 +13,7 @@ def crear_test_veredicto(estado : int,respuesta_str : str = ''):
 
     clases.bot.obtener_veredicto(bot,server)
 
-    return (server.veredicto,server.withelist,server.modeado,server.crackeado)
+    return (server.veredicto,server.whitelist,server.modeado,server.crackeado)
 
 
 class TestVeredicto:

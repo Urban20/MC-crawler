@@ -20,7 +20,7 @@ Su funcionamiento general es el siguiente:
 - obtiene rangos de ips ocupados por hostings
 - selecciona algunos rangos al azar y ejecuta un escaneo de puertos con un rango de /16 cada uno
 - envia una serie de paquetes especificos utilizados para comunicarse con este tipo de servidores
-- envia un bot el cual simula un jugador y se conecta de forma automatica al servidor objetivo sin completar el login. En base a la respuesta se puede inferir con bastante exactitud si el servidor es premium o no premium, si tiene mods, withelist e incluso si el bot fue baneado.
+- envia un bot el cual simula un jugador y se conecta de forma automatica al servidor objetivo sin completar el login. En base a la respuesta se puede inferir con bastante exactitud si el servidor es premium o no premium, si tiene mods, whitelist e incluso si el bot fue baneado.
 
 NOTA: el programa puede actualizar la base de datos de forma automatica. 
 

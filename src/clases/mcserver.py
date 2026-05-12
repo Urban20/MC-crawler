@@ -34,7 +34,7 @@ class McServer():
         self.ping = None # valor por default
 
         # caracteristicas del server
-        self.withelist = False
+        self.whitelist= False
         self.modeado = False
         self.veredicto = consola.ET_IND
         self.crackeado = False
@@ -116,7 +116,7 @@ class McServer():
             cuerpo = self.__pasear_info(
             veredicto=self.veredicto,
             ping=self.ping,
-            whitelist_detectada=self.withelist,
+            whitelist_detectada=self.whitelist,
             mods=self.modeado,
             fecha=self.fecha_otogada,
             nro_de_jugadores=f'{self.jugadores_online}/{self.max_jugadores}',

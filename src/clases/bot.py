@@ -262,7 +262,7 @@ def paquete_disconnect(server,bot):
 
         server.veredicto = consola.ET_CRACK
         server.crackeado = True
-        server.withelist = True
+        server.whitelist = True
 
     elif coincidencia(r'mods|forge'):
 
