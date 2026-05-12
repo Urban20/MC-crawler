@@ -55,6 +55,13 @@ ET_BAN = f'{VIOLETA}BANEADO{RESET}'
 ET_MOD = f'{ROJO}MODEADO{RESET}'
 
 
+def print_centro(txt : str):
+
+    x,_ = shutil.get_terminal_size()
+
+    print(txt.center(x))
+
+
 def print2(texto : str,delay = 0.01,salto : bool = True):
     for c in texto:
         sys.stdout.write(c)
@@ -78,10 +85,9 @@ def input2(texto : str,delay : float = 0.01):
 
 def imprimir_logo():
     delay = 0.05
-    x,_ = shutil.get_terminal_size()
+    
     for linea in LOGO.splitlines():
-        sys.stdout.write(linea.center(x)+'\n')
-        sys.stdout.flush()
+        print_centro(linea)
         time.sleep(delay)
 
 def ver_config():
@@ -133,12 +139,6 @@ def maximo(l : list[str]): # TODO: hacer tests unitarios
 
     return n
 
-
-def print_centro(txt : str):
-
-    x,_ = shutil.get_terminal_size()
-
-    print(txt.center(x))
 
 
 def box(opciones : list, color : str = COLOR_PANEL_MENU,margen : int = 10):
