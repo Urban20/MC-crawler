@@ -28,6 +28,7 @@ var hl = flag.Int("hl", 50, "")
 // barridos
 
 var b24 = flag.Bool("b24", false, "") // booleano que se habilita para barrer en /24
+var b8 = flag.Bool("b8", false, "")   // booleano que se habilita para barrer en /8
 
 // barrido n0.n1.n2.0/24
 func Barrido24(n1 int, n2 int, n3 int) chan string {
@@ -46,8 +47,40 @@ func Barrido24(n1 int, n2 int, n3 int) chan string {
 
 }
 
-// 130 61
-// 54.36.0.0/14 178.32.0.0/15 151.80.0.0/16
+func Barrido8(n int) chan string {
+
+	// n.i3.i2.i1/8
+
+	var long int = 255
+
+	var i1, i2, i3 int = long, long, long
+	var ip = make(chan string)
+
+	go func() {
+
+		defer close(ip)
+
+		for i3 >= 0 {
+			i1--
+			if i1 < 0 {
+				i1 = long
+				i2--
+
+				if i2 < 0 {
+					i2 = long
+					i3--
+				}
+
+			}
+
+			ip <- fmt.Sprintf("%d.%d.%d.%d", n, i3, i2, i1)
+
+		}
+
+	}()
+
+	return ip
+}
 
 /*
 	"n1.n2.0.0/16"
@@ -88,7 +121,7 @@ func Ejecucion(generador chan string, lim chan struct{}, timeout time.Duration) 
 		go func() {
 
 			defer wg.Done()
-			defer func() { <-lim }() //liberar el espacio para otra goroutine
+			defer func() { <-lim }()
 
 			dir := fmt.Sprintf("%s:%d", ip, PUERTO)
 
@@ -112,7 +145,8 @@ func main() {
 	n1 := *n1
 	n2 := *n2 //solo se usa en barrido 24
 	hl := *hl
-	b24 := *b24        // booleano que habilita el barrido /24 , por defecto se usa /16
+	b24 := *b24 // booleano que habilita el barrido /24 , por defecto se usa /16
+	b8 := *b8
 	timeout := *tiempo // tiempo en miliseg
 	version := *vr
 
@@ -128,6 +162,10 @@ func main() {
 	if b24 {
 
 		gen = Barrido24(n0, n1, n2)
+
+	} else if b8 {
+
+		gen = Barrido8(n0)
 
 	} else {
 
