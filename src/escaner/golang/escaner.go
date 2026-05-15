@@ -14,13 +14,13 @@ import (
 
 const (
 	PUERTO  = 25565
-	VERSION = "V3.1" //version del escaner, debe coincidir con el resto del programa
+	VERSION = "V4.0" //version del escaner, debe coincidir con el resto del programa
 )
 
 var n0 = flag.Int("n0", 0, "")
 var n1 = flag.Int("n1", 0, "")
 var n2 = flag.Int("n2", 0, "") // solo se usa en barrido /24
-var tiempo = flag.Int("t", 30, "")
+var tiempo = flag.Int("t", 300, "")
 var vr = flag.Bool("v", false, "")
 
 var hl = flag.Int("hl", 50, "")
@@ -79,37 +79,10 @@ func Barrido16(n1 int, n2 int) chan string {
 
 }
 
-func Ejecucion24(n1 int, n2 int, n3 int, lim chan struct{}, timeout time.Duration) {
-
+func Ejecucion(generador chan string, lim chan struct{}, timeout time.Duration) {
 	wg := sync.WaitGroup{}
 
-	for ip := range Barrido24(n1, n2, n3) {
-
-		lim <- struct{}{}
-		wg.Add(1)
-
-		go func() {
-			defer wg.Done()
-			defer func() { <-lim }()
-
-			dir := fmt.Sprintf("%s:%d", ip, PUERTO)
-			cx, conerr := net.DialTimeout("tcp", dir, time.Millisecond*timeout)
-			if conerr == nil {
-				defer cx.Close()
-				fmt.Println(ip)
-			}
-
-		}()
-
-	}
-
-	wg.Wait()
-}
-
-func Ejecucion16(n0 int, n1 int, lim chan struct{}, timeout time.Duration) {
-	wg := sync.WaitGroup{}
-
-	for ip := range Barrido16(n0, n1) {
+	for ip := range generador {
 		wg.Add(1)
 		lim <- struct{}{}
 		go func() {
@@ -150,13 +123,16 @@ func main() {
 
 	lim := make(chan struct{}, hl)
 
+	var gen chan string
+
 	if b24 {
 
-		Ejecucion24(n0, n1, n2, lim, time.Duration(timeout))
+		gen = Barrido24(n0, n1, n2)
 
 	} else {
 
-		Ejecucion16(n0, n1, lim, time.Duration(timeout))
+		gen = Barrido16(n0, n1)
 	}
 
+	Ejecucion(gen, lim, time.Duration(timeout))
 }
