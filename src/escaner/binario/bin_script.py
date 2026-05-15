@@ -6,6 +6,7 @@ import requests
 import time
 from utilidades.conectividad import conectividad
 import sys
+from utilidades.consola import AMARILLO,RESET
 
 ejecutable = f'{BINARIO}.exe' # similar al bin de gopython pero este explicita su extension
 VERSION_BIN = 'V4.0' # version del escaner a instalar
@@ -65,7 +66,8 @@ def descargar_exe():
     print('escaner no encontrado, descargando ...')
     if req.status_code != 200:
         print(f'fuente no disponible, codigo de estado: {req.status_code}')
-        time.sleep(delay)
+        print(f'{AMARILLO}compila el escaner si no es posible descargarlo en este momento{RESET}')
+        time.sleep(10)
         sys.exit(1)
     
 

@@ -86,7 +86,7 @@ class Menu():
                     consola.ver_config()
                 
                 case '5':
-                    info = Panel('escaneos de 16 o 24 bits\nejemplos:\n\n190.60.0.0/16\n190.60.20.0/24',
+                    info = Panel('escaneos de 16 o 24 bits\nejemplos:\n\n190.60.0.0/16\n190.60.20.0/24\n190.0.0.0/8',
                                  title='uso')
                     
                     pr(info)
