@@ -14,6 +14,7 @@ OVH = 'https://stat.ripe.net/data/announced-prefixes/data.json?resource=AS16276'
 # expresiones regulares utilizadas para extraer bloques, cubren los rangos de forma general
 regex16 = r'(\d+)\.(\d+)\.0\.0/16' 
 regex24 = r'(\d+)\.(\d+)\.(\d+)\.0/24'
+regex8 = r'(\d+)\.0\.0\.0/8'
 
 # otros bloques ip fijos
 OTROS = [(130,61),(54,36),(14,178),(151,80),(50,20),(149,88),

@@ -8,7 +8,7 @@ from utilidades.conectividad import conectividad
 import sys
 
 ejecutable = f'{BINARIO}.exe' # similar al bin de gopython pero este explicita su extension
-VERSION_BIN = 'V3.1' # version del escaner a instalar
+VERSION_BIN = 'V4.0' # version del escaner a instalar
 ruta_bin = os.path.join(os.path.dirname(__file__),ejecutable) # similar a la ruta de gopython.py con la diferencia de que este involucra su extension .exe
 url_exe = f'https://github.com/Urban20/MC-crawler/releases/download/{VERSION_BIN}/{ejecutable}'
 doc_compilar = 'leer.txt'

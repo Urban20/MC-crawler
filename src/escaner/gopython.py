@@ -31,13 +31,22 @@ ruta = os.path.join(os.path.dirname(__file__),CARPETA_BIN,BINARIO) # el binario 
 interrupcion = clases.interruptor.Interruptor(evento='barrido') # objeto creado para barridos y barridos personalizados
 
 
-def introducir_parametros(param1 : int ,param2 : int,param3 : int = 0,bits24 : bool = False):
+def introducir_parametros(param1 : int ,param2 : int = 0,param3 : int = 0,bits24 : bool = False, bits8 : bool = False):
+
     'introduce parametros especificos en el binario'
+
+    if bits24 and bits8:
+        return
 
     parametros = [ruta,'-n0',str(param1),'-n1',str(param2),'-n2',str(param3),'-hl',str(HILOS),'-t',str(TIMEOUT_ESCAN)]
     
     if bits24:
         parametros.append('-b24')
+
+    elif bits8:
+
+        parametros.append('-b8')
+
 
     sp = subprocess.Popen(parametros,stdout=subprocess.PIPE)
 

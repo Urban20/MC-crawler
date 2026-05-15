@@ -5,6 +5,7 @@ import cidr_.data
 
 reg16 = cidr_.data.regex16 + '$'
 reg24 = cidr_.data.regex24 + '$'
+reg8 = cidr_.data.regex8+ '$'
 
 es_octeto = lambda oct: int(oct) >= 0 and int(oct) <= 255
 
@@ -12,13 +13,18 @@ def es_cidr(cidr : str,octetos = 2): # revisar
 
     'da True si el reg especificado coincide con un rango'
 
-    if octetos not in (2,3):
+    if octetos not in (1,2,3):
         return False, None
+    
 
-    if octetos == 2:
-        regex = reg16
-    else:
-        regex = reg24
+    match octetos:
+
+        case 1:
+            regex = reg8
+        case 2:
+            regex = reg16
+        case _:
+            regex = reg24
 
     r = re.match(regex,cidr)
 
@@ -43,6 +49,13 @@ def procesar_rango(cidr : str):
 
     cidr16,reg = es_cidr(cidr=cidr)
     cidr24,reg2 = es_cidr(cidr=cidr,octetos=3)
+    cidr8,reg3 = es_cidr(cidr=cidr,octetos=1)
+
+    if cidr8 and reg3:
+        print('\niniciando escaneo de 8 bits\n')
+        interrupcion.iniciar()
+        param1 = int(reg3.group(1))
+        introducir_parametros(param1=param1,bits8=True)
 
     if cidr16 and reg:
         print('\niniciando escaneo de 16 bits\n')
