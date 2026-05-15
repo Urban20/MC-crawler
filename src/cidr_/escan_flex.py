@@ -49,7 +49,7 @@ def procesar_rango(cidr : str):
 
     cidr16,reg = es_cidr(cidr=cidr)
     cidr24,reg2 = es_cidr(cidr=cidr,octetos=3)
-    cidr8,reg3 = es_cidr(cidr=cidr,octetos=1) # TODO: hacer tests
+    cidr8,reg3 = es_cidr(cidr=cidr,octetos=1) 
 
     if cidr8 and reg3:
         print('\niniciando escaneo de 8 bits\n')

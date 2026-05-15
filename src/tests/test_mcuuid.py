@@ -1,4 +1,4 @@
-from clases.MCuuid import uuid_Offline,uuidV4
+from clases.MCuuid import uuid_Offline,uuidV4,jugador_crackeado
 from uuid import UUID
 
 class TestMcuuidOffline:
@@ -38,3 +38,6 @@ def test_UuidV4():
     for test in fallas:
         assert uuidV4(test) is False
    
+def test_jugador_crackeado():
+    assert jugador_crackeado('Steve','5627dd98-e6be-3c21-b8a8-e92344183641') is True
+    assert jugador_crackeado('Steve','8667ba71-b85a-4004-af54-457a9734eed7') is False
