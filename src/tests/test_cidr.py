@@ -35,6 +35,34 @@ class TestCidrs:
             assert es_cidr(test)[0] is False
             assert es_cidr(test)[1] is None
 
+    def test_cidr8(self):
+
+        aciertos = (
+            '90.0.0.0/8',
+            '255.0.0.0/8'
+        )
+
+        for test in aciertos:
+            ejecucion = es_cidr(test,octetos=1)
+            assert ejecucion[0] is True
+            assert ejecucion[0] is not None
+
+
+        fallas = (
+            'test 90.0.0.0/8',
+            '256.0.0.0.0/8',
+            '91.0.0/8',
+            '-90.0.0.0/8',
+            '90.0.0.0.0.0/8',
+            '50.0.0.0/24'
+        )
+
+        for test in fallas:
+
+            ejecucion = es_cidr(test,octetos=1)
+            assert ejecucion[0] is False
+            assert ejecucion[1] is None
+
     def test_cidr24(self):
 
 
