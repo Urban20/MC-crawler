@@ -10,15 +10,12 @@ from servers import iniciar_busqueda
 from utilidades import conectividad
 import cidr_.escan_flex
 
-
-
 class Menu():
     def __init__(self):
         self.titulo = 'OPCIONES'
         self.ejecutando = True
         self.msgcontinuar = 'ENTER para continuar'
         self.delay_input = 0.05
-        self.margen = ' ' * 2
 
 
     def __agregar_opcion(self,*args : str):
@@ -51,9 +48,9 @@ class Menu():
             self.__panel()
 
             fecha = db.ultimo_escaneo()
-            pr(f'{self.margen}Ultimo escaneo registrado: {fecha}')
+            pr(f'{consola.margen}Ultimo escaneo registrado: {fecha}')
             print('\n')
-            opcion = consola.input2(f'{self.margen}[#] seleccionar opcion numero >> ',delay=self.delay_input).strip()
+            opcion = consola.input2(f'{consola.margen}[#] seleccionar opcion numero >> ',delay=self.delay_input).strip()
             
 
             if not conectividad.conectividad():
@@ -86,7 +83,7 @@ class Menu():
                     consola.ver_config()
                 
                 case '5':
-                    info = Panel('escaneos de 16 o 24 bits\nejemplos:\n\n190.60.0.0/16\n190.60.20.0/24\n190.0.0.0/8',
+                    info = Panel('escaneos de 16 , 24 u 8 bits\nejemplos:\n\n190.60.0.0/16\n190.60.20.0/24\n190.0.0.0/8',
                                  title='uso')
                     
                     pr(info)

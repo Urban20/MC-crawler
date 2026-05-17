@@ -124,7 +124,7 @@ def info_server(cuerpo : str,titulo : str =''):
     consola.print(md)
 
 
-def maximo(l : list[str]): # TODO: hacer tests unitarios
+def maximo(l : list[str]): 
 
     '''
     devuelve el numero maximo de caracteres de una lista de strings
@@ -134,8 +134,10 @@ def maximo(l : list[str]): # TODO: hacer tests unitarios
 
     for elemento in l:
 
-        if n < len(elemento):
-            n = len(elemento)
+        long = len(elemento)
+
+        if n < long:
+            n = long
 
     return n
 

@@ -45,8 +45,10 @@ def main():
     descargar_exe()
 
     if not escaner.binario.verificador.comprobar_escaner(VERSION_BIN):
+        print(utilidades.consola.AMARILLO)
         print(f'\nel escaner actual es incompatible con el programa:\nse necesita la version {VERSION_BIN}')
-        time.sleep(delay)
+        print(utilidades.consola.RESET)
+        time.sleep(10)
         sys.exit(1)
 
     print(f'\n✓ escaner compatible: {VERSION_BIN}\n')    

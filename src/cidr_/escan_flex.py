@@ -2,6 +2,8 @@
 from escaner.gopython import introducir_parametros,interrupcion
 import re
 import cidr_.data
+from utilidades.consola import ROJO,RESET
+
 
 reg16 = cidr_.data.regex16 + '$'
 reg24 = cidr_.data.regex24 + '$'
@@ -77,4 +79,4 @@ def procesar_rango(cidr : str):
                               bits24=True)
 
     else:
-        print('\nla notacion es invalida\n')
+        print(f'\n{ROJO}la notacion es invalida{RESET}\n')
