@@ -120,7 +120,7 @@ limpiar = lambda : subprocess.run(cmd,shell=True,stderr=open(os.devnull,'w'))
 
 def info_server(cuerpo : str,titulo : str =''):
     msg = f'# {titulo}\n{cuerpo}'
-    md = Markdown(msg)
+    md = Markdown(msg,code_theme='paraiso-dark')
     consola.print(md)
 
 
