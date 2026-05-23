@@ -46,13 +46,13 @@ escrito por: Urb@n
 {RESET}                                                                                                                                                                                     
 '''
 # etiquetas que se muestran en la consola como veredicto de los servidores
-ET_CRACK = f'{VERDE}crackeado/no premium{RESET}'
-ET_PREM = f'{ROJO}premium{RESET}'
+ET_CRACK = 'crackeado/no premium'
+ET_PREM = 'premium'
 ET_IND = 'indeterminado'
-ET_TIM = f'{AMARILLO}tiempo agotado{RESET}'
-ET_INC = f'{CELESTE}protocolo incompatible{RESET}'
-ET_BAN = f'{VIOLETA}BANEADO{RESET}'
-ET_MOD = f'{ROJO}MODEADO{RESET}'
+ET_TIM = 'tiempo agotado'
+ET_INC = 'protocolo incompatible'
+ET_BAN = 'BANEADO'
+ET_MOD = 'MODEADO'
 
 
 def print_centro(txt : str):

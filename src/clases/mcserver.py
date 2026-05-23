@@ -114,7 +114,6 @@ class McServer():
         if self.estado == 'online':
 
             cuerpo = self.__pasear_info(
-            veredicto=self.veredicto,
             ping=self.ping,
             whitelist_detectada=self.whitelist,
             mods=self.modeado,
@@ -123,6 +122,8 @@ class McServer():
             version=self.version,
             motd=self.motd,
             jugadores_activos=self.p_data)
+
+            cuerpo = f'> Veredicto:\n> `{self.veredicto}`\n\n' + cuerpo
 
             consola.info_server(cuerpo=cuerpo, titulo=titulo)
 
