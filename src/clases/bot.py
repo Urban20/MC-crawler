@@ -127,6 +127,17 @@ class Bot():
         self.pid_desconexion = 0
         self.pid_encript = 1
         self.pid_login = 3
+
+    def __del__(self):
+
+        try:
+
+            self.__conex.close()
+            
+        except: 
+
+            print(f'la comunicacion del bot no fue cerrada')
+
     
     def __enviar_paquete(self,buffer : Buffer):
         self.__conex.write_varint(len(buffer))
@@ -199,7 +210,6 @@ class Bot():
         self.respuesta_str = n_resp.decode(errors='replace')
         buffer = Buffer(n_resp).read_varint()
         self.numero_estado = buffer
-        self.__conex.close()
 
 def desplegar_bot(server):
 
