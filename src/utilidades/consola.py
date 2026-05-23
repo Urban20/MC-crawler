@@ -115,7 +115,9 @@ def crear_tabla(**kwargs):
 
 
 # probablemente lo modifique varias veces hasta encontrar la forma mas eficiente
-limpiar = lambda : subprocess.run(cmd,shell=True,stderr=open(os.devnull,'w'))
+def limpiar():
+    with open(os.devnull,'w') as devnull:
+        subprocess.run(cmd,shell=True,stderr=devnull)
       
 
 def info_server(cuerpo : str,titulo : str =''):
