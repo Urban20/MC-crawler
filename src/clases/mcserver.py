@@ -31,7 +31,7 @@ class McServer():
         self.timeout = timeout
         self.info = None
         self.protocolo = 47
-        self.ping = None # valor por default
+        self.ping = 0.0 # valor por default
 
         # caracteristicas del server
         self.whitelist= False
@@ -114,7 +114,7 @@ class McServer():
         if self.estado == 'online':
 
             cuerpo = self.__pasear_info(
-            ping=self.ping,
+            ping=f'{round(self.ping,2)} ms',
             whitelist_detectada=self.whitelist,
             mods=self.modeado,
             fecha=self.fecha_otogada,
