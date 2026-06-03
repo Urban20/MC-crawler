@@ -8,7 +8,7 @@ import sqlite3 as sq
 import servers
 from clases.mcserver import McServer
 import os
-from utilidades.consola import ROJO,RESET
+from utilidades.consola import log
 import configuracion.configuracion
 from clases.interruptor import Interruptor
 from clases.contador import contador
@@ -77,7 +77,7 @@ def verificar_actualizacion(server : McServer, mostrar_sv : bool = True,tabla = 
     if server.estado == 'online' and server.version != version_db:
 
         actualizar_server(sv=server,ip_puerto=server.direccion,conex=conex)
-        print(f'\n{server.direccion} fue actualizado\nversion {version_db} → {server.version}\n')
+        log.info(f'{server.direccion}: fue actualizado | version {version_db} → {server.version}')
         contador.incrementar_actualizados()
         if mostrar_sv:
             server.print()
@@ -88,9 +88,9 @@ def eliminar_server(direccion : str,conex = conec2,tabla = TABLA2):
     eliminar.execute(f'DELETE FROM {tabla} WHERE ip = ?',(direccion,))
     conex.commit()
     if tabla == TABLA2:
-        print(f'{ROJO}{direccion} eliminado de db no-premium (offline/cambio de version/cambio a premium){RESET}')
+        log.info(f'{direccion}: eliminado de db no-premium (offline/cambio de version/cambio a premium)')
     else:
-        print(f'{ROJO}{direccion} eliminado de la base de datos global (offline){RESET}')
+        log.info(f'{direccion}: eliminado de la base de datos global (offline/timeout)')
 
 
 def evaluar_servers(sv : McServer,ip_puerto,version_db,fecha_db,borrados : int,actualizados : int):
@@ -112,7 +112,7 @@ def evaluar_servers(sv : McServer,ip_puerto,version_db,fecha_db,borrados : int,a
         sv.verificar_crackeado()
         actualizar_server(sv=sv,ip_puerto=ip_puerto)
         servers.registrar_crackeado(sv)
-        print(f'[↑] ACTUALIZADO: {ip_puerto} | version ({version_db} → {sv.version}) | {fecha_db} → {sv.fecha}')
+        log.info(f'[↑] ACTUALIZADO: {ip_puerto} | version ({version_db} → {sv.version}) | {fecha_db} → {sv.fecha}')
         actualizados+=1
     
     return borrados,actualizados
@@ -147,7 +147,9 @@ def purgar():
         borrados = 0
         actualizados = 0
 
-        print('\n[...] iniciando purga de servidores\nNO cierres el programa\n')
+        log.info('iniciando purga de servidores')
+        log.warning('NO cierres el programa')
+
         selector = conec.cursor() # nuevo cursor que selecciona e itera
         selector.execute(f"SELECT ip, version, fecha FROM {TABLA} WHERE fecha <= date('now','-30 days')")
 
@@ -172,7 +174,9 @@ def purgar():
                      
         print(f'\npurga finalizada\nservers eliminados (offlines): {borrados} | servers actualizados: {actualizados}\n')
     
-    except Exception as e: print(f'\n[-] hubo un problema al intentar purgar la db\n{e}')
+    except Exception as e:
+
+        log.error(f'hubo un problema al intentar purgar la db: {e}')
         
         
  

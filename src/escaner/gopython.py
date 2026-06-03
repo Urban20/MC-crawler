@@ -100,9 +100,11 @@ def ejecutar_bin():
 
             introducir_parametros(n0,n1)
             
-        print('\n[+] finalizado\n')
+        consola.log.info('finalizado')
+
     except Exception as e:
-        print(f'\nhubo un problema al ejecutar el binario: {e}\n')
+
+        consola.log.error(f'hubo un problema al ejecutar el binario: {e}')
 
 
 def procesar_lineas(linea : bytes):
@@ -122,12 +124,12 @@ def procesar_lineas(linea : bytes):
         servers.registrar_crackeado(server=server)
 
     except Exception as e:
-        print(f'\n hubo un problema : {e}\n')
+        consola.log.error(f'hubo un problema : {e}')
 
 def ejecutar_barrido():
 
     print('\n[+] barriendo bloques de ips, esto puede llevar tiempo ...\n ')
-    print('NO cierres el programa')
+    consola.log.warning('NO cierres el programa')
     ejecutar_bin()
     print(f'\nservidores nuevos encontrados: {contador.encontrados}\nservidores actualizados: {contador.actualizado}')
     contador.resetear() 

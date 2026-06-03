@@ -2,7 +2,7 @@
 from escaner.gopython import introducir_parametros,interrupcion
 import re
 import cidr_.data
-from utilidades.consola import ROJO,RESET
+from utilidades.consola import log
 
 
 reg16 = cidr_.data.regex16 + '$'
@@ -54,20 +54,20 @@ def procesar_rango(cidr : str):
     cidr8,reg3 = es_cidr(cidr=cidr,octetos=1) 
 
     if cidr8 and reg3:
-        print('\niniciando escaneo de 8 bits\n')
+        log.info('iniciando escaneo de 8 bits')
         interrupcion.iniciar()
         param1 = int(reg3.group(1))
         introducir_parametros(param1=param1,bits8=True)
 
     elif cidr16 and reg:
-        print('\niniciando escaneo de 16 bits\n')
+        log.info('iniciando escaneo de 16 bits')
         interrupcion.iniciar()
         param1 = int(reg.group(1)) 
         param2 = int(reg.group(2))
         introducir_parametros(param1=param1,
                               param2=param2)
     elif cidr24 and reg2:
-        print('\niniciando escaneo de 24 bits\n')
+        log.info('iniciando escaneo de 24 bits')
         interrupcion.iniciar()
         param1 = int(reg2.group(1))
         param2 = int(reg2.group(2))
@@ -79,4 +79,4 @@ def procesar_rango(cidr : str):
                               bits24=True)
 
     else:
-        print(f'\n{ROJO}la notacion es invalida{RESET}\n')
+        log.error('la notacion es invalida')

@@ -3,24 +3,34 @@ from rich.markdown import Markdown
 from rich.table import Table
 from rich.live import Live
 import time
+from rich.logging import RichHandler
 from configuracion import configuracion
 import subprocess
 import os
 import sys
 import shutil
+import logging
 
+PROGRAMA = 'MC-Crawler'
 
 consola = Console()
+
+log = logging.getLogger(PROGRAMA)
+logging.basicConfig(datefmt='[%X]',
+                    level=logging.INFO,
+                    handlers=[RichHandler(console=consola)],
+                    format='%(message)s')
+
+
+
 margen = ' ' * 2
 
 NEGRITA = '\033[1m'
 VERSION = 'V7.0' # version del programa
-VIOLETA = '\033[0;95m'
 RESET = '\033[0m '
 AMARILLO = '\033[0;33m'
-CELESTE = '\033[0;96m'
-ROJO = '\033[0;31m'
-VERDE = '\033[0;32m'
+
+
 cmd = 'cls' if os.name == 'nt' else 'clear'
 
 def rgb(r,g,b, fondo : bool = False):

@@ -161,7 +161,8 @@ def registrar_server(server : McServer):
         
 
     except DatabaseError as e:
-        print(f'\n[!] error en la db : {e}\n')
+
+        consola.log.critical(f'error en la db : {e}')
         sys.exit(1)
 
 def registrar_crackeado(server : McServer):

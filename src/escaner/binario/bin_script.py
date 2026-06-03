@@ -7,7 +7,7 @@ import time
 from utilidades.conectividad import conectividad
 from rich.markdown import Markdown
 import sys
-from utilidades.consola import AMARILLO,RESET,consola
+from utilidades.consola import AMARILLO,RESET,consola,log
 
 ejecutable = f'{BINARIO}.exe' # similar al bin de gopython pero este explicita su extension
 VERSION_BIN = 'V4.0' # version del escaner a instalar
@@ -65,14 +65,14 @@ def descargar_exe():
         return
 
     if os.path.exists(ruta_bin):
-        print('\n✓ escaner encontrado\n')
+        log.info('escaner encontrado')
         time.sleep(delay)
         return
    
     req = requests.get(url_exe)
-    print('escaner no encontrado, descargando ...')
+    log.warning('escaner no encontrado, descargando ...')
     if req.status_code != 200:
-        print(f'fuente no disponible, codigo de estado: {req.status_code}')
+        log.warning(f'fuente no disponible, codigo de estado: {req.status_code}')
         print(f'{AMARILLO}compila el escaner si no es posible descargarlo en este momento{RESET}')
         time.sleep(10)
         sys.exit(1)
@@ -88,14 +88,14 @@ def descargar_exe():
             
             sys.exit(1)
     
-    print(f'\ndescargando {ejecutable} ...\n')
+    log.info(f'descargando {ejecutable} ...')
     print(f'fuente: {url_exe}')
     time.sleep(delay)
     
     with open(ruta_bin,'wb') as ej:
         ej.write(req.content)
     
-    print('\n✓ descarga exitosa\n')
+    log.info('descarga exitosa')
     time.sleep(delay)
 
     

@@ -39,19 +39,19 @@ SOFTWARE.
 def main():
     delay = 1
     init()
-    print(f'\033]2;MC-Crawler {utilidades.consola.VERSION}\007')
+    print(f'\033]2;{utilidades.consola.PROGRAMA} {utilidades.consola.VERSION}\007')
     utilidades.consola.limpiar()
     check_binario_linux()
     descargar_exe()
 
     if not escaner.binario.verificador.comprobar_escaner(VERSION_BIN):
-        print(utilidades.consola.AMARILLO)
-        print(f'\nel escaner actual es incompatible con el programa:\nse necesita la version {VERSION_BIN}')
-        print(utilidades.consola.RESET)
+        
+        utilidades.consola.log.warning(f'el escaner actual es incompatible con el programa: se necesita la version {VERSION_BIN}')
+        
         time.sleep(10)
         sys.exit(1)
 
-    print(f'\n✓ escaner compatible: {VERSION_BIN}\n')    
+    utilidades.consola.log.info(f'escaner compatible: {VERSION_BIN}')    
     time.sleep(delay)
     menu = Menu()
     menu.iniciar()
@@ -65,7 +65,10 @@ if __name__ == '__main__':
           
     except KeyboardInterrupt:
 
-        print('\n\nsaliendo del programa\n')        
+        print('\n')
+        utilidades.consola.log.info('saliendo del programa')        
           
     except Exception as e:
-        print(f'\nhubo un problema: {e}')
+        
+        print('\n')
+        utilidades.consola.log.critical(f'hubo un problema: {e}')

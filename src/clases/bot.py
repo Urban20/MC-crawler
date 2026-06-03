@@ -136,7 +136,7 @@ class Bot():
             
         except: 
 
-            print(f'la comunicacion del bot no fue cerrada')
+            consola.log.warning('la comunicacion del bot no fue cerrada')
 
     
     def __enviar_paquete(self,buffer : Buffer):
@@ -161,7 +161,7 @@ class Bot():
             
             self.conectado = True
         except:
-            print(f'[BOT] {self.usuario} >> no se pudo conectar a {self.ip}:{self.puerto}')
+            consola.log.warning(f'[BOT] {self.usuario} >> no se pudo conectar a {self.ip}:{self.puerto}')
 
     def loguear(self,version : str = '1.21' ):
         
