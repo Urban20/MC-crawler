@@ -41,6 +41,7 @@ def main():
     init()
     print(f'\033]2;{utilidades.consola.PROGRAMA} {utilidades.consola.VERSION}\007')
     utilidades.consola.limpiar()
+    utilidades.consola.log.debug('iniciando el programa en modo debug')
     check_binario_linux()
     descargar_exe()
 

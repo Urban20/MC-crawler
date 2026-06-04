@@ -15,9 +15,16 @@ PROGRAMA = 'MC-Crawler'
 
 consola = Console()
 
+if len(sys.argv) == 2 and sys.argv[1] == '--debug':
+
+    modo = logging.DEBUG
+else:
+
+    modo = logging.INFO
+
 log = logging.getLogger(PROGRAMA)
 logging.basicConfig(datefmt='[%X]',
-                    level=logging.INFO,
+                    level=modo,
                     handlers=[RichHandler(console=consola)],
                     format='%(message)s')
 
