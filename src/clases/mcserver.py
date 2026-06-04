@@ -1,16 +1,15 @@
 'obtiene informacion de los servidores de minecraft edicion java'
 
-import datetime
 from mcstatus import JavaServer
 from mcstatus.responses import JavaStatusResponse
-from utilidades import consola
+from utilidades import consola,tiempo
 import clases.bot
 import clases.MCuuid
 
 class McServer():
     'esta clase es la encargada de obtener el estado y la informacion de los servidores'
     def __init__(self,ip : str,puerto=25565,fecha_otorgada = None,timeout = 1):
-        self.fecha = datetime.datetime.today().isoformat(sep=' ',timespec='seconds')
+        self.fecha = tiempo.tiempo_actual()
         self.fecha_otogada = fecha_otorgada
         # fecha otorgada: es la fecha que se encuentra en la db para mostrar como info
         # no tiene relacion con self.fecha

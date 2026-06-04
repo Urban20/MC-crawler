@@ -2,13 +2,12 @@
 barre bloques de ips para detectar puertos abiertos de interes'''
 
 import subprocess
-from utilidades import consola
+from utilidades import consola,tiempo
 import os
 from clases.mcserver import McServer
 import servers
 from cidr_ import data
 from configuracion import configuracion
-import datetime
 import clases.interruptor
 from clases.contador import contador
 import time
@@ -114,8 +113,7 @@ def procesar_lineas(linea : bytes):
         server = McServer(ip=str(ip),
             timeout=TIMEOUT,
             # se muestra el tiempo actual a la hora de mostrar el servidor antes de insertar en la db
-            fecha_otorgada=datetime.datetime.today().isoformat(sep=' ',timespec='seconds'
-            ))
+            fecha_otorgada= tiempo.tiempo_actual())
         
         if server.obtener_data() == 'online':
             server.verificar_crackeado()
