@@ -9,6 +9,7 @@ import servers
 from clases.mcserver import McServer
 import os
 from utilidades.consola import log
+from utilidades.tiempo import tiempo_actual
 import configuracion.configuracion
 from clases.interruptor import Interruptor
 from clases.contador import contador
@@ -82,6 +83,20 @@ def verificar_actualizacion(server : McServer, mostrar_sv : bool = True,tabla = 
         if mostrar_sv:
             server.print()
 
+def actualizar_server_fecha(server : McServer, tabla = TABLA,conex = conec):
+
+    '''
+    se utiliza para actualizar la fecha de los servidores antiguos al purgar
+    y retorna la fecha seteada
+    '''
+
+    actualizador = conex.cursor()
+    tiempo = tiempo_actual()
+    actualizador.execute(f'UPDATE {tabla} SET fecha = ? WHERE ip = ?',(tiempo,server.direccion))
+    conex.commit()
+
+    return tiempo
+
 
 def eliminar_server(direccion : str,conex = conec2,tabla = TABLA2):
     eliminar = conex.cursor()
@@ -114,6 +129,10 @@ def evaluar_servers(sv : McServer,ip_puerto,version_db,fecha_db,borrados : int,a
         servers.registrar_crackeado(sv)
         log.info(f'[↑] ACTUALIZADO: {ip_puerto} | version ({version_db} → {sv.version}) | {fecha_db} → {sv.fecha}')
         actualizados+=1
+    else:
+
+        tiempo = actualizar_server_fecha(sv)
+        log.debug(f'{sv.direccion} actualizado a {tiempo}')
     
     return borrados,actualizados
 
