@@ -7,7 +7,7 @@ from rich.panel import Panel
 from rich import print as pr
 from utilidades import consola
 from servers import iniciar_busqueda
-from utilidades import conectividad
+from utilidades.conectividad import verificar_conexion
 import cidr_.escan_flex
 
 class Menu():
@@ -55,8 +55,8 @@ class Menu():
             opcion = consola.input2(f'{consola.margen}[#] seleccionar opcion numero >> ',delay=self.delay_input).strip()
             
 
-            if not conectividad.conectividad():
-                continue
+            verificar_conexion()
+                
                     
             match opcion:
                 case '0':

@@ -4,7 +4,7 @@ import os
 from escaner.gopython import BINARIO,ruta
 import requests
 import time
-from utilidades.conectividad import conectividad
+from utilidades.conectividad import verificar_conexion
 from rich.markdown import Markdown
 import sys
 from utilidades.consola import AMARILLO,RESET,consola,log
@@ -56,8 +56,7 @@ def check_binario_linux():
 def descargar_exe():
     'intenta descargar el escaner automaticamente'
 
-    if not conectividad():
-        sys.exit(1)
+    verificar_conexion()
         
 
     delay = 1

@@ -1,5 +1,7 @@
 import socket
 from utilidades.consola import log
+import time
+import sys
 
 
 def conectividad():
@@ -17,3 +19,14 @@ def conectividad():
                 return True
         
     return False
+
+
+def verificar_conexion():
+
+    if conectividad():
+
+        return
+
+    log.critical('se necesita conexion a internet para poder operar este programa')
+    time.sleep(5)
+    sys.exit(1)
