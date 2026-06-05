@@ -33,15 +33,15 @@ class Menu():
                            'buscar POSIBLES servers crackeados',
                            'buscar version (premiums y no premiums)',
                            'ver configuración',
-                           'escanear rango personalizado',
-                           'salir del programa')
+                           'escanear rango personalizado'
+                           )
 
         consola.box(msg.splitlines())
 
     def iniciar(self):
 
            
-        while self.ejecutando:
+        while True:
             consola.limpiar()
             consola.imprimir_logo()
             consola.print_centro(f'{' '* len(consola.AMARILLO)}{consola.AMARILLO}(!) Este programa necesita conexion para funcionar correctamente{consola.RESET}')
@@ -50,6 +50,9 @@ class Menu():
             fecha = db.ultimo_escaneo()
             pr(f'{consola.margen}Ultimo escaneo registrado: {fecha}')
             print('\n')
+
+            print(f'{consola.margen}{consola.AMARILLO}CTRL + C para salir{consola.RESET}\n\n')
+
             opcion = consola.input2(f'{consola.margen}[#] seleccionar opcion numero >> ',delay=self.delay_input).strip()
             
 
@@ -91,14 +94,11 @@ class Menu():
                     cidr = str(consola.input2('\nrango a escanear >> ')).strip()
                     cidr_.escan_flex.procesar_rango(cidr)
 
-                case '6':
-                    self.ejecutando = False
-                    
                 case _:
             
                     continue
             
-            if self.ejecutando:
-                interrupcion.cancelado = False
-                input(consola.margen + self.msgcontinuar)
+            
+            interrupcion.cancelado = False
+            input(consola.margen + self.msgcontinuar)
 

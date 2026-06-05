@@ -56,7 +56,6 @@ def main():
     time.sleep(delay)
     menu = Menu()
     menu.iniciar()
-    db.conec.close()
 
 
 
@@ -67,6 +66,8 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
 
         print('\n')
+        db.conec.close()
+        db.conec2.close()
         utilidades.consola.log.info('saliendo del programa')        
           
     except Exception as e:
