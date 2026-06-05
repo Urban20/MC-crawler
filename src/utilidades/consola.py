@@ -34,7 +34,7 @@ logging.basicConfig(datefmt='[%X]',
 margen = ' ' * 2
 
 NEGRITA = '\033[1m'
-VERSION = 'V7.0' # version del programa
+VERSION = 'V7.1' # version del programa
 RESET = '\033[0m '
 AMARILLO = '\033[0;33m'
 
