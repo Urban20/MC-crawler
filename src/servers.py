@@ -155,8 +155,12 @@ def registrar_server(server : McServer):
             db.insertar(dato=server.info)
             server.print()
             contador.incrementar_encontrados()
+            consola.log.debug(f'se integra {server.direccion} a db')
+            consola.log.debug(f'incremento: {contador.encontrados}')
 
     except IntegrityError:
+
+        consola.log.debug(f'se intenta verificar actualizaciones para {server.direccion}')
         db.verificar_actualizacion(server) # verifica actualizacion de db global
         
 

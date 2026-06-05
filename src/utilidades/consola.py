@@ -12,6 +12,7 @@ import shutil
 import logging
 
 PROGRAMA = 'MC-Crawler'
+AUTOR = 'Urb@n'
 
 consola = Console()
 
@@ -59,7 +60,7 @@ LOGO = f'''
 \033[2;35m{' '*10}██    ██ ▀████     ▀█████ ██ ██ ██▀██  ▀█▀█▀  ██▄▄▄ ██▄▄▄ ██ ██ \n
 {GRIS_LOGO}
 {VERSION}
-escrito por: Urb@n 
+escrito por: {AUTOR}
 {RESET}                                                                                                                                                                                     
 '''
 # etiquetas que se muestran en la consola como veredicto de los servidores

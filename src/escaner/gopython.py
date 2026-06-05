@@ -51,11 +51,15 @@ def introducir_parametros(param1 : int ,param2 : int = 0,param3 : int = 0,bits24
 
     for linea in sp.stdout:
 
+        ip = linea.decode().replace('\n','').strip()
+
+        consola.log.debug(f'evaluando {ip}')
+
         if interrupcion.cancelado: # segunda interrupcion de barrido
                                    # utilizado en escaneos de barrido y escaneos personalizados
             break
 
-        procesar_lineas(linea)
+        procesar_lineas(ip)
 
 
 def ejecutar_bin():
@@ -106,11 +110,11 @@ def ejecutar_bin():
         consola.log.error(f'hubo un problema al ejecutar el binario: {e}')
 
 
-def procesar_lineas(linea : bytes):
+def procesar_lineas(ip : str):
     
     try:
-        ip = linea.decode().replace('\n','').strip()
-        server = McServer(ip=str(ip),
+        
+        server = McServer(ip=ip,
             timeout=TIMEOUT,
             # se muestra el tiempo actual a la hora de mostrar el servidor antes de insertar en la db
             fecha_otorgada= tiempo.tiempo_actual())

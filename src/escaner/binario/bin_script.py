@@ -88,7 +88,7 @@ def descargar_exe():
             
             sys.exit(1)
     
-    log.info(f'descargando {ejecutable} ...')
+    log.info(f'descargando {ejecutable}')
     print(f'fuente: {url_exe}')
     time.sleep(delay)
     

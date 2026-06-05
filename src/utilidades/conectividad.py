@@ -1,9 +1,12 @@
 import socket
+from utilidades.consola import log
 
 
 def conectividad():
     
     for p in (53,443):
+
+        log.debug(f'verificando conectividad en el puerto {p}')
  
         with socket.socket() as s:
 
