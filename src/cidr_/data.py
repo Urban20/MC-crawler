@@ -3,7 +3,7 @@
 import requests
 import re
 import random
-
+from utilidades.consola import log
 
 ORACLE = 'https://docs.oracle.com/en-us/iaas/tools/public_ip_ranges.json'
 AMAZON = 'https://ip-ranges.amazonaws.com/ip-ranges.json'
@@ -26,7 +26,7 @@ OTROS = [(130,61),(54,36),(14,178),(151,80),(50,20),(149,88),
 
 def obtener_bloque_web(url : str,regex : str = r'(\d+)\.(\d+)\.0\.0',limite : int = 10):
     try:
-        
+        log.debug(f'obteniendo informacion de {url}')
         web = requests.get(url)
 
         if web.status_code != 200:
@@ -34,13 +34,15 @@ def obtener_bloque_web(url : str,regex : str = r'(\d+)\.(\d+)\.0\.0',limite : in
             raise ConnectionError
 
 
-        rangos = re.findall(regex,web.text)    
+        rangos = re.findall(regex,web.text)
+        log.debug(f'{url} info obtenida')    
         return (random.sample(rangos,k=min(len(rangos),limite)),'ok')
         
         
 
-    except (requests.ConnectionError,requests.ConnectTimeout):
-        
+    except (requests.ConnectionError,requests.ConnectTimeout) as e:
+
+        log.debug(f'falla al obtener info de {url} | error: {e}')
         return ([],'fallo')   
 
 

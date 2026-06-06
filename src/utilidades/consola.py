@@ -122,6 +122,7 @@ def ver_config():
     
 
 def crear_tabla(**kwargs):
+    log.debug('creando tabla de hosts')
     tabla = Table(expand=True,)
     tabla.add_column('servicio',justify='center')
     tabla.add_column('estado',justify='center')
