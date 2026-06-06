@@ -9,6 +9,11 @@ class Interruptor():
     def __init__(self,evento : str):
         self.cancelado = False
         self.evento = evento
+
+    def resetear(self):
+
+        self.cancelado = False
+        signal.signal(signal.SIGINT,signal.SIG_DFL)
         
     def __manejador(self,num, f):
 

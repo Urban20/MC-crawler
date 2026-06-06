@@ -98,6 +98,6 @@ class Menu():
                     continue
             
             
-            interrupcion.cancelado = False
+            interrupcion.resetear()
             input(consola.margen + self.msgcontinuar)
 
