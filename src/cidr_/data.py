@@ -24,10 +24,10 @@ OTROS = [(130,61),(54,36),(14,178),(151,80),(50,20),(149,88),
 
 
 
-def obtener_bloque_web(url : str,regex : str = r'(\d+)\.(\d+)\.0\.0',limite : int = 10):
+def obtener_bloque_web(url : str,regex : str = r'(\d+)\.(\d+)\.0\.0',limite : int = 10,timeout = 5):
     try:
         log.debug(f'obteniendo informacion de {url}')
-        web = requests.get(url)
+        web = requests.get(url,timeout=timeout)
 
         if web.status_code != 200:
 
@@ -40,7 +40,7 @@ def obtener_bloque_web(url : str,regex : str = r'(\d+)\.(\d+)\.0\.0',limite : in
         
         
 
-    except (requests.ConnectionError,requests.ConnectTimeout) as e:
+    except Exception as e:
 
         log.debug(f'falla al obtener info de {url} | error: {e}')
         return ([],'fallo')   
