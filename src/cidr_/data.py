@@ -27,16 +27,17 @@ OTROS = [(130,61),(54,36),(14,178),(151,80),(50,20),(149,88),
 def obtener_bloque_web(url : str,regex : str = r'(\d+)\.(\d+)\.0\.0',limite : int = 10,timeout = 5):
     try:
         log.debug(f'obteniendo informacion de {url}')
-        web = requests.get(url,timeout=timeout)
 
-        if web.status_code != 200:
+        with requests.get(url,timeout=timeout) as web:
 
-            raise ConnectionError
+            if web.status_code != 200:
+
+                raise ConnectionError
 
 
-        rangos = re.findall(regex,web.text)
-        log.debug(f'{url} info obtenida')    
-        return (random.sample(rangos,k=min(len(rangos),limite)),'ok')
+            rangos = re.findall(regex,web.text)
+            log.debug(f'{url} info obtenida')    
+            return (random.sample(rangos,k=min(len(rangos),limite)),'ok')
         
         
 
